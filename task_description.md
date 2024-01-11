@@ -285,7 +285,7 @@ Show all approved classes on this page. Each Class will have the following:
 <br/>
 
 
-9. - **Manage Students:** On the Manage Classes, there will be a button called show students. Clicking on that link will take an admin to a route where the admin will see students for a particular class. An admin will be able to kick out a student from a class. 
+9. - **Manage Students:** On the Manage Classes, there will be a button called show students. Clicking on that link will take an admin to a route where the admin will see students for a particular class. An admin will be able to kick out a student from a class.
 
 <hr/>
 <br/>
