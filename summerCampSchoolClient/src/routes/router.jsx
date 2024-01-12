@@ -5,7 +5,7 @@ import {
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <div className="text-3xl font-bold underline">Hello world!</div>,
   },
 ]);
 
