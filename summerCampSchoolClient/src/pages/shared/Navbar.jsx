@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
+  console.log("🚀 ~ Navbar ~ location:", location);
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -31,7 +34,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to={`/login`} className="bg-[#3B0200] text-white rounded-3xl px-6 py-2">Sign in</Link>
+        {location.pathname !== '/login' && <Link to={`/login`} className="bg-[#3B0200] text-white rounded-3xl px-6 py-2">Sign in</Link>}
       </div>
     </div>
   );
