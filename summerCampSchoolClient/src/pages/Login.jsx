@@ -15,6 +15,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
 
   return (
     <div>
@@ -51,13 +53,15 @@ const Login = () => {
               </div>
               <div className="form-control mt-6">
                 <button onClick={async (e) => {
+                  setLoading(true);
                   e.preventDefault();
                   const success = await signInWithEmailAndPassword(email, password);
                   if (success) {
                     navigate('/');
+                    setLoading(false);
                   }
                 }
-                } className="bg-[#3B0200] text-white rounded-md px-6 py-2">Login</button>
+                } className={`bg-[#3B0200] text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-[#3b020085]'}`} disabled={loading}>Login</button>
               </div>
 
               <p className='capitalize underline cursor-pointer md:mt-8 text-[#3B0200] text-lg'><Link to={`/register`}>create a new account!</Link></p>
