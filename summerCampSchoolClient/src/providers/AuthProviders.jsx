@@ -23,7 +23,7 @@ const AuthProviders = ({ children }) => {
 
 
   // google pop up sign in
-  const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signInWithGoogle,] = useSignInWithGoogle(auth);
 
   // logout
   const [signOut] = useSignOut(auth);

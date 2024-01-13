@@ -14,6 +14,8 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   return (
     <div>
       <div className="hero min-h-screen">
@@ -48,12 +50,14 @@ const Register = () => {
               </div>
               <div className="form-control mt-6">
                 <button onClick={async (e) => {
+                  setLoading(true);
                   e.preventDefault();
                   const success = await createUserWithEmailAndPassword(email, password);
                   if (success) {
+                    setLoading(false);
                     navigate('/');
                   }
-                }} className="bg-[#3B0200] text-white rounded-md px-6 py-2">Sign up</button>
+                }} className={`bg-[#3B0200] text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-[#3b020085]'}`} disabled={loading}>Sign up</button>
               </div>
 
             </form>
