@@ -1,8 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
   const location = useLocation();
   console.log("🚀 ~ Navbar ~ location:", location);
+  const { user, signOut } = useAuth();
 
   return (
     <div className="navbar bg-base-100">
@@ -34,7 +36,45 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {location.pathname !== '/login' && <Link to={`/login`} className="bg-[#3B0200] text-white rounded-3xl px-6 py-2">Sign in</Link>}
+        {/* {
+          !user ?
+            <Link to={`/login`} className="bg-[#3B0200] text-white rounded-3xl px-6 py-2">Sign in</Link>
+            :
+            location.pathname === '/login' ? '' : <Link to={`/login`} className="bg-[#3B0200] text-white rounded-3xl px-6 py-2">Sign in</Link>
+        } */}
+
+        {/* aie ta ami solve korsi navLink er technique ta use kore react router thake */}
+        {
+          location.pathname === '/login' ?
+            ''
+            :
+            !user && <Link to={`/login`} className="bg-[#3B0200] text-white rounded-3xl px-6 py-2">Sign in</Link>
+        }
+        {
+          user &&
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+              </div>
+            </div>
+            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+              <li>
+                <a className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li><a>Settings</a></li>
+              <li onClick={async () => {
+                const success = await signOut();
+                if (success) {
+                  console.log('successfully signed out');
+                }
+              }}><a>Logout</a></li>
+            </ul>
+          </div>
+        }
       </div>
     </div>
   );
