@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
+import FacebookLogin from './shared/socialLogin/FacebookLogin';
+import GoogleLogin from './shared/socialLogin/GoogleLogin';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,9 +48,13 @@ const Login = () => {
       </div>
 
       <div className='flex justify-center'>
-      <div className="divider md:w-1/2 lg:w-1/2 xl:w-3/5 2xl:w-3/5">OR</div>
+        <div className="divider md:w-1/2 lg:w-1/2 xl:w-3/5 2xl:w-3/5">OR</div>
+        
       </div>
-
+      <span className='flex flex-col items-center'>
+          <FacebookLogin></FacebookLogin>
+          <GoogleLogin></GoogleLogin>
+        </span>
     </div>
   );
 };
