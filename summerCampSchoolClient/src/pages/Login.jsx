@@ -7,9 +7,10 @@ import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+
 const Login = () => {
   const navigate = useNavigate();
-  const { signInWithEmailAndPassword } = useAuth();
+  const { signInWithEmailAndPassword, sendPasswordResetEmail } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -48,7 +49,7 @@ const Login = () => {
                   }
                 </span>
                 <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                  <span onClick={() => sendPasswordResetEmail(email)} className="label-text-alt link link-hover">Forgot password?</span>
                 </label>
               </div>
               <div className="form-control mt-6">

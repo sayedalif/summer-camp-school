@@ -1,14 +1,16 @@
 import React, { createContext } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase/firebase.config';
-import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import { useSignOut } from 'react-firebase-hooks/auth';
+import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignInWithGoogle, useSendPasswordResetEmail, useSignOut } from 'react-firebase-hooks/auth';
 
 
+// context
 export const AuthContext = createContext(null);
 
+// auth firebase
 const auth = getAuth(app);
 
+// auth provider
 const AuthProviders = ({ children }) => {
 
   // create user with email and password
@@ -28,6 +30,11 @@ const AuthProviders = ({ children }) => {
   // logout
   const [signOut] = useSignOut(auth);
 
+  // password reset / forget password
+  const [sendPasswordResetEmail] = useSendPasswordResetEmail(
+    auth
+  );
+
   // observer
   const [user, loading, error] = useAuthState(auth);
   console.log("🚀 ~ AuthProviders ~ loading:", loading);
@@ -36,7 +43,7 @@ const AuthProviders = ({ children }) => {
 
   const authInfo =
   {
-    user, loading, error, signInWithGoogle, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword
+    user, loading, error, signInWithGoogle, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail
   };
 
   return (
