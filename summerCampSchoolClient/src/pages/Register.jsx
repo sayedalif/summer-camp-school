@@ -19,14 +19,18 @@ const Register = () => {
 
   const onSubmit = async data => {
     console.log(data);
-    const { email, password, confirmPassword } = data;
+    const { email, password, confirmPassword, address, phoneNumber, photoURL } = data;
 
     // setLoading(true);
-    /* const success = await createUserWithEmailAndPassword(email, password);
-    if (success) {
-      setLoading(false);
-      navigate('/');
-    } */
+    if (password === confirmPassword) {
+      const success = await createUserWithEmailAndPassword(email, password);
+      if (success) {
+        setLoading(false);
+        navigate('/');
+      }
+    }
+
+
   };
 
   console.log(errors);
@@ -96,17 +100,23 @@ const Register = () => {
               </div>
 
               {/* photoURL */}
-              <div className="form-control">
+              <div className="form-control relative">
                 <label className="label">
                   <span className="label-text text-base">Photo URL <i className='text-gray-500'> - optional</i></span>
                 </label>
                 <input type="url" placeholder="Photo URL" className="input input-bordered"
-
                   {
                   ...register("photoURL", { required: true, })
                   }
-
                 />
+
+                <span className='absolute right-0 top-1/2'>
+                  <input type="file"
+                    {
+                    ...register("photoURL", { required: true, })
+                    }
+                  />
+                </span>
               </div>
 
               {/* phone number */}
@@ -114,7 +124,7 @@ const Register = () => {
                 <label className="label">
                   <span className="label-text text-base">Phone Number <i className='text-gray-500'> - optional</i></span>
                 </label>
-                <input type="number" placeholder="Phone number" className="input input-bordered"
+                <input type="tel" placeholder="Phone number" className="input input-bordered"
 
                   {
                   ...register("phoneNumber", { required: false, })
