@@ -11,6 +11,8 @@ app.get('/', (req, res) => {
   res.send('summer camp school server is running!')
 });
 
+
+
 app.listen(port, () => {
   console.log(`summer camp school app listening on port ${port}`)
 });

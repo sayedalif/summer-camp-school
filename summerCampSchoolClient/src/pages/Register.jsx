@@ -17,9 +17,17 @@ const Register = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
+  const [imageUploadText, setImageUploadText] = useState('upload');
+  console.log("🚀 ~ Register ~ imageUploadText:", imageUploadText);
+
+  const handleImageChange = (image) => {
+    console.log("🚀 ~ handleImageChange ~ image:", image);
+    setImageUploadText(image.name)
+  }
+
   const onSubmit = async data => {
     console.log(data);
-    const { email, password, confirmPassword, address, phoneNumber, photoURL } = data;
+    const { email, password, confirmPassword, address, phoneNumber } = data;
 
     // setLoading(true);
     if (password === confirmPassword) {
@@ -98,26 +106,21 @@ const Register = () => {
                   }
                 </span>
               </div>
-
-              {/* photoURL */}
-              <div className="form-control relative">
-                <label className="label">
-                  <span className="label-text text-base">Photo URL <i className='text-gray-500'> - optional</i></span>
-                </label>
-                <input type="url" placeholder="Photo URL" className="input input-bordered"
-                  {
-                  ...register("photoURL", { required: true, })
-                  }
+              <label className='flex items-center gap-x-2'>
+                <span className="label-text text-base">Add Photo:</span>
+                <input
+                  onChange={(e) => handleImageChange(e.target.files[0])}
+                  className='text-sm cursor-pointer w-36 hidden'
+                  type='file'
+                  name='image'
+                  id='image'
+                  accept='image/*'
+                  hidden
                 />
-
-                <span className='absolute right-0 top-1/2'>
-                  <input type="file"
-                    {
-                    ...register("photoURL", { required: true, })
-                    }
-                  />
-                </span>
-              </div>
+                <div className='bg-[#A3A3F5] text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-[#A3A3F5]'>
+                  {imageUploadText}
+                </div>
+              </label>
 
               {/* phone number */}
               <div className="form-control">
