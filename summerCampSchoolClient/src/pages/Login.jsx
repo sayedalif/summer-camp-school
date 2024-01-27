@@ -6,6 +6,7 @@ import GoogleLogin from './shared/socialLogin/GoogleLogin';
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-ho';
 
 
 const Login = () => {
@@ -46,7 +47,12 @@ const Login = () => {
                   }
                 </span>
                 <label className="label">
-                  <span onClick={() => sendPasswordResetEmail(email)} className="label-text-alt link link-hover">Forgot password?</span>
+                  <span onClick={async () => {
+                    const success = await sendPasswordResetEmail(email);
+                    if(success){
+                      toast
+                    }
+                  }} className="label-text-alt link link-hover">Forgot password?</span>
                 </label>
               </div>
               <div className="form-control mt-6">
