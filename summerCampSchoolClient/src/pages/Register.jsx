@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { createUserWithEmailAndPassword } = useAuth();
+  const { createUserWithEmailAndPassword, sendEmailVerification } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -29,10 +29,13 @@ const Register = () => {
     console.log(data);
     const { email, password, confirmPassword, address, phoneNumber } = data;
 
+    console.log(['password fields'],password, confirmPassword);
+
     // setLoading(true);
     if (password === confirmPassword) {
       const success = await createUserWithEmailAndPassword(email, password);
       if (success) {
+        sendEmailVerification();
         setLoading(false);
         navigate('/');
       }
