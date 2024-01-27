@@ -2,6 +2,7 @@ import React, { createContext } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase/firebase.config';
 import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignInWithGoogle, useSendPasswordResetEmail, useSignOut } from 'react-firebase-hooks/auth';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 
 // context
@@ -12,6 +13,8 @@ const auth = getAuth(app);
 
 // auth provider
 const AuthProviders = ({ children }) => {
+
+  const [axiosPublic] = useAxiosPublic();
 
   // create user with email and password
   const [
@@ -40,6 +43,21 @@ const AuthProviders = ({ children }) => {
   console.log("🚀 ~ AuthProviders ~ loading:", loading);
   console.log("🚀 ~ AuthProviders ~ user:", user);
   console.log("🚀 ~ AuthProviders ~ error:", error);
+
+  if (user) {
+    axiosPublic.get(`/users/${user?.email}:`).then(response => {
+      console.log(response.data);
+    });
+
+    const savedUser = { email: user.email, name: user.displayName, photoURL: user.photoURL };
+
+
+    /* if (user?.email !== emailFromDB) {
+
+    } */
+
+    /* axiosPublic.put(`/users/${user.email}`, savedUser).then(response => console.log(response)); */
+  }
 
   const authInfo =
   {

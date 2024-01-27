@@ -29,6 +29,8 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const summerCampSchoolUserCollection = client.db('summerCampSchool').collection('usersCollections');
+
     // save user to database
     app.put('/users/:email', async (req, res) => {
       const email = req.params.email;
@@ -40,8 +42,19 @@ async function run() {
         $set: user
       };
 
-      const result = await usersCollection.updateOne(filter, updateDoc, option);
+      const result = await summerCampSchoolUserCollection.updateOne(filter, updateDoc, option);
       // console.log(result);
+      res.send(result);
+    });
+
+    // get single user info form the database
+    app.get('/users/:email', async (req, res) => {
+      const email = req.params.email;
+      console.log(email);
+      const query = { email: email };
+      console.log(query);
+      const result = await summerCampSchoolUserCollection.findOne(query);
+      console.log(result);
       res.send(result);
     });
 
@@ -50,7 +63,7 @@ async function run() {
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
