@@ -5,6 +5,7 @@ import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { imageUpload } from '../hooks/utils/utils';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -17,12 +18,29 @@ const Register = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
+  // image related
+
   const [imageUploadText, setImageUploadText] = useState('upload');
-  console.log("🚀 ~ Register ~ imageUploadText:", imageUploadText);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
+  console.log("🚀 ~ Register ~ imageLoading:", imageLoading);
 
   const handleImageChange = (image) => {
+
     console.log("🚀 ~ handleImageChange ~ image:", image);
-    setImageUploadText(image.name)
+    // setting the image name to the ui
+    setImageUploadText(image.name);
+
+    // setting the image loading state to true
+    // setImageLoading(true);
+
+    setLoading(false);
+    imageUpload(image).then(response => {
+      console.log(response.data);
+      setImageUrl(response.data.display_url);
+    }).then(err => {
+      console.log(err);
+    })
   }
 
   const onSubmit = async data => {
@@ -126,7 +144,10 @@ const Register = () => {
               <label className='flex items-center gap-x-2'>
                 <span className="label-text text-base">Add Photo:</span>
                 <input
-                  onChange={(e) => handleImageChange(e.target.files[0])}
+                  onChange={(e) => {
+                    handleImageChange(e.target.files[0])
+                    setImageLoading(true);
+                  }}
                   className='text-sm cursor-pointer w-36 hidden'
                   type='file'
                   name='image'
@@ -135,7 +156,7 @@ const Register = () => {
                   hidden
                 />
                 <div className='bg-[#A3A3F5] text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-[#A3A3F5]'>
-                  {imageUploadText}
+                  {imageLoading ? 'uploading...' : imageUploadText}
                 </div>
               </label>
 
