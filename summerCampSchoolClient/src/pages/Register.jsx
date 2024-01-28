@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { createUserWithEmailAndPassword, sendEmailVerification } = useAuth();
+  const { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -27,19 +27,21 @@ const Register = () => {
 
   const onSubmit = async data => {
     console.log(data);
-    const { email, password, confirmPassword, address, phoneNumber } = data;
+    const { name, email, password, confirmPassword, address, phoneNumber } = data;
 
-    console.log(['password fields'],password, confirmPassword);
+    console.log(['password fields'], password, confirmPassword);
 
     // setLoading(true);
-    if (password === confirmPassword) {
+    /* if (password === confirmPassword) {
       const success = await createUserWithEmailAndPassword(email, password);
       if (success) {
-        sendEmailVerification();
+
+        // sendEmailVerification();
+        updateProfile(name,);
         setLoading(false);
         navigate('/');
       }
-    }
+    } */
 
 
   };
@@ -52,6 +54,18 @@ const Register = () => {
         <div className="hero-content flex-col lg:flex-row-reverse md:w-1/2 lg:w-1/2 xl:w-3/5 2xl:w-3/5">
           <div className="card shrink-0 w-full shadow-2xl">
             <div className="card-body">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-base">name</span>
+                </label>
+                <input type="name" placeholder="name" className="input input-bordered"
+
+                  {
+                  ...register("name", { required: true, maxLength: 80 })
+                  }
+
+                />
+              </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-base">Email</span>

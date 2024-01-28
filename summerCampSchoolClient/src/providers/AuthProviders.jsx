@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase/firebase.config';
-import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignInWithGoogle, useSendPasswordResetEmail, useSignOut, useSendEmailVerification } from 'react-firebase-hooks/auth';
+import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignInWithGoogle, useSendPasswordResetEmail, useSignOut, useSendEmailVerification, useUpdateProfile } from 'react-firebase-hooks/auth';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 
 
@@ -43,6 +43,9 @@ const AuthProviders = ({ children }) => {
     auth
   );
 
+  // update profile
+  const [updateProfile] = useUpdateProfile(auth);
+
   // observer
   const [user, loading, error] = useAuthState(auth);
   console.log("🚀 ~ AuthProviders ~ loading:", loading);
@@ -50,9 +53,9 @@ const AuthProviders = ({ children }) => {
   console.log("🚀 ~ AuthProviders ~ error:", error);
 
   if (user) {
-   /*  axiosPublic.get(`/users/${user?.email}:`).then(response => {
-      console.log(response.data);
-    }); */
+    /*  axiosPublic.get(`/users/${user?.email}:`).then(response => {
+       console.log(response.data);
+     }); */
 
     const savedUser = { email: user.email, name: user.displayName, photoURL: user.photoURL };
 
@@ -66,7 +69,7 @@ const AuthProviders = ({ children }) => {
 
   const authInfo =
   {
-    user, loading, error, signInWithGoogle, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification
+    user, loading, error, signInWithGoogle, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, updateProfile
   };
 
   return (
