@@ -103,7 +103,11 @@ const Register = () => {
                 <input type={showPassword ? "text" : "password"} placeholder="password" className="input input-bordered"
 
                   {
-                  ...register("password", { required: true })
+                  ...register("password", { required: true, minLength: 8 }, { pattern: /^[A-Za-z-0-9]+$/i },
+
+                  )
+
+
                   }
 
                 />
