@@ -2,17 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faIdBadge, faM, faMagnifyingGlass, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
-import axios, { all } from 'axios';
+import axios from 'axios';
 
 
 const PopularClasses = () => {
   const [axiosPublic] = useAxiosPublic();
 
   const [allClasses, setAllClasses] = useState('');
-  console.log("🚀 ~ PopularClasses ~ allClasses:", allClasses);
-
-  // const [showAllClasses, setShowAllClasses] = useState(false);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +21,16 @@ const PopularClasses = () => {
 
 
   const allPopularClasses = allClasses.length > 0 && Array.isArray(allClasses) && allClasses.filter(allClass => allClass.students_enrolled >= 1000);
-  console.log("🚀 ~ PopularClasses ~ allPopularClasses:", allPopularClasses);
+  // console.log("🚀 ~ PopularClasses ~ allPopularClasses:", allPopularClasses);
+
+  const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
+  function generateRandomColorString() {
+    const index = Math.floor(Math.random() * badges.length);
+
+    const randomString = `${badges[index]}`;
+    return randomString;
+  }
+
 
   return (
     <div>
@@ -57,20 +62,21 @@ const PopularClasses = () => {
 
       </form>
 
-      <div className='flex justify-between space-x-4 flex-wrap space-y-4 my-8 mx-6'>
+      <div className='flex justify-between space-x-4 flex-wrap space-y-4 my-8 mx-8'>
         {
           allClasses.length > 0 && Array.isArray(allClasses) &&
           allPopularClasses.map((eachClass, idx) => {
+            const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>
-                <div className="card w-96 h-96 bg-base-100 shadow-xl group-hover:bg-[#C3FFD2]">
+                <div className="card w-96 h-[28rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300">
 
                   <div className='flex justify-between items-start px-[32px] pt-[32px]'>
                     <figure>
                       <img className='w-[200px] rounded-full' src={eachClass.image} alt='instructor image' />
                     </figure>
                     <div className='text-right'>
-                      <span className='badge badge-secondary text-end'>{eachClass.category}</span>
+                      <span style={{ backgroundColor: randomBadgeColors }} className={`badge text-end`}>{eachClass.category}</span>
                       <span className="card-title">{eachClass.title}</span>
                     </div>
                   </div>
