@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faIdBadge, faM, faMagnifyingGlass, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import axios from 'axios';
+import BwArrowButton from '../../../components/BwArrowButton';
 
 
 const PopularClasses = () => {
@@ -105,9 +106,7 @@ const PopularClasses = () => {
       </div>
 
       <div className='text-center my-4'>
-        <button className="btn bg-[#000] hover:bg-[#000] text-[#FFFF] rounded-full capitalize">view all course
-          <FontAwesomeIcon className='bg-[#fff] text-[#000] p-2 rounded-full' icon={faArrowRight} />
-        </button>
+        <BwArrowButton text={'view all course'} to={'/'}></BwArrowButton>
       </div>
 
     </div>
