@@ -74,7 +74,7 @@ const PopularClasses = () => {
 
                   <div className='flex justify-between items-start px-[32px] pt-[32px]'>
                     <figure>
-                      <img className='w-[200px] rounded-full' src={eachClass.image} alt='instructor image' />
+                      <img loading="lazy" className='w-[200px] clip-roundedImg' src={eachClass.image} alt='instructor image' />
                     </figure>
                     <div className='text-right'>
                       <span style={{ backgroundColor: randomBadgeColors }} className={`badge text-end`}>{eachClass.category}</span>
