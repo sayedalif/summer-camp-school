@@ -3,6 +3,8 @@ import Banner from "./Banner";
 import Curriculum from "./Curriculum";
 import PopularClasses from "./PopularClasses";
 import PopularInstructor from "./PopularInstructor";
+import StudentsReview from "./StudentsReview";
+import WhyLearnFromUs from "./WhyLearnFromUs";
 
 
 const HomePage = () => {
@@ -13,6 +15,8 @@ const HomePage = () => {
       <PopularClasses></PopularClasses>
       <PopularInstructor></PopularInstructor>
       <Analytics></Analytics>
+      <WhyLearnFromUs></WhyLearnFromUs>
+      <StudentsReview></StudentsReview>
     </div>
   );
 };
