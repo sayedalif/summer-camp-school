@@ -23,8 +23,5 @@ module.exports = {
       }
     ],
     "react/prop-types": "off",
-    'fontawesome-svg-core': {
-      'license': 'free'
-    }
   },
 }

@@ -30,6 +30,8 @@ async function run() {
     await client.connect();
 
     const summerCampSchoolUserCollection = client.db('summerCampSchool').collection('usersCollections');
+    const summerCampSchoolInstructorCollection = client.db('summerCampSchool').collection('instructor');
+    const summerCampSchoolClassesCollection = client.db('summerCampSchool').collection('classes');
 
     // save user to database
     app.put('/users/:email', async (req, res) => {
@@ -56,6 +58,32 @@ async function run() {
       const result = await summerCampSchoolUserCollection.findOne(query);
       console.log(result);
       res.send(result);
+    });
+
+
+    // these are for all the classes
+    app.get('/classes', async (req, res) => {
+      const result = await summerCampSchoolClassesCollection.find().toArray();
+      res.send(result);
+    });
+
+    // instructor api
+
+    // * this is for getting all the instructor
+    /* app.get('/instructor', async (req, res) => {
+      const result = await summerCampSchoolInstructorCollection.find().toArray();
+      res.send(result);
+    }); */
+
+    // popular instructor
+
+    /* app.get('/popularinstructor', async (req, res) => {
+      
+    }); */
+
+    // request to be an instructor
+    app.patch('/users/:email', async (req, res) => {
+      const email = req.query.email;
     });
 
     // Send a ping to confirm a successful connection

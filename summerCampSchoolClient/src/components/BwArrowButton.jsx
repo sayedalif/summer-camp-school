@@ -2,7 +2,8 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
-// these button are for curriculum button and popular class button
+// these button are for curriculum button and popular class button.
+// black and white with arrow buttons
 const BwArrowButton = ({ text, to }) => {
   return (
     <Link to={to}>

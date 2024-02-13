@@ -86,7 +86,7 @@ const PopularClasses = () => {
                     <div className='flex justify-between items-center'>
                       <span className='badge bg-[#E2F6FF] my-[16px]'>
                         <FontAwesomeIcon className='text-[#6FD1FF] pr-1' icon={faIdBadge} />
-                        {eachClass?.instructor}</span>
+                        {eachClass?.instructor_name}</span>
                       <span className='badge bg-[#FDF7EF]'>
                         <FontAwesomeIcon className='text-[#FED477]' icon={faStar} />
                         {eachClass?.rating}</span>

@@ -1,3 +1,4 @@
+import Analytics from "./Analytics";
 import Banner from "./Banner";
 import Curriculum from "./Curriculum";
 import PopularClasses from "./PopularClasses";
@@ -11,6 +12,7 @@ const HomePage = () => {
       <Curriculum></Curriculum>
       <PopularClasses></PopularClasses>
       <PopularInstructor></PopularInstructor>
+      <Analytics></Analytics>
     </div>
   );
 };
