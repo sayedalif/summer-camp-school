@@ -26,8 +26,8 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 flex space-x-16 capitalize">
           <Link className="font-semibold" to={`/`}>home</Link>
           <Link className="font-semibold" to={`/courses`}>courses</Link>
-          <Link className="font-semibold" to={`/instructors`}>instructors</Link>
-          <Link to={`/classes`}>classes</Link>
+          <Link className="font-semibold" to={`/dashboard/instructors`}>instructors</Link>
+          <Link to={`/allclasses`}>classes</Link>
           <Link to={`/community`}>community</Link>
           {user && <Link to={`/dashboard`}>Dashboard</Link>}
           <Link to={`/about`}>about</Link>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faIdBadge, faM, faMagnifyingGlass, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faIdBadge, faMagnifyingGlass, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import axios from 'axios';
 import BwArrowButton from '../../../components/BwArrowButton';
@@ -10,10 +10,11 @@ const PopularClasses = () => {
   const [axiosPublic] = useAxiosPublic();
 
   const [allClasses, setAllClasses] = useState('');
+  console.log("🚀 ~ PopularClasses ~ allClasses:", allClasses);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`popularClasses.json`);
+      const response = await axiosPublic.get(`/classes`);
       const data = await response.data;
       setAllClasses(data);
     }
@@ -21,8 +22,8 @@ const PopularClasses = () => {
   }, []);
 
 
-  const allPopularClasses = allClasses.length > 0 && Array.isArray(allClasses) && allClasses.filter(allClass => allClass.students_enrolled >= 1000);
-  // console.log("🚀 ~ PopularClasses ~ allPopularClasses:", allPopularClasses);
+  const allPopularClasses = allClasses.length > 0 && Array.isArray(allClasses) && allClasses.filter(allClass => allClass.students_enrolled > 400);
+  console.log("🚀 ~ PopularClasses ~ allPopularClasses:", allPopularClasses);
 
   const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
   function generateRandomColorString() {
@@ -67,6 +68,7 @@ const PopularClasses = () => {
         {
           allClasses.length > 0 && Array.isArray(allClasses) &&
           allPopularClasses.map((eachClass, idx) => {
+            {/* console.log("🚀 ~ allPopularClasses.map ~ eachClass:", eachClass); */}
             const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>
@@ -74,11 +76,11 @@ const PopularClasses = () => {
 
                   <div className='flex justify-between items-start px-[32px] pt-[32px]'>
                     <figure>
-                      <img loading="lazy" className='w-[200px] clip-roundedImg' src={eachClass.image} alt='instructor image' />
+                      <img loading="lazy" className='w-[200px] clip-roundedImg' src={eachClass.class_thumbnail} alt='instructor image' />
                     </figure>
                     <div className='text-right'>
                       <span style={{ backgroundColor: randomBadgeColors }} className={`badge text-end`}>{eachClass.category}</span>
-                      <span className="card-title">{eachClass.title}</span>
+                      <span className="card-title">{eachClass.className}</span>
                     </div>
                   </div>
                   <div className="card-body">

@@ -3,114 +3,37 @@
     "instructor_name": "John Doe",
     "email": "john.doe@example.com",
     "instructor_id": 1,
-    "instructor_image": "https://i.ibb.co/z2mCVr7/John-Doe.jpg"
+    "instructor_image": "https://i.ibb.co/z2mCVr7/John-Doe.jpg",
+    "role": "instructor"
   },
   {
     "instructor_name": "Jane Smith",
     "email": "jane.smith@example.com",
     "instructor_id": 2,
-    "instructor_image": "https://exampleimages.com/jane_smith.jpg"
+    "instructor_image": "https://i.ibb.co/sjvhn04/lucas-gouvea-ao-Ewu-EH7-YAs-unsplash-min.jpg"
   },
   {
     "instructor_name": "Michael Johnson",
     "email": "michael.johnson@example.com",
     "instructor_id": 3,
-    "instructor_image": "https://exampleimages.com/michael_johnson.jpg"
+    "instructor_image": "https://i.ibb.co/wSh3PPL/luis-villasmil-Z4rqv-Rp-Rj38-unsplash-min.jpg"
   },
   {
     "instructor_name": "Astrid Celestial",
     "email": "astrid.celestial@example.com",
     "instructor_id": 4,
-    "instructor_image": "https://exampleimages.com/astrid_celestial.jpg"
+    "instructor_image": "https://i.ibb.co/TM79gCY/alex-suprun-1-JGHAAdb-L-Y-unsplash-min.jpg"
   },
   {
     "instructor_name": "Eva Artiste",
     "email": "eva.artiste@example.com",
     "instructor_id": 5,
-    "instructor_image": "https://i.ibb.co/0DxwxCf/Astrid-Celestial.jpg"
+    "instructor_image": "https://i.ibb.co/qFrdNX1/vadim-bogulov-5h-L0zy-Aci-Hk-unsplash-min.jpg"
   },
   {
     "instructor_name": "Realtor Photography Institute",
     "email": "realtor.institute@example.com",
     "instructor_id": 6,
-    "instructor_image": "https://exampleimages.com/realtor_institute.jpg"
-  },
-  {
-    "instructor_name": "Professor SciPhoto",
-    "email": "professor.sciphoto@example.com",
-    "instructor_id": 7,
-    "instructor_image": "https://i.ibb.co/Bs5SnbG/Professor-Sci-Photo.jpg"
-  },
-  {
-    "instructor_name": "Street Guru",
-    "email": "street.guru@example.com",
-    "instructor_id": 8,
-    "instructor_image": "https://exampleimages.com/street_guru.jpg"
-  },
-  {
-    "instructor_name": "Linda Creativity",
-    "email": "linda.creativity@example.com",
-    "instructor_id": 9,
-    "instructor_image": "https://exampleimages.com/linda_creativity.jpg"
-  },
-  {
-    "instructor_name": "Bob Shutterbug",
-    "email": "bob.shutterbug@example.com",
-    "instructor_id": 10,
-    "instructor_image": "https://i.ibb.co/qg4SrSx/Bob-Shutterbug.jpg"
-  },
-  {
-    "instructor_name": "Grace Captures",
-    "email": "grace.captures@example.com",
-    "instructor_id": 11,
-    "instructor_image": "https://exampleimages.com/grace_captures.jpg"
-  },
-  {
-    "instructor_name": "Chris Drone",
-    "email": "chris.drone@example.com",
-    "instructor_id": 12,
-    "instructor_image": "https://exampleimages.com/chris_drone.jpg"
-  },
-  {
-    "instructor_name": "Annie Photojournalist",
-    "email": "annie.photojournalist@example.com",
-    "instructor_id": 13,
-    "instructor_image": "https://exampleimages.com/annie_photojournalist.jpg"
-  },
-  {
-    "instructor_name": "Steve Composition",
-    "email": "steve.composition@example.com",
-    "instructor_id": 14,
-    "instructor_image": "https://exampleimages.com/steve_composition.jpg"
-  },
-  {
-    "instructor_name": "Lucy Smartphone",
-    "email": "lucy.smartphone@example.com",
-    "instructor_id": 15,
-    "instructor_image": "https://i.ibb.co/PNZZkdL/Olivia-Vintage.jpg"
-  },
-  {
-    "instructor_name": "David Editing Pro",
-    "email": "david.editing@example.com",
-    "instructor_id": 16,
-    "instructor_image": "https://exampleimages.com/david_editing_pro.jpg"
-  },
-  {
-    "instructor_name": "Mia Lightroom Wizard",
-    "email": "mia.lightroom@example.com",
-    "instructor_id": 17,
-    "instructor_image": "https://exampleimages.com/mia_lightroom_wizard.jpg"
-  },
-  {
-    "instructor_name": "Sam Filters",
-    "email": "sam.filters@example.com",
-    "instructor_id": 18,
-    "instructor_image": "https://exampleimages.com/sam_filters.jpg"
-  },
-  {
-    "instructor_name": "Olivia Vintage",
-    "email": "olivia.vintage@example.com",
-    "instructor_id": 19,
-    "instructor_image": "https://i.ibb.co/1LTHFKv/Lucy-Smartphone.jpg"
+    "instructor_image": "https://i.ibb.co/C97hbhK/vadim-bogulov-rd-Hrr-FA1-KKg-unsplash-min.jpg"
   }
 ]
