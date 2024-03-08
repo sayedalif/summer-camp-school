@@ -102,13 +102,174 @@ async function run() {
       res.send(result);
     });
 
-    // instructor api
 
     // * this is for getting all the instructor
     app.get('/users', async (req, res) => {
       const result = await summerCampSchoolUserCollection.find().toArray();
       res.send(result);
     });
+
+    // * most popular instructor of all time api
+    app.get('/mostpopularinstructor', async (req, res) => {
+      const pipeline = [
+        // Match users with role 'instructor'
+        {
+          $match: {
+            role: "instructor"
+          }
+        },
+        // Lookup classes for each instructor
+        {
+          $lookup: {
+            from: "classes",
+            localField: "instructor_id", // assuming instructor _id is stored here
+            foreignField: "instructor_id", // assuming instructor id in classes collection
+            as: "classes"
+          }
+        },
+        // Unwind the classes array
+        {
+          $unwind: "$classes"
+        },
+        // Project to calculate percentage for each class
+        {
+          $project: {
+            _id: 0,
+            instructor_id: "$_id",
+            instructor_name: "$instructor_name", // Assuming instructor name is stored in users collection
+            class_name: "$classes.className",
+            available_seats: "$classes.available_seats",
+            students_enrolled: "$classes.students_enrolled",
+            percentage: {
+              $multiply: [
+                {
+                  $divide: ["$classes.students_enrolled", "$classes.available_seats"]
+                },
+                100
+              ]
+            }
+          }
+        },
+        // Filter only popular instructors (percentage >= 70)
+        {
+          $match: {
+            percentage: { $gte: 70 }
+          }
+        },
+        // Group by instructor to calculate total popular classes and total classes
+        {
+          $group: {
+            _id: "$instructor_id",
+            instructor_name: { $first: "$instructor_name" },
+            total_popular_classes: { $sum: 1 },
+            total_classes: { $sum: 1 }
+          }
+        },
+        // Project to calculate percentage of popular classes
+        {
+          $project: {
+            _id: 0,
+            instructor_id: "$_id",
+            instructor_name: 1,
+            popularity_percentage: {
+              $multiply: [
+                {
+                  $divide: ["$total_popular_classes", "$total_classes"]
+                },
+                100
+              ]
+            }
+          }
+        },
+        // Sort by popularity_percentage in descending order
+        {
+          $sort: {
+            popularity_percentage: -1
+          }
+        }
+      ];
+
+      const result = await summerCampSchoolUserCollection.aggregate(pipeline).toArray();
+      res.send(result);
+    });
+
+    app.get('/popularinstructor', async (req, res) => {
+      const pipeline = [
+        // Match users with role 'instructor'
+        {
+          $match: {
+            role: "instructor"
+          }
+        },
+        // Lookup classes for each instructor
+        {
+          $lookup: {
+            from: "classes",
+            localField: "instructor_id", // assuming instructor _id is stored here
+            foreignField: "instructor_id", // assuming instructor id in classes collection
+            as: "classes"
+          }
+        },
+        // Unwind the classes array
+        {
+          $unwind: "$classes"
+        },
+        // Project to calculate percentage for each class
+        {
+          $project: {
+            _id: 0,
+            instructor_id: "$_id",
+            instructor_name: "$name", // Assuming instructor name is stored in users collection
+            email: "$email",
+            instructor_image: "$image",
+            class_name: "$classes.className",
+            available_seats: "$classes.available_seats",
+            students_enrolled: "$classes.students_enrolled",
+            percentage: {
+              $multiply: [
+                {
+                  $divide: ["$classes.students_enrolled", "$classes.available_seats"]
+                },
+                100
+              ]
+            }
+          }
+        },
+        // Filter only popular classes (percentage >= 70)
+        {
+          $match: {
+            percentage: { $gte: 70 }
+          }
+        },
+        // Group by instructor to get distinct popular instructors
+        {
+          $group: {
+            _id: "$instructor_id",
+            instructor_name: { $first: "$instructor_name" },
+            email: { $first: "$email" },
+            instructor_image: { $first: "$instructor_image" },
+            total_classes: { $sum: 1 },
+            classes_names: { $push: "$class_name" }
+          }
+        },
+        // Project to reshape the output
+        {
+          $project: {
+            _id: 0,
+            instructor_id: "$_id",
+            instructor_name: 1,
+            email: 1,
+            instructor_image: 1,
+            total_classes: 1,
+            classes_names: 1
+          }
+        }
+      ];
+
+      const result = await summerCampSchoolUserCollection.aggregate(pipeline).toArray();
+      res.send(result);
+    });
+
 
     // popular instructor
 

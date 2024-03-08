@@ -1,0 +1,42 @@
+[
+  {
+    "name": "John Doe",
+    "image": "https://example.com/john_doe.jpg",
+    "rating": 4.5,
+    "description": "Great experience with this product. It exceeded my expectations!",
+    "category": "macro",
+    "className": "macro-photography"
+  },
+  {
+    "name": "Jane Smith",
+    "image": "https://example.com/jane_smith.jpg",
+    "rating": 5,
+    "description": "Amazing service and quick delivery. Will definitely buy again!",
+    "category": "abstract",
+    "className": "abstract-photography"
+  },
+  {
+    "name": "David Brown",
+    "image": "https://example.com/david_brown.jpg",
+    "rating": 3.8,
+    "description": "Decent quality but took a bit longer to arrive than expected.",
+    "category": "adventure",
+    "className": "adventure-photography"
+  },
+  {
+    "name": "Emily Johnson",
+    "image": "https://example.com/emily_johnson.jpg",
+    "rating": 4.7,
+    "description": "Impressed with the variety of options available. Would recommend!",
+    "category": "astro",
+    "className": "astro-photography"
+  },
+  {
+    "name": "Alex Parker",
+    "image": "https://example.com/alex_parker.jpg",
+    "rating": 4.2,
+    "description": "Breathtaking artistry. Every piece is a masterpiece!",
+    "category": "fineart",
+    "className": "fineart-photography"
+  }
+]
