@@ -29,8 +29,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const summerCampSchoolUserCollection = client.db('summerCampSchool').collection('usersCollections');
-    const summerCampSchoolInstructorCollection = client.db('summerCampSchool').collection('instructor');
+    const summerCampSchoolUserCollection = client.db('summerCampSchool').collection('users');
     const summerCampSchoolClassesCollection = client.db('summerCampSchool').collection('classes');
 
     // save user to database
@@ -67,13 +66,49 @@ async function run() {
       res.send(result);
     });
 
+    // here is the api for popular classes
+    // i'm deciding popular classes based on their available seats and students enrolled in that class if the students enrolled are 70% of the available seats then that class is popular
+    app.get('/popularclasses', async (req, res) => {
+      const pipeline = [
+        {
+          $project: {
+            _id: 1,
+            className: 1,
+            available_seats: 1,
+            students_enrolled: 1,
+            category: 1,
+            description: 1,
+            class_thumbnail: 1,
+            rating: 1,
+            price: 1,
+            instructor_name: 1,
+            percentage: {
+              $multiply: [
+                { $divide: ["$students_enrolled", "$available_seats"] },
+                100
+              ]
+            }
+          }
+        },
+        {
+          $match: {
+            percentage: { $gte: 70 } // Filter classes with percentage >= 70%
+          }
+        }
+      ];
+
+      const result = await summerCampSchoolClassesCollection.aggregate(pipeline).toArray();
+
+      res.send(result);
+    });
+
     // instructor api
 
     // * this is for getting all the instructor
-    /* app.get('/instructor', async (req, res) => {
-      const result = await summerCampSchoolInstructorCollection.find().toArray();
+    app.get('/users', async (req, res) => {
+      const result = await summerCampSchoolUserCollection.find().toArray();
       res.send(result);
-    }); */
+    });
 
     // popular instructor
 

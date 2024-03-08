@@ -14,7 +14,7 @@ const PopularClasses = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosPublic.get(`/classes`);
+      const response = await axiosPublic.get(`/popularclasses`);
       const data = await response.data;
       setAllClasses(data);
     }
@@ -22,7 +22,7 @@ const PopularClasses = () => {
   }, []);
 
 
-  const allPopularClasses = allClasses.length > 0 && Array.isArray(allClasses) && allClasses.filter(allClass => allClass.students_enrolled > 400);
+  const allPopularClasses = allClasses.length > 0 && Array.isArray(allClasses) && allClasses.filter(allClass => allClass.students_enrolled >= 400);
   console.log("🚀 ~ PopularClasses ~ allPopularClasses:", allPopularClasses);
 
   const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
