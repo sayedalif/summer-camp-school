@@ -277,6 +277,30 @@ async function run() {
       res.send(result);
     });
 
+    // stats for showing on the homepage
+    app.get('/stats', async (req, res) => {
+      // Get total amount of classes
+      const classesCount = await summerCampSchoolClassesCollection.countDocuments();
+
+      // Get amount of members
+      const membersCount = await summerCampSchoolUserCollection.countDocuments({ role: { $ne: 'instructor' } });
+
+      // Calculate average rating
+      const reviews = await summerCampSchoolReviewsCollection.find().toArray();
+      const totalRatings = reviews.reduce((sum, review) => sum + review.rating, 0);
+      const averageRating = (totalRatings / reviews.length).toFixed(2);
+
+      // Prepare response object
+      const stats = {
+        classesCount,
+        membersCount,
+        averageRating
+      };
+
+      // Send response
+      res.send(stats);
+    });
+
 
     /* ------------------------------------------------ */
     // * Send a ping to confirm a successful connection
