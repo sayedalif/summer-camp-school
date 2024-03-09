@@ -31,6 +31,7 @@ async function run() {
 
     const summerCampSchoolUserCollection = client.db('summerCampSchool').collection('users');
     const summerCampSchoolClassesCollection = client.db('summerCampSchool').collection('classes');
+    const summerCampSchoolReviewsCollection = client.db('summerCampSchool').collection('reviews');
 
     // save user to database
     app.put('/users/:email', async (req, res) => {
@@ -270,19 +271,15 @@ async function run() {
       res.send(result);
     });
 
-
-    // popular instructor
-
-    /* app.get('/popularinstructor', async (req, res) => {
-      
-    }); */
-
-    // request to be an instructor
-    app.patch('/users/:email', async (req, res) => {
-      const email = req.query.email;
+    // reviews
+    app.get('/reviews', async (req, res) => {
+      const result = await summerCampSchoolReviewsCollection.find().toArray();
+      res.send(result);
     });
 
-    // Send a ping to confirm a successful connection
+
+    /* ------------------------------------------------ */
+    // * Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {

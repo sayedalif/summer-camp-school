@@ -38,7 +38,6 @@ const PopularInstructor = () => {
             return (
               <div key={idx} className="card w-1/2 relative">
                   <img className='rounded' src={instructor.instructor_image} alt="instructor_image" />
-
                 <div className='absolute bottom-0 left-4'>
                   <h2 className="text-white">
                     {instructor.instructor_name}
