@@ -104,7 +104,7 @@ async function run() {
     });
 
 
-    // * this is for getting all the instructor
+    // * this is for getting all the users
     app.get('/users', async (req, res) => {
       const result = await summerCampSchoolUserCollection.find().toArray();
       res.send(result);
@@ -194,6 +194,7 @@ async function run() {
       res.send(result);
     });
 
+    // popular instructor
     app.get('/popularinstructor', async (req, res) => {
       const pipeline = [
         // Match users with role 'instructor'
@@ -285,17 +286,20 @@ async function run() {
       // Get amount of members
       const membersCount = await summerCampSchoolUserCollection.countDocuments({ role: { $ne: 'instructor' } });
 
+      const instructorCount = await summerCampSchoolUserCollection.countDocuments({ role: 'instructor' });
+
       // Calculate average rating
       const reviews = await summerCampSchoolReviewsCollection.find().toArray();
       const totalRatings = reviews.reduce((sum, review) => sum + review.rating, 0);
       const averageRating = (totalRatings / reviews.length).toFixed(2);
 
       // Prepare response object
-      const stats = {
-        classesCount,
-        membersCount,
-        averageRating
-      };
+      const stats = [
+        { classesCount: classesCount },
+        { membersCount: membersCount },
+        { instructor: instructorCount },
+        { averageRating: averageRating },
+      ];
 
       // Send response
       res.send(stats);

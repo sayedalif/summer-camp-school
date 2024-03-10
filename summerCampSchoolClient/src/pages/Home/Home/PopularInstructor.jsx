@@ -19,29 +19,29 @@ const PopularInstructor = () => {
     fetchData();
   }, []);
 
-  /*   const popularInstructor = instructor.length > 0 && Array.isArray(instructor) && instructor.filter(item => item.students_enrolled >= 1000).slice(0, 7);
-    console.log("🚀 ~ popularInstructor ~ popularInstructor:", popularInstructor); */
-
-
-
-
   return (
     <div className='my-8'>
       <h1 className='text-4xl text-center'>Learn from Creative Experts</h1>
       <p className='mx-auto text-center w-[25%] my-4'>ShutterCraft classes are taught by industry leaders excited to share their tools, techniques, and professional journeys with you.</p>
 
-      <div className='flex'>
+      <div className='flex justify-between space-x-3'>
         {
-          instructors && instructors.length && Array.isArray(instructors) && instructors.map((instructor, idx) => {
+          instructors && instructors?.length && Array?.isArray(instructors) && instructors?.map((instructor) => {
             console.log("🚀 ~ popularInstructor&&popularInstructor.length&&Array.isArray ~ instructor:", instructor);
+            const { classes_names, email, image, instructor_id, name, role, total_classes, _id } = instructor;
 
             return (
-              <div key={idx} className="card w-1/2 relative">
-                  <img className='rounded' src={instructor.instructor_image} alt="instructor_image" />
+              <div key={_id} className="card w-1/2 relative">
+                <img className='rounded' src={image} alt="instructor_image" />
                 <div className='absolute bottom-0 left-4'>
                   <h2 className="text-white">
-                    {instructor.instructor_name}
+                    {name}
                   </h2>
+                  <span>{classes_names.map((classes_name,index)=>{
+                    return(
+                      <h2 key={index}>{classes_name}</h2>
+                    )
+                  })}</span>
                 </div>
               </div>
             )
