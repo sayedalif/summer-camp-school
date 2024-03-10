@@ -294,11 +294,12 @@ async function run() {
       const averageRating = (totalRatings / reviews.length).toFixed(2);
 
       // Prepare response object
+      // here I'm returning the data
       const stats = [
-        { classesCount: classesCount },
-        { membersCount: membersCount },
+        { 'classes count': classesCount },
+        { 'members count': membersCount },
         { instructor: instructorCount },
-        { averageRating: averageRating },
+        { 'average rating': averageRating },
       ];
 
       // Send response

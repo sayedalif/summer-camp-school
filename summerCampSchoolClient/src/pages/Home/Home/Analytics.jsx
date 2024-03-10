@@ -22,14 +22,21 @@ const Analytics = () => {
       {
         stats && Array.isArray(stats) && stats.length > 0 && stats?.map((eachStat, index) => {
           console.log("🚀 ~ stats&&Array.isArray ~ eachStat:", eachStat);
-          
+
           return (
-            <div key={index} className="card w-96 bg-base-100 shadow-xl">
+            <div key={index} className="card w-96 shadow-xl bg-[#81C784]">
               <div className="card-body">
-                <p>{eachStat.classesCount} classes</p>
-                <h1>{eachStat.membersCount} Members</h1>
-                <h1>{eachStat.instructor} Teachers</h1>
-                <h1>{eachStat.averageRating} Ratings</h1>
+                {Object.keys(eachStat).map((key, i) => (
+                  <div key={i}>
+                    <p className='text-center'>
+                      {/* Conditionally render symbols */}
+                      {eachStat[key]}
+                      {key !== 'average rating' && 'k+'}
+                      {key === 'average rating' && '★★★★★'} 
+                    </p>
+                    <h2 className='uppercase text-center'>{key}</h2>
+                  </div>
+                ))}
               </div>
             </div>
           )
