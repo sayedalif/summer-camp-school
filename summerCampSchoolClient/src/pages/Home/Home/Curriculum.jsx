@@ -41,12 +41,12 @@ const Curriculum = () => {
           </div>
         </div>
 
-        <div className='flex space-x-8'>
-          <h1 className='capitalize text-2xl font-semibold'>our features <br /> special for you</h1>
-          <div className='flex-grow space-x-32 text-center'>
-            <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize">get certificate</button>
+        <div className='md:flex md:space-x-8'>
+          <h1 className='capitalize md:text-2xl md:font-semibold text-center font-semibold text-2xl mb-8'>our special<br />features  for you</h1>
+          <div className='md:flex-grow md:space-x-32 md:text-center grid grid-cols-2'>
+            <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize mr-2 mb-4">get certificate</button>
             <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize">amazing instructor</button>
-            <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize">lifetime support</button>
+            <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize mr-2">lifetime support</button>
             <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize">video lesson</button>
           </div>
         </div>
