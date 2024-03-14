@@ -7,6 +7,9 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Classes from "../pages/Classes";
 import ErrorPage from "../pages/shared/ErrorPage";
+import Dashboard from "../pages/shared/Dashboard";
+import AddClass from "../pages/AddClass";
+import MyClasses from "../pages/MyClasses";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +36,20 @@ export const router = createBrowserRouter([
     ],
 
   },
+  {
+    path: '/dashboard',
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: '/dashboard/addclass',
+        element: <AddClass></AddClass>
+      },
+      {
+        path: '/dashboard/myclasses',
+        element: <MyClasses></MyClasses>
+      }
+    ]
+  }
 
 ]);
 

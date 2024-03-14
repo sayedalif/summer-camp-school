@@ -37,7 +37,7 @@ const PopularInstructor = () => {
                   <h2 className="text-white">
                     {name}
                   </h2>
-                  <span>{classes_names.map((classes_name,index)=>{
+                  <span>{classes_names?.map((classes_name,index)=>{
                     return(
                       <h2 key={index}>{classes_name}</h2>
                     )

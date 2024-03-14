@@ -31,6 +31,7 @@ const Analytics = () => {
                     <p className='text-center'>
                       {/* Conditionally render symbols */}
                       {eachStat[key]}
+                      {/* here i'm adding a fake k to make it look like lot, but the k is fake */}
                       {key !== 'average rating' && 'k+'}
                       {key === 'average rating' && '★★★★★'} 
                     </p>

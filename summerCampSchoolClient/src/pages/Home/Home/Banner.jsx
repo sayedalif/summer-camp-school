@@ -19,50 +19,53 @@ import FineartPhoto from "../../../assets/images/Fine art photography.jpg";
 import RealestatePhoto from "../../../assets/images/Real estate photography.jpg";
 import ScientificPhoto from "../../../assets/images/Scientific photography.jpg";
 import streetPhoto from "../../../assets/images/street photography.jpg";
+import Container from "../../../components/Container";
 
 
 
 const Banner = () => {
   return (
     <>
-      <Swiper pagination={{
-        dynamicBullets: true,
-      }}
-        modules={[Pagination]}
-        className="mySwiper"
+      <Container>
+        <Swiper pagination={{
+          dynamicBullets: true,
+        }}
+          modules={[Pagination]}
+          className="mySwiper w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
         >
-        <SwiperSlide>
-        <img className="w-[15rem] max-h-[50rem]" src={macroPhoto} alt="" />
-        </SwiperSlide>
+          <SwiperSlide className="aspect-w-1 aspect-h-1">
+            <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={macroPhoto} alt="" />
+          </SwiperSlide>
 
-        <SwiperSlide>
-        <img className="w-[15rem] max-h-[50rem]" src={abstractPhoto} alt="" />
-        </SwiperSlide>
+          <SwiperSlide className="aspect-w-1 aspect-h-1">
+            <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={abstractPhoto} alt="" />
+          </SwiperSlide>
 
-        <SwiperSlide>
-        <img className="w-[15rem] max-h-[50rem]" src={AdventurePhoto} alt="" />
-        </SwiperSlide>
+          <SwiperSlide className="aspect-w-1 aspect-h-1">
+            <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={AdventurePhoto} alt="" />
+          </SwiperSlide>
 
-        <SwiperSlide>
-        <img className="w-[15rem] max-h-[50rem]" src={AstroPhoto} alt="" />
-        </SwiperSlide>
+          <SwiperSlide className="aspect-w-1 aspect-h-1">
+            <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={AstroPhoto} alt="" />
+          </SwiperSlide>
 
-        <SwiperSlide>
-        <img className="w-[15rem] max-h-[50rem]" src={FineartPhoto} alt="" />
-        </SwiperSlide>
+          <SwiperSlide className="aspect-w-1 aspect-h-1">
+            <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={FineartPhoto} alt="" />
+          </SwiperSlide>
 
-        <SwiperSlide>
-        <img className="w-[15rem] max-h-[50rem]" src={RealestatePhoto} alt="" />
-        </SwiperSlide>
+          <SwiperSlide className="aspect-w-1 aspect-h-1">
+            <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={RealestatePhoto} alt="" />
+          </SwiperSlide>
 
-        <SwiperSlide>
-        <img className="w-[15rem] max-h-[50rem]" src={ScientificPhoto} alt="" />
-        </SwiperSlide>
+          <SwiperSlide className="aspect-w-1 aspect-h-1">
+            <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={ScientificPhoto} alt="" />
+          </SwiperSlide>
 
-        <SwiperSlide>
-        <img className="w-[15rem] max-h-[50rem]" src={streetPhoto} alt="" />
-        </SwiperSlide>
-      </Swiper>
+          <SwiperSlide className="aspect-w-1 aspect-h-1">
+            <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={streetPhoto} alt="" />
+          </SwiperSlide>
+        </Swiper>
+      </Container>
     </>
   );
 };
