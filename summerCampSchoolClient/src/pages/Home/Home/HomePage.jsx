@@ -1,3 +1,4 @@
+import Container from "../../../components/Container";
 import Analytics from "./Analytics";
 import Banner from "./Banner";
 import Curriculum from "./Curriculum";
@@ -10,13 +11,15 @@ import WhyLearnFromUs from "./WhyLearnFromUs";
 const HomePage = () => {
   return (
     <div>
-      <Banner></Banner>
-      <Curriculum></Curriculum>
-      <PopularClasses></PopularClasses>
-      <PopularInstructor></PopularInstructor>
-      <Analytics></Analytics>
-      <WhyLearnFromUs></WhyLearnFromUs>
-      <StudentsReview></StudentsReview>
+      <Container>
+        <Banner></Banner>
+        <Curriculum></Curriculum>
+        <PopularClasses></PopularClasses>
+        <PopularInstructor></PopularInstructor>
+        <Analytics></Analytics>
+        <WhyLearnFromUs></WhyLearnFromUs>
+        <StudentsReview></StudentsReview>
+      </Container>
     </div>
   );
 };

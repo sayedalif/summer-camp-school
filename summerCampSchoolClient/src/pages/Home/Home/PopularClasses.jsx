@@ -36,7 +36,7 @@ const PopularClasses = () => {
 
   return (
     <div>
-      <h1 className='text-center my-8 text-[#000000] text-5xl font-bold'>Popular Courses</h1>
+      <h1 className='text-center md:my-8 text-[#000000] md:text-5xl font-bold text-2xl'>Popular Courses</h1>
 
       {/* popular classes based on students */}
 
