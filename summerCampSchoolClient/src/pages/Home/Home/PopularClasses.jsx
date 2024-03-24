@@ -36,14 +36,14 @@ const PopularClasses = () => {
 
   return (
     <div>
-      <h1 className='text-center md:my-8 text-[#000000] md:text-5xl font-bold text-2xl'>Popular Courses</h1>
+      <h1 className='text-center md:my-8 text-[#000000] md:text-5xl font-bold text-2xl mb-7'>Popular Courses</h1>
 
       {/* popular classes based on students */}
 
       {/* search bar */}
       <form className='flex justify-center'>
         <div className='relative flex items-center'>
-          <input type="text" placeholder="Course name" className="py-8 input input-bordered input-md w-[300px] rounded-l-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1] pl-9" />
+          <input type="text" placeholder="Course name" className="md:py-8 input input-bordered md:input-md md:w-[300px] w-5 rounded-l-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1] pl-9" />
 
           <span className='absolute left-3'>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -51,7 +51,7 @@ const PopularClasses = () => {
         </div>
 
         <div className='relative flex items-center'>
-          <input type="text" placeholder="Instructor" className="py-8 input input-bordered input-md w-[300px] rounded-r-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1]" />
+          <input type="text" placeholder="Instructor" className="md:py-8 input input-bordered md:input-md md:w-[300px] rounded-r-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1]" />
 
           <span className='absolute -left-1'>
             <FontAwesomeIcon icon={faUser} />
@@ -64,26 +64,25 @@ const PopularClasses = () => {
 
       </form>
 
-      <div className='flex justify-between space-x-4 flex-wrap space-y-4 my-8 mx-8'>
+      <div className='md:flex md:justify-between md:space-x-4 md:flex-wrap md:space-y-4 md:my-8 md:mx-8 my-4 space-y-4'>
         {
           allClasses.length > 0 && Array.isArray(allClasses) &&
           allPopularClasses.map((eachClass, idx) => {
-            {/* console.log("🚀 ~ allPopularClasses.map ~ eachClass:", eachClass); */}
             const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>
-                <div className="card w-96 h-[28rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300">
+                <div className="card md:w-96 sm:w-96 md:h-[28rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300">
 
-                  <div className='flex justify-between items-start px-[32px] pt-[32px]'>
+                  <div className='flex justify-between items-start md:px-[32px] px-6 py-6 md:pt-[32px]'>
                     <figure>
-                      <img loading="lazy" className='w-[200px] clip-roundedImg' src={eachClass.class_thumbnail} alt='instructor image' />
+                      <img loading="lazy" className='md:w-[200px] w-48 md:rounded-md sm:rounded-sm rounded clip-roundedImg' src={eachClass.class_thumbnail} alt='instructor image' />
                     </figure>
                     <div className='text-right'>
                       <span style={{ backgroundColor: randomBadgeColors }} className={`badge text-end`}>{eachClass.category}</span>
-                      <span className="card-title">{eachClass.className}</span>
+                      <span className="card-title text-base">{eachClass.className}</span>
                     </div>
                   </div>
-                  <div className="card-body">
+                  <div className="card-body px-6 py-6">
                     <p className='font-medium text-base'>{eachClass.description}</p>
                     <div className='flex justify-between items-center'>
                       <span className='badge bg-[#E2F6FF] my-[16px]'>
@@ -94,8 +93,8 @@ const PopularClasses = () => {
                         {eachClass?.rating}</span>
                     </div>
                     <div className="card-actions flex justify-between items-center">
-                      <span className='text-3xl font-bold'>${eachClass?.price}</span>
-                      <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full">Join Now
+                      <span className='md:text-3xl text-2xl font-bold'>${eachClass?.price}</span>
+                      <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2">Join Now
                         <FontAwesomeIcon icon={faArrowRight} />
                       </button>
                     </div>
