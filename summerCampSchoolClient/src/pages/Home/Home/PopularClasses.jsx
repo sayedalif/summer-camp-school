@@ -36,7 +36,7 @@ const PopularClasses = () => {
 
   return (
     <div>
-      <h1 className='text-center md:my-8 text-[#000000] md:text-5xl font-bold text-2xl mb-7'>Popular Courses</h1>
+      <h1 className='text-center md:my-8 text-[#000000] lg:text-6xl md:text-5xl font-bold text-2xl mb-7'>Popular Courses</h1>
 
       {/* popular classes based on students */}
 
@@ -64,16 +64,16 @@ const PopularClasses = () => {
 
       </form>
 
-      <div className='lg:flex md:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap lg:my-8 lg:mx-8 mt-4 mb-4'>
+      <div className='lg:flex md:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4'>
         {
           allClasses.length > 0 && Array.isArray(allClasses) &&
           allPopularClasses.map((eachClass, idx) => {
             const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>
-                <div className="card lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-96 bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4">
+                <div className="card lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4">
 
-                  <div className='flex justify-between items-start md:px-[32px] px-6 py-6 md:pt-[32px]'>
+                  <div className='flex justify-between items-start lg:px-4 lg:py-4 md:px-3 md:py-3 px-4 py-4'>
                     <figure>
                       <img loading="lazy" className='md:w-[200px] w-48 md:rounded-md sm:rounded-sm rounded clip-roundedImg' src={eachClass.class_thumbnail} alt='instructor image' />
                     </figure>
@@ -82,7 +82,7 @@ const PopularClasses = () => {
                       <span className="card-title text-base">{eachClass.className}</span>
                     </div>
                   </div>
-                  <div className="card-body px-6 py-6">
+                  <div className="card-body lg:px-4 lg:py-4 md:px-3 md:py-3 px-3 py-3">
                     <p className='font-medium text-base'>{eachClass.description}</p>
                     <div className='flex justify-between items-center'>
                       <span className='badge bg-[#E2F6FF] my-[16px]'>
