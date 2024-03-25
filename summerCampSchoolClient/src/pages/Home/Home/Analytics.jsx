@@ -4,7 +4,7 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic';
 const Analytics = () => {
 
   const [stats, setStats] = useState('');
-  console.log("🚀 ~ Analytics ~ stats:", stats);
+  // console.log("🚀 ~ Analytics ~ stats:", stats);
 
   const [axiosPublic] = useAxiosPublic();
 
@@ -21,7 +21,7 @@ const Analytics = () => {
     <div className='flex justify-center my-8 space-x-5'>
       {
         stats && Array.isArray(stats) && stats.length > 0 && stats?.map((eachStat, index) => {
-          console.log("🚀 ~ stats&&Array.isArray ~ eachStat:", eachStat);
+          {/* console.log("🚀 ~ stats&&Array.isArray ~ eachStat:", eachStat); */}
 
           return (
             <div key={index} className="card w-96 shadow-xl bg-[#81C784]">

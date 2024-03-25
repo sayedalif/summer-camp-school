@@ -8,7 +8,7 @@ const PopularInstructor = () => {
   const [axiosPublic] = useAxiosPublic();
 
   const [instructors, setInstructors] = useState('');
-  console.log("🚀 ~ PopularInstructor ~ instructors:", instructors);
+  // console.log("🚀 ~ PopularInstructor ~ instructors:", instructors);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +27,7 @@ const PopularInstructor = () => {
       <div className='flex justify-between space-x-3'>
         {
           instructors && instructors?.length && Array?.isArray(instructors) && instructors?.map((instructor) => {
-            console.log("🚀 ~ popularInstructor&&popularInstructor.length&&Array.isArray ~ instructor:", instructor);
+            {/* console.log("🚀 ~ popularInstructor&&popularInstructor.length&&Array.isArray ~ instructor:", instructor); */}
             const { classes_names, email, image, instructor_id, name, role, total_classes, _id } = instructor;
 
             return (

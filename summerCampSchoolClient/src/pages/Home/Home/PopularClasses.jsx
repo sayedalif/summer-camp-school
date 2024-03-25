@@ -10,7 +10,7 @@ const PopularClasses = () => {
   const [axiosPublic] = useAxiosPublic();
 
   const [allClasses, setAllClasses] = useState('');
-  console.log("🚀 ~ PopularClasses ~ allClasses:", allClasses);
+  // console.log("🚀 ~ PopularClasses ~ allClasses:", allClasses);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +23,7 @@ const PopularClasses = () => {
 
 
   const allPopularClasses = allClasses.length > 0 && Array.isArray(allClasses) && allClasses.filter(allClass => allClass.students_enrolled >= 400);
-  console.log("🚀 ~ PopularClasses ~ allPopularClasses:", allPopularClasses);
+  // console.log("🚀 ~ PopularClasses ~ allPopularClasses:", allPopularClasses);
 
   const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
   function generateRandomColorString() {

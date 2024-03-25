@@ -1,11 +1,28 @@
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BwArrowButton from '../../../components/BwArrowButton';
 import ownPacePng from '../../../assets/illustrations/3d-business-young-man-standing-at-his-desk.png';
 import passionPng from '../../../assets/illustrations/moji-hand-with-index-finger-and-thumb-crossed-1.png';
+import axios from 'axios';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 const Curriculum = () => {
+  const [axiosPublic] = useAxiosPublic();
+
+  const [curriculum, setCurriculum] = useState([]);
+  console.log("🚀 ~ Curriculum ~ curriculum:", curriculum);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axiosPublic.get('/curriculum');
+      const data = await response.data;
+      console.log("🚀 ~ fetchData ~ data:", data);
+
+      setCurriculum(data);
+    }
+    fetchData();
+  }, [axiosPublic]);
   return (
     <div className='md:mx-8 md:my-16'>
       <div className='xl:flex lg:flex md:flex justify-between'>
@@ -19,24 +36,21 @@ const Curriculum = () => {
           <BwArrowButton text={'get started'} to={'/'}></BwArrowButton>
         </div>
       </div>
+      <div className='xl:flex lg:flex lg:flex-row md:flex lg:justify-between md:space-x-4 md:my-16 my-10 space-y-5 lg:space-y-0 lg:w-full md:w-full sm:w-full flex flex-col items-center'>
 
-      {/* cards */}
-      <div className='xl:flex lg:flex md:flex md:space-x-4 md:my-16 my-10 space-y-5 w-full flex flex-col items-center'>
-        <div className="card md:w-[30rem] w-64 bg-[#AEE5FF] text-black">
-          <div className="card-body">
-            <img className='md:w-[80px] max-w-full w-3/4 mx-auto' src={ownPacePng} alt="own pace png" />
-            <h2 className="card-title normal-case md:my-4 md:font-semibold md:text-xl text-center">Learn at your own pace with hands-on creative classes</h2>
-            <p className='font-medium text-lg'>Looking to expand your skills and explore your creativity? our hands-on creative classes are the perfect way to learn at your own pace and discover new talents</p>
-          </div>
-        </div>
-
-        <div className="card md:w-[30rem] w-64 bg-[#C3FFD2] text-black">
-          <div className="card-body">
-            <img className='md:w-[80px] max-w-full w-3/4 mx-auto' src={passionPng} alt="passion png" />
-            <h2 className="card-title normal-case md:my-4 font-semibold text-xl">ShutterCraft teachers are every day creative & professional who want to share their passion</h2>
-            <p className='font-medium text-lg'>At ShutterCraft, we believe that everyone has something to teach and share with the world. our teachers are not just experts in their field, they are also passionate about teaching and helping others discover their own creativity. they take the time to get to know their students and tailor their instruction to meet their individual needs and goals.</p>
-          </div>
-        </div>
+        {
+          curriculum.map((eachCurriculum, index) => {
+            return (
+              <div key={eachCurriculum._id} className={`card lg:w-[32rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
+                <div className="card-body sm:px-3 sm:py-3 px-3 py-3">
+                  <img className='lg:w-48 md:w-52 sm:w-10 w-40 max-w-full mx-auto' src={eachCurriculum.img} alt="own pace png" />
+                  <h2 className="card-title normal-case md:my-4 md:font-semibold md:text-xl text-center">Learn at your own pace with hands-on creative classes</h2>
+                  <p className='font-medium text-lg'>Looking to expand your skills and explore your creativity? our hands-on creative classes are the perfect way to learn at your own pace and discover new talents</p>
+                </div>
+              </div>
+            )
+          })
+        }
       </div>
 
       <div className='md:flex md:space-x-8'>

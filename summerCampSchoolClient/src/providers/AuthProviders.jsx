@@ -48,9 +48,9 @@ const AuthProviders = ({ children }) => {
 
   // observer
   const [user, loading, error] = useAuthState(auth);
-  console.log("🚀 ~ AuthProviders ~ loading:", loading);
+/*   console.log("🚀 ~ AuthProviders ~ loading:", loading);
   console.log("🚀 ~ AuthProviders ~ user:", user);
-  console.log("🚀 ~ AuthProviders ~ error:", error);
+  console.log("🚀 ~ AuthProviders ~ error:", error); */
 
   if (user) {
     /*  axiosPublic.get(`/users/${user?.email}:`).then(response => {
