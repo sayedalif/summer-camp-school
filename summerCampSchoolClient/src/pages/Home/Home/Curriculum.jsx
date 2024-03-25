@@ -9,13 +9,13 @@ const Curriculum = () => {
   return (
     <div className='md:mx-8 md:my-16'>
       <div className='xl:flex lg:flex md:flex justify-between'>
-        <div className='font-semibold md:text-5xl sm:text-2xl text-2xl mb-4'>
+        <div className='font-semibold lg:text-5xl md:text-3xl sm:text-2xl text-2xl mb-4'>
           <h1><span className='capitalize'>new skills</span> with ShutterCraft.</h1>
           <p><span className='capitalize'>a detailed look</span> at <span className='capitalize'>our curriculum</span></p>
         </div>
 
         <div>
-          <p className='font-semibold text-lg mb-6'>with real world project to create and <br /> online classes that fit a busy schedule</p>
+          <p className='font-semibold lg:text-xl md:text-xl sm:text-lg text-lg mb-6'>with real world project to create and <br /> online classes that fit a busy schedule</p>
           <BwArrowButton text={'get started'} to={'/'}></BwArrowButton>
         </div>
       </div>
