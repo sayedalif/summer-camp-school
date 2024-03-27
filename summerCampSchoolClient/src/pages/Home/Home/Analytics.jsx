@@ -18,13 +18,13 @@ const Analytics = () => {
   }, []);
 
   return (
-    <div className='flex justify-center my-8 space-x-5'>
+    <div className='lg:flex lg:justify-center lg:my-8 lg:space-x-5 lg:space-y-0 md:grid md:grid-cols-2 md:space-x-0 md:gap-5 md:space-y-0 sm:space-y-5 space-y-5'>
       {
         stats && Array.isArray(stats) && stats.length > 0 && stats?.map((eachStat, index) => {
           {/* console.log("🚀 ~ stats&&Array.isArray ~ eachStat:", eachStat); */}
 
           return (
-            <div key={index} className="card w-96 shadow-xl bg-[#81C784]">
+            <div key={index} className="card lg:w-96 shadow-xl bg-[#81C784]">
               <div className="card-body">
                 {Object.keys(eachStat).map((key, i) => (
                   <div key={i}>

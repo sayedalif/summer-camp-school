@@ -10,7 +10,6 @@ const PopularClasses = () => {
   const [axiosPublic] = useAxiosPublic();
 
   const [allClasses, setAllClasses] = useState('');
-  // console.log("🚀 ~ PopularClasses ~ allClasses:", allClasses);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +22,6 @@ const PopularClasses = () => {
 
 
   const allPopularClasses = allClasses.length > 0 && Array.isArray(allClasses) && allClasses.filter(allClass => allClass.students_enrolled >= 400);
-  // console.log("🚀 ~ PopularClasses ~ allPopularClasses:", allPopularClasses);
 
   const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
   function generateRandomColorString() {
@@ -43,21 +41,21 @@ const PopularClasses = () => {
       {/* search bar */}
       <form className='flex justify-center'>
         <div className='relative flex items-center'>
-          <input type="text" placeholder="Course name" className="md:py-8 input input-bordered md:input-md md:w-[300px] w-5 rounded-l-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1] pl-9" />
+          <input type="text" placeholder="Course name" className="md:py-7 md:pl-7 input input-bordered md:input-md sm:input-sm lg:w-[27rem] md:w-80 w-[9rem] p-0 rounded-l-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1]" />
 
-          <span className='absolute left-3'>
+          <span className='absolute md:left-2'>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </span>
         </div>
 
         <div className='relative flex items-center'>
-          <input type="text" placeholder="Instructor" className="md:py-8 input input-bordered md:input-md md:w-[300px] rounded-r-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1]" />
+          <input type="text" placeholder="Instructor" className="md:py-7 input input-bordered md:input-md sm:input-sm lg:w-[27rem] md:w-80 w-[9rem] rounded-r-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1]" />
 
           <span className='absolute -left-1'>
             <FontAwesomeIcon icon={faUser} />
           </span>
 
-          <button onClick={(e) => e.preventDefault()} type='submit' className="btn capitalize rounded-full absolute right-[10px] px-7 bg-[#000000] text-[#F0F0F1] hover:bg-black">
+          <button onClick={(e) => e.preventDefault()} type='submit' className="btn capitalize rounded-full absolute right-[10px] lg:px-7 md:px-7 bg-[#000000] text-[#F0F0F1] hover:bg-black">
             <FontAwesomeIcon icon={faMagnifyingGlass} />
             search</button>
         </div>
