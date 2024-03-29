@@ -35,31 +35,32 @@ const StudentsReview = () => {
   return (
     <div>
       <div className='text-center'>
-        <h1 className='capitalize text-2xl'>a skill-building journey with <br />ShutterCraft</h1>
-        <p className='capitalize'>how ShutterCraft courses helped you master new skills and advance your career</p>
+        <h1 className='capitalize text-center md:my-8 text-[#000000] lg:text-5xl md:text-5xl font-bold text-2xl mb-7'>a skill-building journey with <br />ShutterCraft</h1>
+        <p className='capitalize lg:mx-auto md:mx-auto text-center my-4 sm:text-2xl text-xl'>how ShutterCraft courses helped you master new skills and advance your career</p>
       </div>
 
       {/* cards */}
       <div className='my-8'>
         {/* loop here */}
-        <div className='flex justify-between space-x-4 flex-wrap space-y-4 mx-8'>
+        <div className='lg:flex md:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4'>
           {
             reviews.length > 0 && Array.isArray(reviews) &&
             reviews.map((review, idx) => {
               const randomBadgeColors = generateRandomColorString();
               return (
                 <div key={idx} className='group cursor-pointer'>
-                  <div className="card w-96 h-[28rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300">
-
-                    <div className='flex p-[32px] items-center'>
+                  <div className="card lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4">
+                  
+                    <div className='flex justify-between items-start lg:px-4 lg:py-4 md:px-3 md:py-3 px-4 py-4'>
                       <figure className='md:mr-3'>
-                        <img loading="lazy" className='w-[50px] clip-roundedImg' src={review.image} alt='instructor image' />
+                        {/* student image */}
+                        <img loading="lazy" className='lg:w-[100px] md:w-[100px] w-48 md:rounded-md sm:rounded-sm rounded' src={review.image} alt='instructor image' />
                       </figure>
                       <div>
                         <span className='text-pretty card-title'>{review.name}</span>
                       </div>
                     </div>
-                    <div className="card-body">
+                    <div className="card-body lg:px-4 lg:py-4 md:px-3 md:py-3 px-3 py-3">
                       <Rating
                         className='w-1/2'
                         initialRating={review.stars}

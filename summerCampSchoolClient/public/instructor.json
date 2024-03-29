@@ -13,10 +13,13 @@
     "instructor_image": "https://i.ibb.co/sjvhn04/lucas-gouvea-ao-Ewu-EH7-YAs-unsplash-min.jpg"
   },
   {
-    "instructor_name": "Michael Johnson",
+    "name": "Michael Johnson",
     "email": "michael.johnson@example.com",
     "instructor_id": 3,
-    "instructor_image": "https://i.ibb.co/wSh3PPL/luis-villasmil-Z4rqv-Rp-Rj38-unsplash-min.jpg"
+    "classes_names": ["abstract"],
+    "image": "https://i.ibb.co/wSh3PPL/luis-villasmil-Z4rqv-Rp-Rj38-unsplash-min.jpg",
+    "role": "instructor",
+    "total_classes": 1
   },
   {
     "instructor_name": "Astrid Celestial",

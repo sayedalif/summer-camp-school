@@ -18,7 +18,7 @@ const Analytics = () => {
   }, []);
 
   return (
-    <div className='lg:flex lg:justify-center lg:my-8 lg:space-x-5 lg:space-y-0 md:grid md:grid-cols-2 md:space-x-0 md:gap-5 md:space-y-0 sm:space-y-5 space-y-5'>
+    <div className='lg:flex lg:justify-center lg:my-20 lg:space-x-5 lg:space-y-0 md:grid md:grid-cols-2 md:space-x-0 md:gap-5 md:space-y-0 sm:space-y-5 space-y-5'>
       {
         stats && Array.isArray(stats) && stats.length > 0 && stats?.map((eachStat, index) => {
           {/* console.log("🚀 ~ stats&&Array.isArray ~ eachStat:", eachStat); */}
@@ -28,14 +28,14 @@ const Analytics = () => {
               <div className="card-body">
                 {Object.keys(eachStat).map((key, i) => (
                   <div key={i}>
-                    <p className='text-center'>
+                    <p className='text-center text-xl font-medium'>
                       {/* Conditionally render symbols */}
                       {eachStat[key]}
                       {/* here i'm adding a fake k to make it look like lot, but the k is fake */}
                       {key !== 'average rating' && 'k+'}
-                      {key === 'average rating' && '★★★★★'} 
+                      {key === 'average rating' && <span className='text-yellow-400 ml-2'>★★★★★</span>} 
                     </p>
-                    <h2 className='uppercase text-center'>{key}</h2>
+                    <h2 className='uppercase text-center text-xl font-medium'>{key}</h2>
                   </div>
                 ))}
               </div>

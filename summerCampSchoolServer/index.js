@@ -303,8 +303,8 @@ async function run() {
       // Prepare response object
       // here I'm returning the data
       const stats = [
-        { 'classes count': classesCount },
-        { 'members count': membersCount },
+        { classes: classesCount },
+        { members: membersCount },
         { instructor: instructorCount },
         { 'average rating': averageRating },
       ];
