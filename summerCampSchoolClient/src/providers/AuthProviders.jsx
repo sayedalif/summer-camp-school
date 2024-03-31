@@ -58,13 +58,6 @@ const AuthProviders = ({ children }) => {
      }); */
 
     const savedUser = { email: user.email, name: user.displayName, photoURL: user.photoURL };
-
-
-    /* if (user?.email !== emailFromDB) {
-
-    } */
-
-    /* axiosPublic.put(`/users/${user.email}`, savedUser).then(response => console.log(response)); */
   }
 
   const authInfo =

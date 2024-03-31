@@ -69,7 +69,7 @@ const PopularClasses = () => {
             return (
               <div key={idx} className='group cursor-pointer'>
                 <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] h-[32rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4 rounded-xl
-                 backface-hidden">
+                backface-hidden">
 
                   <div className='flex flex-col justify-between h-full'>
                     <div className='flex justify-between items-start px-4 py-4'>

@@ -42,19 +42,20 @@ const StudentsReview = () => {
       {/* cards */}
       <div className='my-8'>
         {/* loop here */}
-        <div className='lg:flex md:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4'>
+        <div className='lg:flex lg:flex-wrap lg:my-8 lg:mx-4 md:flex md:flex-wrap mt-4 mb-4'>
           {
             reviews.length > 0 && Array.isArray(reviews) &&
             reviews.map((review, idx) => {
               const randomBadgeColors = generateRandomColorString();
               return (
-                <div key={idx} className='group cursor-pointer'>
-                  <div className="card lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4">
-                  
+                <div key={idx} className='cursor-pointer'>
+                  <div className="card lg:w-[22rem] lg:h-[20rem] lg:mr-4 md:w-[20rem] sm:w-[20rem] w-[18rem] bg-base-100 shadow-xl mb-4">
+
                     <div className='flex justify-between items-start lg:px-4 lg:py-4 md:px-3 md:py-3 px-4 py-4'>
                       <figure className='md:mr-3'>
                         {/* student image */}
-                        <img loading="lazy" className='lg:w-[100px] md:w-[100px] w-48 md:rounded-md sm:rounded-sm rounded' src={review.image} alt='instructor image' />
+                        <img loading="lazy"
+                          className='w-full h-auto md:w-[100px] sm:w-[100px] rounded-md' src={review.image} alt='instructor image' />
                       </figure>
                       <div>
                         <span className='text-pretty card-title'>{review.name}</span>

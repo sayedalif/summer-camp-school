@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <div>
-      <div className="hero min-h-screen">
+      <div className="hero min-h-screen bg-base-100">
         <div className="hero-content flex-col lg:flex-row-reverse md:w-1/2 lg:w-1/2 xl:w-3/5 2xl:w-3/5">
           <div className="card shrink-0 w-full shadow-2xl">
             <form className="card-body">

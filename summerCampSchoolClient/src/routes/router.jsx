@@ -49,6 +49,10 @@ export const router = createBrowserRouter([
         element: <MyClasses></MyClasses>
       }
     ]
+  },
+  {
+    path:'/profile',
+    
   }
 
 ]);
