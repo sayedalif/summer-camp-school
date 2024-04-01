@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { IoIosEye } from "react-icons/io";
-import { IoIosEyeOff } from "react-icons/io";
 import FacebookLogin from './shared/socialLogin/FacebookLogin';
 import GoogleLogin from './shared/socialLogin/GoogleLogin';
 import useAuth from '../hooks/useAuth';
@@ -12,8 +10,6 @@ import { toast } from 'react-hot-toast';
 const Login = () => {
   const navigate = useNavigate();
   const { signInWithEmailAndPassword, sendPasswordResetEmail } = useAuth();
-
-  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -36,16 +32,7 @@ const Login = () => {
                 <label className="label">
                   <span className="label-text text-base">Password</span>
                 </label>
-                <input onChange={(e) => setPassword(e.target.value)} type={showPassword ? "text" : "password"} placeholder="password" className="input input-bordered" required />
-                {/* show password */}
-                <span onClick={() => setShowPassword(!showPassword)} className='absolute md:top-44 right-10 cursor-pointer'>
-                  {showPassword
-                    ?
-                    <IoIosEyeOff className='text-black' size={25}></IoIosEyeOff>
-                    :
-                    <IoIosEye className='text-slate-400' size={25}></IoIosEye>
-                  }
-                </span>
+                <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" className="input input-bordered" required />
                 <label className="label">
                   <span onClick={async () => {
                     const success = await sendPasswordResetEmail(email);
@@ -68,7 +55,7 @@ const Login = () => {
                 } className={`bg-[#3B0200] text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-[#3b020085]'}`} disabled={loading}>Login</button>
               </div>
 
-              <p className='capitalize underline cursor-pointer md:mt-8 text-[#3B0200] text-lg'><Link to={`/register`}>create a new account!</Link></p>
+              <p className='underline cursor-pointer md:mt-8 text-[#3B0200] text-lg'><Link to={`/register`}>new here? create a new <span className='uppercase'>account</span>!</Link></p>
             </form>
           </div>
         </div>

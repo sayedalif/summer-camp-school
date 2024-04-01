@@ -25,7 +25,7 @@ const Banner = () => {
         dynamicBullets: true,
       }}
         modules={[Pagination]}
-        className="mySwiper w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
+        className="mySwiper w-full"
       >
         <SwiperSlide className="aspect-w-1 aspect-h-1">
           <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={macroPhoto} alt="" />

@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
 import FacebookLogin from './shared/socialLogin/FacebookLogin';
 import GoogleLogin from './shared/socialLogin/GoogleLogin';
-import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { imageUpload } from '../hooks/utils/utils';
+
+import { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
 
 const Register = () => {
+  // navigate
+  // to navigate user after login
   const navigate = useNavigate();
+
+  // use auth hook
   const { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } = useAuth();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  // loading state
 
   const [loading, setLoading] = useState(false);
 
+  // 
+  const [droppedImages, setDroppedImages] = useState([]);
+
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // image related
-
-  const [imageUploadText, setImageUploadText] = useState('upload');
-  const [imageUrl, setImageUrl] = useState(null);
-  const [imageLoading, setImageLoading] = useState(false);
-  console.log("🚀 ~ Register ~ imageLoading:", imageLoading);
 
   const handleImageChange = (image) => {
 
@@ -43,28 +45,28 @@ const Register = () => {
     })
   }
 
+
+  // from submit
+  // react hook form
   const onSubmit = async data => {
     console.log(data);
     const { name, email, password, confirmPassword, address, phoneNumber } = data;
 
     console.log(['password fields'], password, confirmPassword);
 
-    // setLoading(true);
-    /* if (password === confirmPassword) {
-      const success = await createUserWithEmailAndPassword(email, password);
-      if (success) {
-
-        // sendEmailVerification();
-        updateProfile(name,);
-        setLoading(false);
-        navigate('/');
-      }
-    } */
-
-
   };
 
   console.log(errors);
+
+
+  // react-dropzone
+  const onDrop = useCallback(acceptedFiles => {
+    // Do something with the files
+    console.log(acceptedFiles);
+    // setting the drop image to use state function
+    setDroppedImages(acceptedFiles);
+  }, [])
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,7 +102,7 @@ const Register = () => {
                 <label className="label">
                   <span className="label-text text-base">Password</span>
                 </label>
-                <input type={showPassword ? "text" : "password"} placeholder="password" className="input input-bordered"
+                <input type="password" placeholder="password" className="input input-bordered"
 
                   {
                   ...register("password", { required: true, minLength: 8 }, { pattern: /^[A-Za-z-0-9]+$/i },
@@ -111,15 +113,6 @@ const Register = () => {
                   }
 
                 />
-                {/* show password */}
-                <span onClick={() => setShowPassword(!showPassword)} className='absolute md:top-44 right-10 cursor-pointer'>
-                  {showPassword
-                    ?
-                    <IoIosEyeOff className='text-black' size={25}></IoIosEyeOff>
-                    :
-                    <IoIosEye className='text-slate-400' size={25}></IoIosEye>
-                  }
-                </span>
               </div>
 
               {/* confirm password */}
@@ -127,42 +120,25 @@ const Register = () => {
                 <label className="label">
                   <span className="label-text text-base">Confirm Password</span>
                 </label>
-                <input type={showConfirmPassword ? "text" : "password"} placeholder="confirm password" className="input input-bordered"
+                <input type="password" placeholder="confirm password" className="input input-bordered"
 
                   {
                   ...register("confirmPassword", { required: true })
                   }
 
                 />
-
-                {/* show password */}
-                <span onClick={() => setShowConfirmPassword(!showConfirmPassword)} className='absolute md:top-12 right-2 cursor-pointer'>
-                  {showConfirmPassword
-                    ?
-                    <IoIosEyeOff className='text-black' size={25}></IoIosEyeOff>
-                    :
-                    <IoIosEye className='text-slate-400' size={25}></IoIosEye>
-                  }
-                </span>
               </div>
-              <label className='flex items-center gap-x-2'>
-                <span className="label-text text-base">Add Photo:</span>
-                <input
-                  onChange={(e) => {
-                    handleImageChange(e.target.files[0])
-                    setImageLoading(true);
-                  }}
-                  className='text-sm cursor-pointer w-36 hidden'
-                  type='file'
-                  name='image'
-                  id='image'
-                  accept='image/*'
-                  hidden
-                />
-                <div className='bg-[#A3A3F5] text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-[#A3A3F5]'>
-                  {imageLoading ? 'uploading...' : imageUploadText}
-                </div>
-              </label>
+              <div className='border border-dashed border-black lg:pt-10 lg:text-2xl' {...getRootProps()}>
+                <input {...getInputProps()} />
+                {
+                  isDragActive ?
+                    <p>Drop the files here ...</p> :
+                    <p>Drop your photo here, or click to select it</p>
+                }
+              </div>
+              {/* <aside style={thumbsContainer}>
+                {thumbs}
+              </aside> */}
 
               {/* phone number */}
               <div className="form-control">
