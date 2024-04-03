@@ -17,7 +17,6 @@ const Curriculum = () => {
     const fetchData = async () => {
       const response = await axiosPublic.get('/curriculum');
       const data = await response.data;
-      // console.log("🚀 ~ fetchData ~ data:", data);
 
       setCurriculum(data);
     }

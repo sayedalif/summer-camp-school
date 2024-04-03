@@ -20,7 +20,7 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // 
+  // dropped images state
   const [droppedImages, setDroppedImages] = useState([]);
 
 
@@ -65,8 +65,10 @@ const Register = () => {
     console.log(acceptedFiles);
     // setting the drop image to use state function
     setDroppedImages(acceptedFiles);
-  }, [])
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop, accept: 'image/*' // Accepts all image MIME types
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -128,14 +130,33 @@ const Register = () => {
 
                 />
               </div>
-              <div className='border border-dashed border-black lg:pt-10 lg:text-2xl' {...getRootProps()}>
-                <input {...getInputProps()} />
-                {
-                  isDragActive ?
-                    <p>Drop the files here ...</p> :
-                    <p>Drop your photo here, or click to select it</p>
+
+              {/* image drag and drop */}
+
+              <div className='border border-dashed border-black py-10 text-center h-full flex justify-center items-center rounded-md mt-2' {...getRootProps()}>
+                <input type="file" name="img" accept="image/*" {...getInputProps()} />
+                {isDragActive ?
+                  <p>Drop the files here ...</p> :
+                  <p>Drop your photo here, or click to select it</p>
                 }
               </div>
+
+
+
+              {/* Display dropped images */}
+              {droppedImages.length > 0 && (
+                <div>
+                  <h2>Dropped Images:</h2>
+                  <ul>
+                    {droppedImages.map((file, index) => (
+                      <div key={index}>
+                        <img src={URL.createObjectURL(file)} alt={`Dropped Image ${index}`} style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '5px' }} />
+                      </div>
+
+                    ))}
+                  </ul>
+                </div>
+              )}
               {/* <aside style={thumbsContainer}>
                 {thumbs}
               </aside> */}
