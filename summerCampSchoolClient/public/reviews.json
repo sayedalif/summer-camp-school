@@ -1,7 +1,7 @@
 [
   {
     "name": "John Dove",
-    "image": "https://i.ibb.co/qF9WCW6/avatar-2.jpg",
+    "image": "https://i.ibb.co/HqdSxfv/avatar-1.jpg",
     "rating": 4.5,
     "description": "Best macro photography class in town. It exceeded my expectations!",
     "category": "macro",
@@ -9,7 +9,7 @@
   },
   {
     "name": "Janed Smith",
-    "image": "https://i.ibb.co/YkdGkyk/avatar-1.jpg",
+    "image": "https://i.ibb.co/XCDCv5W/avatar-2.jpg",
     "rating": 5,
     "description": "Amazing Amazing Amazing. Will definitely buy again!",
     "category": "abstract",
@@ -17,7 +17,7 @@
   },
   {
     "name": "David Browne",
-    "image": "https://i.ibb.co/HVbC7dx/avatar-5.jpg",
+    "image": "https://i.ibb.co/TqQq17V/avatar-3.jpg",
     "rating": 3.8,
     "description": "It is decent, but the tutorial quality is good",
     "category": "adventure",
@@ -25,7 +25,7 @@
   },
   {
     "name": "Emily Johnson",
-    "image": "https://i.ibb.co/5vYqvpy/avatar-4.jpg",
+    "image": "https://i.ibb.co/hs4RJdt/avatar-4.jpg",
     "rating": 4.7,
     "description": "Impressed with the variety of options available. Would recommend!",
     "category": "astro",
@@ -33,7 +33,7 @@
   },
   {
     "name": "Alex Parker",
-    "image": "https://i.ibb.co/wJL6J6q/avatar-3.jpg",
+    "image": "https://i.ibb.co/0JPgtS4/avatar-5.jpg",
     "rating": 4.2,
     "description": "Breathtaking artistry. Every piece is a masterpiece!",
     "category": "fineart",

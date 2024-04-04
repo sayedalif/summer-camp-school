@@ -23,7 +23,7 @@ const Curriculum = () => {
     fetchData();
   }, [axiosPublic]);
   return (
-    <div className='md:mx-8 md:my-16'>
+    <div className='md:mx-8 md:-my-40'>
       <div className='xl:flex lg:flex md:flex justify-between'>
         <div className='font-semibold lg:text-5xl md:text-3xl sm:text-2xl text-2xl mb-4'>
           <h1><span className='capitalize'>new skills</span> with ShutterCraft.</h1>
@@ -39,13 +39,13 @@ const Curriculum = () => {
 
         {
           curriculum.map((eachCurriculum, index) => {
-            {/* console.log(eachCurriculum); */}
+            console.log(eachCurriculum);
             return (
-              <div key={eachCurriculum._id} className={`card lg:w-[32rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
+              <div key={eachCurriculum._id} className={`card lg:w-[32rem] h-[30rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
                 <div className="card-body sm:px-3 sm:py-3 px-3 py-3">
                   <img className='lg:w-48 md:w-52 sm:w-10 w-40 max-w-full mx-auto' src={eachCurriculum.img} alt="own pace png" />
-                  <h2 className="card-title normal-case md:my-4 md:font-semibold md:text-xl text-center">Learn at your own pace with hands-on creative classes</h2>
-                  <p className='font-medium text-lg'>Looking to expand your skills and explore your creativity? our hands-on creative classes are the perfect way to learn at your own pace and discover new talents</p>
+                  <h2 className="card-title md:my-4 md:font-semibold md:text-xl text-center capitalize">{eachCurriculum.title}</h2>
+                  <p className='font-medium text-lg capitalize'>{eachCurriculum.description}</p>
                 </div>
               </div>
             )

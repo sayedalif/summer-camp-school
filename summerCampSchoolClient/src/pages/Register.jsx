@@ -133,7 +133,7 @@ const Register = () => {
 
               {/* image drag and drop */}
 
-              <div className='border border-dashed border-black py-10 text-center h-full flex justify-center items-center rounded-md mt-2' {...getRootProps()}>
+              <div className='border-2 border-dashed border-[#A3A3F5] py-10 text-center h-full flex justify-center items-center rounded-md mt-2' {...getRootProps()}>
                 <input type="file" name="img" accept="image/*" {...getInputProps()} />
                 {isDragActive ?
                   <p>Drop the files here ...</p> :

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 // Import Swiper styles
@@ -15,10 +15,28 @@ import FineartPhoto from "../../../assets/images/Fine art photography.jpg";
 import RealestatePhoto from "../../../assets/images/Real estate photography.jpg";
 import ScientificPhoto from "../../../assets/images/Scientific photography.jpg";
 import streetPhoto from "../../../assets/images/street photography.jpg";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 
 
 const Banner = () => {
+  const [axiosPublic] = useAxiosPublic();
+
+  const [banner, setBanner] = useState([]);
+  console.log("🚀 ~ Banner ~ banner:", banner);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axiosPublic('/banner');
+      const data = response.data;
+      setBanner(data);
+      // console.log(data);
+    }
+
+    fetchData();
+  }, [axiosPublic]);
+
   return (
     <>
       <Swiper pagination={{

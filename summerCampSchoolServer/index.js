@@ -30,6 +30,7 @@ async function run() {
     await client.connect();
 
     const summerCampSchoolUserCollection = client.db('summerCampSchool').collection('users');
+    const summerCampSchoolBannerCollection = client.db('summerCampSchool').collection('banner');
     const summerCampSchoolCurriculumCollection = client.db('summerCampSchool').collection('curriculum');
     const summerCampSchoolClassesCollection = client.db('summerCampSchool').collection('classes');
     const summerCampSchoolReviewsCollection = client.db('summerCampSchool').collection('reviews');
@@ -58,6 +59,13 @@ async function run() {
       console.log(query);
       const result = await summerCampSchoolUserCollection.findOne(query);
       console.log(result);
+      res.send(result);
+    });
+
+    // banner
+    // images and description
+    app.get('/banner', async (req, res) => {
+      const result = await summerCampSchoolBannerCollection.find().toArray();
       res.send(result);
     });
 

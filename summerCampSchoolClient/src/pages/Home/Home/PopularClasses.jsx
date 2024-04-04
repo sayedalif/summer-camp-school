@@ -33,7 +33,7 @@ const PopularClasses = () => {
 
 
   return (
-    <div>
+    <div className='mt-60'>
       <h1 className='text-center md:my-8 text-[#000000] lg:text-6xl md:text-5xl font-bold text-2xl mb-7'>Popular Courses</h1>
 
       {/* popular classes based on students */}
@@ -68,7 +68,7 @@ const PopularClasses = () => {
             const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>
-                <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] h-[32rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4 rounded-xl
+              <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4 rounded-xl
                 backface-hidden">
 
                   <div className='flex flex-col justify-between h-full'>
