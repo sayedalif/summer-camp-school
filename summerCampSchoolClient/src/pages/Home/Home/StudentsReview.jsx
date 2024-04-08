@@ -33,9 +33,9 @@ const StudentsReview = () => {
     return randomString;
   }
   return (
-    <div>
+    <div className='mb-24'>
       <div className='text-center'>
-        <h1 className='capitalize text-center md:my-8 text-[#000000] lg:text-5xl md:text-5xl font-bold text-2xl mb-7'>a skill-building journey with <br />ShutterCraft</h1>
+        <h1 className='capitalize text-center md:my-8 mb-7 text-[#000000] lg:text-5xl md:text-5xl font-bold text-2xl'>a skill-building journey with <br />ShutterCraft</h1>
         <p className='capitalize lg:mx-auto md:mx-auto text-center my-4 sm:text-2xl text-xl'>how ShutterCraft courses helped you master new skills and advance your career</p>
       </div>
 
@@ -55,7 +55,7 @@ const StudentsReview = () => {
                       <figure className='md:mr-3'>
                         {/* student image */}
                         <img loading="lazy"
-                          className='w-full h-auto md:w-[100px] sm:w-[100px] rounded-md' src={review.image} alt='instructor image' />
+                          className='w-full h-full lg:w-full lg:h-[5rem] md:w-[100px] md:h-[4rem] sm:w-[100px] sm:h-[4rem] rounded-md' src={review.image} alt='instructor image' />
                       </figure>
                       <div>
                         <span className='text-pretty card-title'>{review.name}</span>
