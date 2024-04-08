@@ -39,42 +39,43 @@ const Banner = () => {
 
   return (
     <>
-      <Swiper pagination={{
-        dynamicBullets: true,
-      }}
+      <Swiper
+        pagination={{
+          dynamicBullets: true,
+        }}
         modules={[Pagination]}
         className="mySwiper w-full"
       >
         <SwiperSlide className="aspect-w-1 aspect-h-1">
-          <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={macroPhoto} alt="" />
+          <img loading="lazy" className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={macroPhoto} alt="" />
         </SwiperSlide>
 
         <SwiperSlide className="aspect-w-1 aspect-h-1">
-          <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={abstractPhoto} alt="" />
+          <img loading="lazy" className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={abstractPhoto} alt="" />
         </SwiperSlide>
 
         <SwiperSlide className="aspect-w-1 aspect-h-1">
-          <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={AdventurePhoto} alt="" />
+          <img loading="lazy" className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={AdventurePhoto} alt="" />
         </SwiperSlide>
 
         <SwiperSlide className="aspect-w-1 aspect-h-1">
-          <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={AstroPhoto} alt="" />
+          <img loading="lazy" className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={AstroPhoto} alt="" />
         </SwiperSlide>
 
         <SwiperSlide className="aspect-w-1 aspect-h-1">
-          <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={FineartPhoto} alt="" />
+          <img loading="lazy" className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={FineartPhoto} alt="" />
         </SwiperSlide>
 
         <SwiperSlide className="aspect-w-1 aspect-h-1">
-          <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={RealestatePhoto} alt="" />
+          <img loading="lazy" className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={RealestatePhoto} alt="" />
         </SwiperSlide>
 
         <SwiperSlide className="aspect-w-1 aspect-h-1">
-          <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={ScientificPhoto} alt="" />
+          <img loading="lazy" className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={ScientificPhoto} alt="" />
         </SwiperSlide>
 
         <SwiperSlide className="aspect-w-1 aspect-h-1">
-          <img className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={streetPhoto} alt="" />
+          <img loading="lazy" className="xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={streetPhoto} alt="" />
         </SwiperSlide>
       </Swiper>
 

@@ -43,9 +43,12 @@ const Curriculum = () => {
             return (
               <div key={eachCurriculum._id} className={`card lg:w-[32rem] h-[30rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
                 <div className="card-body sm:px-3 sm:py-3 px-3 py-3">
-                  <img className='lg:w-48 md:w-52 sm:w-10 w-40 max-w-full mx-auto' src={eachCurriculum.img} alt="own pace png" />
-                  <h2 className="card-title md:my-4 md:font-semibold md:text-xl text-center capitalize">{eachCurriculum.title}</h2>
-                  <p className='font-medium text-lg capitalize'>{eachCurriculum.description}</p>
+                {/* images */}
+                  <img loading="lazy" className='lg:w-48 md:w-52 sm:w-10 w-40 max-w-full mx-auto' src={eachCurriculum.img} alt="own pace png" />
+                  {/* title */}
+                  <h2 className="card-title md:my-4 md:font-semibold md:text-xl text-center">{eachCurriculum.title}</h2>
+                  {/* description */}
+                  <p className='font-medium text-lg'>{eachCurriculum.description}</p>
                 </div>
               </div>
             )

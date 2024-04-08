@@ -1,12 +1,13 @@
 import React from 'react';
 import facebookLogo from '../../../assets/icons/facebook_logo.png';
+import toast from 'react-hot-toast';
 
 
 const FacebookLogin = () => {
 
   // TODO: implement facebook login
   const handleFacebookSignIn = () => {
-    // toast.error(`hasn't implemented yet`);
+    toast.error(`hasn't implemented yet`);
   }
 
   return (

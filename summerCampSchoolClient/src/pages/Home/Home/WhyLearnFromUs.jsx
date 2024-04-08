@@ -5,7 +5,7 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 const WhyLearnFromUs = () => {
   return (
     <div className='mb-24 relative'>
-      <img className='lg:w-[79rem] lg:mx-auto lg:h-auto rounded-lg' src={lens} alt="why section image" />
+      <img loading="lazy" className='lg:w-[79rem] lg:mx-auto lg:h-auto rounded-lg' src={lens} alt="why section image" />
 
       <div className='lg:absolute md:absolute sm:absolute absolute lg:top-[30%] md:top-[25%] sm:top-[30%] top-[5%] text-[#FEFEFF] lg:left-16 md:left-10 sm:left-10 left-10'>
         <h1 className='lg:text-4xl md:text-2xl sm:text-2xl text-lg lg:mb-8 md:mb-3 sm:mb-2 mb-1 capitalize'>why learn from ShutterCraft</h1>

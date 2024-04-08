@@ -62,7 +62,7 @@ const PopularClasses = () => {
 
       </form>
 
-      <div className='lg:flex md:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4'>
+      <div className='lg:flex lg:flex-row md:flex sm:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
         {allClasses.length > 0 && Array.isArray(allClasses) &&
           allPopularClasses.map((eachClass, idx) => {
             const randomBadgeColors = generateRandomColorString();
