@@ -39,7 +39,7 @@ const Curriculum = () => {
 
         {
           curriculum.map((eachCurriculum, index) => {
-            console.log(eachCurriculum);
+            {/* console.log(eachCurriculum); */}
             return (
               <div key={eachCurriculum._id} className={`card lg:w-[32rem] h-[30rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
                 <div className="card-body sm:px-3 sm:py-3 px-3 py-3">

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swiper .swiper-slide {
+  height: auto;
+}
+
+.swiper-pagination-bullets-dynamic{
+  display: none;
+}

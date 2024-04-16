@@ -42,7 +42,7 @@ const Footer = () => {
       </div>
 
       <footer className="lg:flex lg:items-center lg:justify-between lg:w-full lg:h-full lg:p-4 bg-[#101218] text-white">
-        <Link to={`/`} className="btn btn-ghost text-xl text-[#323232]">ShutterCraft</Link>
+        <Link to={`/`} className="btn btn-ghost text-xl text-[#ffffff]">ShutterCraft</Link>
         <aside className='lg:flex-grow'>
           <p className="text-center">Copyright © {year} - All rights reserved by ShutterCraft</p>
         </aside>
