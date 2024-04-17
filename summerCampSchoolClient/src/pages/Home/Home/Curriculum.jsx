@@ -25,30 +25,36 @@ const Curriculum = () => {
   return (
     <div className='md:mx-8 md:my-16'>
       <div className='xl:flex lg:flex md:flex justify-between'>
+
+        {/* texts */}
         <div className='font-semibold lg:text-5xl md:text-3xl sm:text-2xl text-2xl mb-4'>
           <h1><span className='capitalize'>new skills</span> with ShutterCraft.</h1>
           <p><span className='capitalize'>a detailed look</span> at <span className='capitalize'>our curriculum</span></p>
         </div>
 
         <div>
-          <p className='font-semibold lg:text-xl md:text-xl sm:text-lg text-lg mb-6'>with real world project to create and <br /> online classes that fit a busy schedule</p>
+          <p className='font-semibold lg:text-xl md:text-xl sm:text-lg text-lg mb-6'>With real world project to create and <br /> online classes that fit a busy schedule</p>
           <BwArrowButton text={'get started'} to={'/'}></BwArrowButton>
         </div>
       </div>
-      <div className='xl:flex lg:flex lg:flex-row md:flex lg:justify-between md:space-x-4 md:my-16 my-10 space-y-5 lg:space-y-0 lg:w-full md:w-full sm:w-full flex flex-col items-center'>
+
+      {/* carriculum cards */}
+      <div className='xl:flex lg:flex lg:flex-row lg:justify-between lg:space-y-0 lg:w-full md:flex md:flex-row md:space-x-4 md:space-y-0 md:my-16 md:w-full my-10  sm:w-full space-y-5 flex flex-col items-center'>
 
         {
           curriculum.map((eachCurriculum, index) => {
-            {/* console.log(eachCurriculum); */}
+            {/* console.log(eachCurriculum); */ }
             return (
-              <div key={eachCurriculum._id} className={`card lg:w-[32rem] h-[30rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
-                <div className="card-body sm:px-3 sm:py-3 px-3 py-3">
-                {/* images */}
-                  <img loading="lazy" className='lg:w-48 md:w-52 sm:w-10 w-40 max-w-full mx-auto' src={eachCurriculum.img} alt="own pace png" />
+              <div
+                key={eachCurriculum._id}
+                className={`card lg:w-[32rem] lg:h-[32rem] md:h-[40rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
+                <div className="card-body">
+                  {/* images */}
+                  <img loading="lazy" className='lg:w-40 md:w-36 sm:w-10 w-40 mx-auto' src={eachCurriculum.img} alt="own pace png" />
                   {/* title */}
-                  <h2 className="card-title md:my-4 md:font-semibold md:text-xl text-center">{eachCurriculum.title}</h2>
+                  <h2 className="md:my-4 md:font-semibold md:text-lg text-center">{eachCurriculum.title}</h2>
                   {/* description */}
-                  <p className='font-medium text-lg'>{eachCurriculum.description}</p>
+                  <p className='font-medium md:text-base leading-3'>{eachCurriculum.description}</p>
                 </div>
               </div>
             )
