@@ -5,21 +5,12 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-
-import macroPhoto from "../../../assets/images/macro photography.jpg";
-import abstractPhoto from "../../../assets/images/abstract photography.jpg";
-import AdventurePhoto from "../../../assets/images/Adventure photography.jpg";
-import AstroPhoto from "../../../assets/images/Astrophotography.jpg";
-import FineartPhoto from "../../../assets/images/Fine art photography.jpg";
-import RealestatePhoto from "../../../assets/images/Real estate photography.jpg";
-import ScientificPhoto from "../../../assets/images/Scientific photography.jpg";
-import streetPhoto from "../../../assets/images/street photography.jpg";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+// import '../../../index.css';
 
 
 
 const Banner = () => {
-  const bannerImages = [macroPhoto, abstractPhoto, AdventurePhoto, AstroPhoto, FineartPhoto, RealestatePhoto, ScientificPhoto, streetPhoto];
 
   const [axiosPublic] = useAxiosPublic();
 
@@ -49,52 +40,23 @@ const Banner = () => {
       >
 
 
-        {banners && Array.isArray(banners) && banners.map((banner, idx) => {
+        {
+          banners && Array.isArray(banners) && banners.map((banner, idx) => {
           return (
             <SwiperSlide key={idx} className="aspect-w-1 aspect-h-1 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
               <div className="relative h-full">
-                <img loading="lazy" className="block w-full lg:h-[35rem] md:h-[30rem] sm:h-[25rem] h-[18rem] rounded object-cover" src={banner.image} alt="" />
-                <div className="absolute top-1/2 transform -translate-y-1/2 w-1/2 left-8">
-                  <h1 className="lg:text-3xl lg:font-bold lg:mb-2 text[#333333]">{banner.title}</h1>
-                  <p className="lg:text-lg text-[#333333] lg:font-bold">{banner.description}</p>
+                <img className="block w-full lg:h-[35rem] md:h-[30rem] sm:h-[25rem] h-[18rem] rounded object-cover" src={banner.image} alt="banner images" />
+                <div className="absolute top-24 transform -translate-y-1/2 lg:w-[65%] md:w-[60%] sm:w-[60%] banner-text-bg banner-border-radius">
+                  <div className="pl-4 pt-2 pb-2 md:pr-4">
+                    <h1 className="lg:text-3xl lg:font-bold lg:mb-2 text[#333333] text-center">{banner.title}</h1>
+                    <p className="lg:text-lg text-[#333333] lg:font-bold text-left lg:w-[35rem]">{banner.description}</p>
+                  </div>
                 </div>
               </div>
             </SwiperSlide>
           )
-        })}
-
-        {/*         <SwiperSlide className="aspect-w-1 aspect-h-1 h-auto">
-          <img loading="lazy" className="block w-full h-[35rem] rounded xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={macroPhoto} alt="" />
-        </SwiperSlide>
-
-        <SwiperSlide className="aspect-w-1 aspect-h-1 h-auto">
-          <img loading="lazy" className="block w-full h-[35rem] rounded xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={abstractPhoto} alt="" />
-        </SwiperSlide>
-
-        <SwiperSlide className="aspect-w-1 aspect-h-1 h-auto">
-          <img loading="lazy" className="block w-full h-[35rem] rounded xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={AdventurePhoto} alt="" />
-        </SwiperSlide>
-
-        <SwiperSlide className="aspect-w-1 aspect-h-1 h-auto">
-          <img loading="lazy" className="block w-full h-[35rem] rounded xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={AstroPhoto} alt="" />
-        </SwiperSlide>
-
-        <SwiperSlide className="aspect-w-1 aspect-h-1 h-auto">
-          <img loading="lazy" className="block w-full h-[35rem] rounded xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={FineartPhoto} alt="" />
-        </SwiperSlide>
-
-        <SwiperSlide className="aspect-w-1 aspect-h-1 h-auto">
-          <img loading="lazy" className="block w-full h-[35rem] rounded xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={RealestatePhoto} alt="" />
-        </SwiperSlide>
-
-        <SwiperSlide className="aspect-w-1 aspect-h-1 h-auto">
-          <img loading="lazy" className="block w-full h-[35rem] rounded xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={ScientificPhoto} alt="" />
-        </SwiperSlide>
-
-        <SwiperSlide className="aspect-w-1 aspect-h-1 h-auto">
-          <img loading="lazy" className="block w-full h-[35rem] rounded xl:rounded-xl md:rounded-md sm:rounded-sm object-cover" src={streetPhoto} alt="" />
-        </SwiperSlide>
-         */}
+        })
+        }
       </Swiper>
 
     </>
