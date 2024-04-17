@@ -23,7 +23,7 @@ const Curriculum = () => {
     fetchData();
   }, [axiosPublic]);
   return (
-    <div className='md:mx-8 md:-my-40'>
+    <div className='md:mx-8 md:my-16'>
       <div className='xl:flex lg:flex md:flex justify-between'>
         <div className='font-semibold lg:text-5xl md:text-3xl sm:text-2xl text-2xl mb-4'>
           <h1><span className='capitalize'>new skills</span> with ShutterCraft.</h1>

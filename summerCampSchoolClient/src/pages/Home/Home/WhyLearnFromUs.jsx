@@ -1,5 +1,5 @@
 import React from 'react';
-import lens from '../../../assets/images/lens.jpg';
+import lens from '../../../assets/images/lens.webp';
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
 const WhyLearnFromUs = () => {

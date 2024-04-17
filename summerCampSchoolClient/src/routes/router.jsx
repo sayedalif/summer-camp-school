@@ -50,10 +50,6 @@ export const router = createBrowserRouter([
       }
     ]
   },
-  {
-    path:'/profile',
-    
-  }
 
 ]);
 

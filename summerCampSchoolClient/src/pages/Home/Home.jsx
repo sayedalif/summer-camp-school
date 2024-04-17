@@ -4,13 +4,13 @@ import Footer from '../shared/Footer';
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Navbar></Navbar>
       <div className='min-h-[calc(100vh-276px)]'>
       <Outlet></Outlet>
       </div>
       <Footer></Footer>
-    </div>
+    </>
   );
 };
 
