@@ -1,11 +1,7 @@
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BwArrowButton from '../../../components/BwArrowButton';
-import ownPacePng from '../../../assets/illustrations/3d-business-young-man-standing-at-his-desk.png';
-import passionPng from '../../../assets/illustrations/moji-hand-with-index-finger-and-thumb-crossed-1.png';
-import axios from 'axios';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import CurriculumButton from '../../../components/CurriculumButton';
 
 const Curriculum = () => {
   const [axiosPublic] = useAxiosPublic();
@@ -50,11 +46,11 @@ const Curriculum = () => {
                 className={`card lg:w-[32rem] lg:h-[32rem] md:h-[40rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
                 <div className="card-body">
                   {/* images */}
-                  <img loading="lazy" className='lg:w-40 md:w-36 sm:w-10 w-40 mx-auto' src={eachCurriculum.img} alt="own pace png" />
+                  <img loading="lazy" className='lg:w-40 md:w-36 sm:w-[13rem] w-[10rem] mx-auto' src={eachCurriculum.img} alt="own pace png" />
                   {/* title */}
-                  <h2 className="md:my-4 md:font-semibold md:text-lg text-center">{eachCurriculum.title}</h2>
+                  <h2 className="lg:text-2xl md:text-xl  md:font-semibold md:my-4 sm:text-xl text-lg text-center">{eachCurriculum.title}</h2>
                   {/* description */}
-                  <p className='font-medium md:text-base leading-3'>{eachCurriculum.description}</p>
+                  <p className='font-medium md:text-base'>{eachCurriculum.description}</p>
                 </div>
               </div>
             )
@@ -65,10 +61,19 @@ const Curriculum = () => {
       <div className='md:flex md:space-x-8'>
         <h1 className='capitalize md:text-2xl md:font-semibold text-center font-semibold text-2xl mb-8'>our special<br />features  for you</h1>
         <div className='lg:flex lg:flex-wrap lg:space-x-28 md:flex md:flex-wrap grid grid-cols-2'>
-          <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize mr-2 mb-4">get certificate</button>
-          <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize md:mr-2">amazing instructor</button>
-          <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize mr-2">lifetime support</button>
-          <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize">video lesson</button>
+          {/* button */}
+          <CurriculumButton text={'get certificate'} />
+          {/* <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize mr-2 mb-4">get certificate</button> */}
+
+          <CurriculumButton text={'amazing instructor'} />
+          {/* <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize md:mr-2">amazing instructor</button> */}
+
+          <CurriculumButton text={'lifetime support'} />
+
+          {/* <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize mr-2">lifetime support</button> */}
+
+          <CurriculumButton text={'video lesson'} />
+          {/* <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize">video lesson</button> */}
         </div>
       </div>
       <div className="divider text-black my-10"></div>

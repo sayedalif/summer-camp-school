@@ -19,7 +19,7 @@ const Banner = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('banner.json')
+      const response = await fetch('bannerData.json')
       const data = await response.json();
       setBanners(data);
       // console.log(data);

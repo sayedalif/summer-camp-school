@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import FacebookLogin from './shared/socialLogin/FacebookLogin';
-import GoogleLogin from './shared/socialLogin/GoogleLogin';
+import { useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
+import SocialLoginButton from '../components/SocialLoginButton';
 
 const Register = () => {
   // navigate
@@ -204,8 +203,10 @@ const Register = () => {
 
       </div>
       <span className='flex flex-col items-center'>
-        <FacebookLogin></FacebookLogin>
-        <GoogleLogin></GoogleLogin>
+      {/* google */}
+        <SocialLoginButton authType={'google'}></SocialLoginButton>
+        {/* facebook */}
+        <SocialLoginButton></SocialLoginButton>
       </span>
     </form>
   );

@@ -13,4 +13,9 @@ export const imageUpload = async (image) => {
 
   const data = await response.data;
   return data;
-}
+};
+
+// fetch data
+// this fetch data using react query
+
+

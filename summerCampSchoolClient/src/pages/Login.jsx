@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import FacebookLogin from './shared/socialLogin/FacebookLogin';
-import GoogleLogin from './shared/socialLogin/GoogleLogin';
+import { useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import SocialLoginButton from '../components/SocialLoginButton';
 
 
 const Login = () => {
@@ -66,8 +65,8 @@ const Login = () => {
 
       </div>
       <span className='flex flex-col items-center'>
-        <FacebookLogin></FacebookLogin>
-        <GoogleLogin></GoogleLogin>
+        <SocialLoginButton authType={'google'}></SocialLoginButton>
+        <SocialLoginButton></SocialLoginButton>
       </span>
     </div>
   );
