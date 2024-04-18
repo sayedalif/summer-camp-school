@@ -136,7 +136,7 @@ const Register = () => {
                 <input type="file" name="img" accept="image/*" {...getInputProps()} />
                 {isDragActive ?
                   <p>Drop the files here ...</p> :
-                  <p>Drop your photo here, or click to select it</p>
+                  <button className='btn btn-primary'>Drop your photo here, or click to select it</button>
                 }
               </div>
 
@@ -190,7 +190,7 @@ const Register = () => {
               </div>
 
               <div className="form-control mt-6">
-                <button type='submit' className={`bg-[#3B0200] text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-[#3b020085]'}`} disabled={loading}>Sign up</button>
+                <button type='submit' className={`bg-accent text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-accent'}`} disabled={loading}>Sign up</button>
               </div>
 
             </div>

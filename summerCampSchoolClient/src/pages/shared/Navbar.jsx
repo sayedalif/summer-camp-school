@@ -53,7 +53,7 @@ const Navbar = () => {
           location.pathname === '/login' ?
             ''
             :
-            !user && <Link to={`/login`} className="bg-[#3B0200] text-white rounded-3xl px-6 py-2">Sign in</Link>
+            !user && <Link to={`/login`} className="bg-primary text-white rounded-3xl px-6 py-2">Sign in</Link>
         }
 
         {

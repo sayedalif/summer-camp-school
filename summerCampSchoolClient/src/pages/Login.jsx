@@ -51,10 +51,10 @@ const Login = () => {
                     setLoading(false);
                   }
                 }
-                } className={`bg-[#3B0200] text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-[#3b020085]'}`} disabled={loading}>Login</button>
+                } className={`bg-primary text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-primary'}`} disabled={loading}>Login</button>
               </div>
 
-              <p className='underline cursor-pointer md:mt-8 text-[#3B0200] text-lg'><Link to={`/register`}>new here? create a new <span className='uppercase'>account</span>!</Link></p>
+              <p className='underline cursor-pointer md:mt-8 text-blue-400 text-lg'><Link to={`/register`}>new here? create a new <span className='uppercase'>account</span>!</Link></p>
             </form>
           </div>
         </div>
