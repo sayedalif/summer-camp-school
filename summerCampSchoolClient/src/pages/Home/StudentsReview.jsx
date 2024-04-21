@@ -1,29 +1,11 @@
-import { faArrowRight, faIdBadge, faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import Rating from 'react-rating';
-import starYellow from '../../../assets/icons/star-yellow.png'
-import starGrey from '../../../assets/icons/star-grey.png'
+import starYellow from '../../assets/icons/star-yellow.png'
+import starGrey from '../../assets/icons/star-grey.png'
+import useStudentReview from '../../hooks/useStudentReview';
 
 
 const StudentsReview = () => {
-  const [axiosPublic] = useAxiosPublic();
-
-  const [reviews, setReviews] = useState('');
-
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axiosPublic.get(`/reviews`);
-      const data = await response.data;
-      setReviews(data);
-    }
-    fetchData();
-  }, []);
-
+  const { reviews, isLoading } = useStudentReview();
 
   const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
   function generateRandomColorString() {
@@ -65,6 +47,7 @@ const StudentsReview = () => {
                       <Rating
                         className='w-1/2'
                         initialRating={review.stars}
+                        placeholderRating={review.stars}
                         readonly
                         emptySymbol={'../../../assets/icons/star-grey.png'}
                         fullSymbol={'../../../assets/icons/star-yellow.png'}

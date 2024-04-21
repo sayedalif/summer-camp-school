@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from '../shared/Navbar';
-import Footer from '../shared/Footer';
+import Navbar from '../pages/shared/Navbar';
+import Footer from '../pages/shared/Footer';
 
-const Home = () => {
+const Main = () => {
   return (
     <>
       <Navbar></Navbar>
@@ -14,4 +14,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Main;

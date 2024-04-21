@@ -1,23 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import usePopularInstructor from "../../hooks/usePopularInstructor";
 
 const PopularInstructor = () => {
 
-  // axios public hook
-  const [axiosPublic] = useAxiosPublic();
-
-  const [instructors, setInstructors] = useState('');
-  // console.log("🚀 ~ PopularInstructor ~ instructors:", instructors);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axiosPublic.get('/users');
-      const data = response.data;
-      setInstructors(data);
-    }
-    fetchData();
-  }, []);
+  const { popularInstructors, isLoading } = usePopularInstructor();
+  console.log("🚀 ~ PopularInstructor ~ popularInstructors:", popularInstructors);
 
   return (
     <div className='my-24'>
@@ -26,16 +12,16 @@ const PopularInstructor = () => {
 
       <div className='lg:flex md:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4'>
         {
-          instructors && instructors?.length && Array?.isArray(instructors) && instructors?.map((instructor) => {
+          popularInstructors && popularInstructors?.length && Array?.isArray(popularInstructors) && popularInstructors?.map((instructor) => {
             {/* console.log("🚀 ~ popularInstructor&&popularInstructor.length&&Array.isArray ~ instructor:", instructor); */ }
-            const { classes_names, email, image, instructor_id, name, role, total_classes, _id } = instructor;
+            const { classes_names, instructor_image, instructor_id, instructor_name } = instructor;
 
             return (
-              <div key={_id} className="card relative lg:mb-0 md:mb-3 sm:mb-3 mb-3">
-                <img loading="lazy" className='rounded lg:w-[380px]' src={image} alt="instructor_image" />
+              <div key={instructor_id} className="card relative lg:mb-0 md:mb-3 sm:mb-3 mb-3">
+                <img loading="lazy" className='rounded lg:w-[380px]' src={instructor_image} alt="instructor_image" />
                 <div className='absolute bottom-0 left-4'>
                   <h2 className="text-white text-lg font-bold">
-                    {name}
+                    {instructor_name}
                   </h2>
                   <span>{classes_names?.map((classes_name, index) => {
                     return (

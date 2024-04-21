@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import Logo from "../../components/Logo";
 
 const Navbar = () => {
   const location = useLocation();
@@ -27,7 +28,8 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <Link to={`/`} className="btn btn-ghost text-xl text-[#323232]">ShutterCraft</Link>
+        {/* logo component */}
+        <Logo color={'#323232'}></Logo>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 flex space-x-16 capitalize">

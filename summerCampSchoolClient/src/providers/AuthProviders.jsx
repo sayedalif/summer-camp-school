@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase/firebase.config';
 import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignInWithGoogle, useSendPasswordResetEmail, useSignOut, useSendEmailVerification, useUpdateProfile } from 'react-firebase-hooks/auth';
@@ -48,9 +48,9 @@ const AuthProviders = ({ children }) => {
 
   // observer
   const [user, loading, error] = useAuthState(auth);
-/*   console.log("🚀 ~ AuthProviders ~ loading:", loading);
-  console.log("🚀 ~ AuthProviders ~ user:", user);
-  console.log("🚀 ~ AuthProviders ~ error:", error); */
+  /*   console.log("🚀 ~ AuthProviders ~ loading:", loading);
+    console.log("🚀 ~ AuthProviders ~ user:", user);
+    console.log("🚀 ~ AuthProviders ~ error:", error); */
 
   if (user) {
     /*  axiosPublic.get(`/users/${user?.email}:`).then(response => {

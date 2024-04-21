@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faIdBadge, faMagnifyingGlass, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
-import axios from 'axios';
-import BwArrowButton from '../../../components/BwArrowButton';
+import BwArrowButton from '../../components/BwArrowButton';
+import UsePopularClasses from '../../hooks/UsePopularClasses';
 
 
 const PopularClasses = () => {
-  const [axiosPublic] = useAxiosPublic();
 
-  const [allClasses, setAllClasses] = useState('');
+  const {classes, isLoading} = UsePopularClasses();
+  console.log("🚀 ~ PopularClasses ~ classes:", classes)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axiosPublic.get(`/popularclasses`);
-      const data = await response.data;
-      setAllClasses(data);
-    }
-    fetchData();
-  }, []);
-
-
-  const allPopularClasses = allClasses.length > 0 && Array.isArray(allClasses) && allClasses.filter(allClass => allClass.students_enrolled >= 400);
+  const allPopularClasses = classes.length > 0 && Array.isArray(classes) && classes.filter(allClass => allClass.students_enrolled >= 400);
 
   const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
   function generateRandomColorString() {
@@ -63,12 +51,12 @@ const PopularClasses = () => {
       </form>
 
       <div className='lg:flex lg:flex-row md:flex sm:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
-        {allClasses.length > 0 && Array.isArray(allClasses) &&
+        {classes.length > 0 && Array.isArray(classes) &&
           allPopularClasses.map((eachClass, idx) => {
             const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>
-              <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4 rounded-xl
+                <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4 rounded-xl
                 backface-hidden">
 
                   <div className='flex flex-col justify-between h-full'>

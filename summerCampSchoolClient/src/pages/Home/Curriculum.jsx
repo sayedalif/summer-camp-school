@@ -1,23 +1,9 @@
-import { useEffect, useState } from 'react';
-import BwArrowButton from '../../../components/BwArrowButton';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
-import CurriculumButton from '../../../components/CurriculumButton';
+import BwArrowButton from '../../components/BwArrowButton';
+import CurriculumButton from '../../components/CurriculumButton';
+import useCurriculum from '../../hooks/useCurriculum';
 
 const Curriculum = () => {
-  const [axiosPublic] = useAxiosPublic();
-
-  const [curriculum, setCurriculum] = useState([]);
-  // console.log("🚀 ~ Curriculum ~ curriculum:", curriculum);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axiosPublic.get('/curriculum');
-      const data = await response.data;
-
-      setCurriculum(data);
-    }
-    fetchData();
-  }, [axiosPublic]);
+  const { curriculum, isLoading } = useCurriculum();
   return (
     <div className='md:mx-8 md:my-16'>
       <div className='xl:flex lg:flex md:flex justify-between'>
@@ -38,7 +24,7 @@ const Curriculum = () => {
       <div className='xl:flex lg:flex lg:flex-row lg:justify-between lg:space-y-0 lg:w-full md:flex md:flex-row md:space-x-4 md:space-y-0 md:my-16 md:w-full my-10  sm:w-full space-y-5 flex flex-col items-center'>
 
         {
-          curriculum.map((eachCurriculum, index) => {
+          curriculum && Array.isArray(curriculum) && curriculum.map((eachCurriculum, index) => {
             {/* console.log(eachCurriculum); */ }
             return (
               <div

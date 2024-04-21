@@ -1,33 +1,14 @@
-import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-
-
+import useBanner from '../../hooks/useBanner';
 
 const Banner = () => {
+  // from the hooks
 
-  const [axiosPublic] = useAxiosPublic();
-
-  const [banners, setBanners] = useState([]);
-  console.log("🚀 ~ Banner ~ banner:", banners);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('bannerData.json')
-      const data = await response.json();
-      setBanners(data);
-      // console.log(data);
-    }
-
-    fetchData();
-  }, [axiosPublic]);
-
+  const { banners, isLoading } = useBanner();
   return (
     <>
       <Swiper
