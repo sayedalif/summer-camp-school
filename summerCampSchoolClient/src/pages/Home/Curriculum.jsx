@@ -46,7 +46,7 @@ const Curriculum = () => {
 
       <div className='md:flex md:space-x-8'>
         <h1 className='capitalize md:text-2xl md:font-semibold text-center font-semibold text-2xl mb-8'>our special<br />features  for you</h1>
-        <div className='lg:flex lg:flex-wrap lg:space-x-28 md:flex md:flex-wrap grid grid-cols-2'>
+        <div className='lg:flex lg:flex-wrap lg:justify-between lg:items-start lg:space-x-28 md:flex md:flex-wrap md:content-center grid grid-cols-2'>
           {/* button */}
           <CurriculumButton text={'get certificate'} />
           {/* <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize mr-2 mb-4">get certificate</button> */}
