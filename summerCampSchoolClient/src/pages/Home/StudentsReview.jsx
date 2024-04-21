@@ -33,7 +33,7 @@ const StudentsReview = () => {
       {/* cards */}
       <div className='my-8'>
         {/* loop here */}
-        <div className='lg:flex lg:flex-wrap lg:my-8 lg:mx-4 md:flex md:flex-wrap mt-4 mb-4'>
+        <div className='lg:flex lg:flex-wrap lg:my-8 lg:mx-4 md:flex md:flex-row md:flex-wrap md:gap-3 flex flex-col items-center mt-4 mb-4'>
           {
             reviews.length > 0 && Array.isArray(reviews) &&
             reviews.map((review, idx) => {
@@ -47,13 +47,15 @@ const StudentsReview = () => {
                       <figure className='md:mr-3'>
                         {/* student image */}
                         <img loading="lazy"
-                          className='w-full h-full lg:w-full lg:h-[5rem] md:w-[100px] md:h-[4rem] sm:w-[100px] sm:h-[4rem] rounded-md' src={review.image} alt='instructor image' />
+                          className='lg:w-full lg:h-[5rem] md:w-[100px] md:h-[4rem] sm:w-[100px] sm:h-[4rem] w-20 h-14 rounded-md' src={review.image} alt='students images' />
                       </figure>
+                      {/* students names */}
                       <div>
                         <span className='text-pretty card-title'>{review.name}</span>
                       </div>
                     </div>
                     <div className="card-body lg:px-4 lg:py-4 md:px-3 md:py-3 px-3 py-3">
+                      {/* rating from student */}
                       <div className='flex items-start justify-start w-1/3'>
                         <Rating
                           className='w-5 h-5'

@@ -25,18 +25,17 @@ const Curriculum = () => {
 
         {
           curriculum && Array.isArray(curriculum) && curriculum.map((eachCurriculum, index) => {
-            {/* console.log(eachCurriculum); */ }
             return (
               <div
                 key={eachCurriculum._id}
                 className={`card lg:w-[32rem] lg:h-[32rem] md:h-[40rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
                 <div className="card-body">
-                  {/* images */}
+                  {/* cards images */}
                   <img loading="lazy" className='lg:w-40 md:w-36 sm:w-[13rem] w-[10rem] mx-auto' src={eachCurriculum.img} alt="own pace png" />
-                  {/* title */}
-                  <h2 className="lg:text-2xl md:text-xl  md:font-semibold md:my-4 sm:text-xl text-lg text-center">{eachCurriculum.title}</h2>
+                  {/* cards title */}
+                  <h2 className="lg:text-2xl md:text-xl  md:font-semibold md:my-4 sm:text-xl text-center text-xl">{eachCurriculum.title}</h2>
                   {/* description */}
-                  <p className='font-medium md:text-base'>{eachCurriculum.description}</p>
+                  <p className='lg:font-medium md:font-medium sm:font-semibold font-normal md:text-base'>{eachCurriculum.description}</p>
                 </div>
               </div>
             )
@@ -44,9 +43,11 @@ const Curriculum = () => {
         }
       </div>
 
+      {/* special features */}
+
       <div className='md:flex md:space-x-8'>
         <h1 className='capitalize md:text-2xl md:font-semibold text-center font-semibold text-2xl mb-8'>our special<br />features  for you</h1>
-        <div className='lg:flex lg:flex-wrap lg:justify-between lg:items-start lg:space-x-28 md:flex md:flex-wrap md:content-center grid grid-cols-2'>
+        <div className='lg:flex lg:flex-wrap lg:content-center lg:justify-between lg:items-center md:flex md:flex-wrap md:content-center md:gap-2 grid grid-cols-2 gap-4'>
           {/* button */}
           <CurriculumButton text={'get certificate'} />
           {/* <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize mr-2 mb-4">get certificate</button> */}
@@ -62,6 +63,7 @@ const Curriculum = () => {
           {/* <button className="btn btn-active bg-[#F1F1F1] outline-none border-none rounded-full capitalize">video lesson</button> */}
         </div>
       </div>
+
       <div className="divider text-black my-10"></div>
     </div>
   );
