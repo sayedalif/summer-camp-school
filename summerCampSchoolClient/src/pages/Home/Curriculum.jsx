@@ -5,7 +5,7 @@ import useCurriculum from '../../hooks/useCurriculum';
 const Curriculum = () => {
   const { curriculum, isLoading } = useCurriculum();
   return (
-    <div className='md:mx-8 md:my-16'>
+    <div className='md:mx-8 md:my-16 sm:mt-6 mt-6'>
       <div className='xl:flex lg:flex md:flex justify-between'>
 
         {/* texts */}

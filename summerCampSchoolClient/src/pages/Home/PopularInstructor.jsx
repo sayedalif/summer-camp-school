@@ -6,7 +6,7 @@ const PopularInstructor = () => {
   console.log("🚀 ~ PopularInstructor ~ popularInstructors:", popularInstructors);
 
   return (
-    <div className='my-24'>
+    <div className='lg:my-24'>
       <h1 className='text-center md:my-8 text-[#000000] lg:text-5xl md:text-5xl font-bold text-2xl mb-7'>Learn from Creative Experts</h1>
       <p className='lg:mx-auto md:mx-auto text-center my-4 sm:text-2xl text-xl'>ShutterCraft classes are taught by industry leaders excited to share their tools, techniques, and professional journeys with you.</p>
 
