@@ -6,7 +6,7 @@ import UsePopularClasses from '../../hooks/UsePopularClasses';
 
 const PopularClasses = () => {
 
-  const {classes, isLoading} = UsePopularClasses();
+  const { classes, isLoading } = UsePopularClasses();
   console.log("🚀 ~ PopularClasses ~ classes:", classes)
 
   const allPopularClasses = classes.length > 0 && Array.isArray(classes) && classes.filter(allClass => allClass.students_enrolled >= 400);
@@ -50,7 +50,7 @@ const PopularClasses = () => {
 
       </form>
 
-      <div className='lg:flex lg:flex-row md:flex sm:flex lg:justify-between md:justify-evenly lg:flex-wrap md:flex-wrap sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
+      <div className='lg:flex lg:flex-row lg:justify-between lg:flex-wrap md:flex md:flex-row md:justify-between md:flex-wrap sm:flex sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
         {classes.length > 0 && Array.isArray(classes) &&
           allPopularClasses.map((eachClass, idx) => {
             const randomBadgeColors = generateRandomColorString();

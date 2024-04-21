@@ -10,12 +10,7 @@
   display: none;
 }
 
-.banner-border-radius{
-  border-top-right-radius: 9999px;
-  border-bottom-right-radius: 9999px;
-}
-
 .banner-text-bg{
-  background: rgb(255,255,255);
+  border-radius: 4px;
   background: linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.5) 77%, rgba(255,255,255,0.3) 100%);
 }

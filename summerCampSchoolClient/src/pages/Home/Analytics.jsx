@@ -2,6 +2,7 @@ import useAnalytics from "../../hooks/useAnalytics";
 
 const Analytics = () => {
   const { stats, isLoading } = useAnalytics();
+  
   return (
     <div className='lg:flex lg:justify-center lg:my-24 lg:space-x-5 lg:space-y-0 md:grid md:grid-cols-2 md:space-x-0 md:gap-5 md:space-y-0 sm:space-y-5 space-y-5'>
       {

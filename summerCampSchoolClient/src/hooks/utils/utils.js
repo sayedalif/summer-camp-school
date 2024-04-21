@@ -1,7 +1,4 @@
 import axios from 'axios';
-import { useState } from 'react';
-
-
 
 // upload image to IMGBB
 export const imageUpload = async (image) => {
@@ -17,6 +14,3 @@ export const imageUpload = async (image) => {
   const data = await response.data;
   return data;
 };
-
-// fetch data
-// this fetch data using react query

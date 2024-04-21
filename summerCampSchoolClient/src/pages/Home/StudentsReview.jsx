@@ -1,19 +1,28 @@
-import Rating from 'react-rating';
-import starYellow from '../../assets/icons/star-yellow.png'
-import starGrey from '../../assets/icons/star-grey.png'
 import useStudentReview from '../../hooks/useStudentReview';
+import { Rating, RoundedStar } from '@smastrom/react-rating'
 
+import '@smastrom/react-rating/style.css'
+
+const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
+function generateRandomColorString() {
+  const index = Math.floor(Math.random() * badges.length);
+
+  const randomString = `${badges[index]}`;
+  return randomString;
+}
+
+
+// Declare it outside your component so it doesn't get re-created
+const myStyles = {
+  itemShapes: RoundedStar,
+  activeFillColor: '#ffb700',
+  inactiveFillColor: '#fbf1a9'
+}
 
 const StudentsReview = () => {
   const { reviews, isLoading } = useStudentReview();
 
-  const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
-  function generateRandomColorString() {
-    const index = Math.floor(Math.random() * badges.length);
 
-    const randomString = `${badges[index]}`;
-    return randomString;
-  }
   return (
     <div className='mb-24'>
       <div className='text-center'>
@@ -28,9 +37,10 @@ const StudentsReview = () => {
           {
             reviews.length > 0 && Array.isArray(reviews) &&
             reviews.map((review, idx) => {
+              console.log(review);
               const randomBadgeColors = generateRandomColorString();
               return (
-                <div key={idx} className='cursor-pointer'>
+                <div key={idx}>
                   <div className="card lg:w-[22rem] lg:h-[20rem] lg:mr-4 md:w-[20rem] sm:w-[20rem] w-[18rem] bg-base-100 shadow-xl mb-4">
 
                     <div className='flex justify-between items-start lg:px-4 lg:py-4 md:px-3 md:py-3 px-4 py-4'>
@@ -44,14 +54,11 @@ const StudentsReview = () => {
                       </div>
                     </div>
                     <div className="card-body lg:px-4 lg:py-4 md:px-3 md:py-3 px-3 py-3">
-                      <Rating
-                        className='w-1/2'
-                        initialRating={review.stars}
-                        placeholderRating={review.stars}
-                        readonly
-                        emptySymbol={'../../../assets/icons/star-grey.png'}
-                        fullSymbol={'../../../assets/icons/star-yellow.png'}
-                      />
+                      <div className='flex items-start justify-start w-1/3'>
+                        <Rating
+                          className='w-5 h-5'
+                          style={{ maxWidth: 250 }} value={review.rating} readOnly={true} halfFillMode={true} itemStyles={myStyles} />
+                      </div>
                       <p className='font-medium text-base'>{review.description}</p>
                       <div className="">
                         <h1 style={{ backgroundColor: randomBadgeColors }} className='badge'>{review?.category}</h1>
