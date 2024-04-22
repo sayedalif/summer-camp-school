@@ -2,14 +2,7 @@ import useStudentReview from '../../hooks/useStudentReview';
 import { Rating, RoundedStar } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
-
-const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
-function generateRandomColorString() {
-  const index = Math.floor(Math.random() * badges.length);
-
-  const randomString = `${badges[index]}`;
-  return randomString;
-}
+import { generateRandomColorString } from '../../hooks/utils/utils';
 
 
 // Declare it outside your component so it doesn't get re-created

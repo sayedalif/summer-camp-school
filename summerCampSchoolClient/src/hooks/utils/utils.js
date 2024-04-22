@@ -14,3 +14,11 @@ export const imageUpload = async (image) => {
   const data = await response.data;
   return data;
 };
+
+const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
+export function generateRandomColorString() {
+  const index = Math.floor(Math.random() * badges.length);
+
+  const randomString = `${badges[index]}`;
+  return randomString;
+}

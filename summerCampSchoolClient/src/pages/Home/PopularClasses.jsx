@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faIdBadge, faMagnifyingGlass, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 import BwArrowButton from '../../components/BwArrowButton';
 import UsePopularClasses from '../../hooks/UsePopularClasses';
+import { generateRandomColorString } from '../../hooks/utils/utils';
 
 
 const PopularClasses = () => {
@@ -10,14 +11,6 @@ const PopularClasses = () => {
   console.log("🚀 ~ PopularClasses ~ classes:", classes)
 
   const allPopularClasses = classes.length > 0 && Array.isArray(classes) && classes.filter(allClass => allClass.students_enrolled >= 400);
-
-  const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
-  function generateRandomColorString() {
-    const index = Math.floor(Math.random() * badges.length);
-
-    const randomString = `${badges[index]}`;
-    return randomString;
-  }
 
 
   return (
@@ -29,7 +22,7 @@ const PopularClasses = () => {
       {/* search bar */}
       <form className='flex justify-center'>
         <div className='relative flex items-center'>
-          <input type="text" placeholder="Course name" className="md:py-7 md:pl-7 input input-bordered md:input-md sm:input-sm lg:w-[27rem] md:w-80 w-[9rem] p-0 rounded-l-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1]" />
+          <input type="text" placeholder="Course name" className="md:py-7 md:pl-7 input input-bordered md:input-md sm:input-sm lg:w-[27rem] md:w-80 w-[10rem] p-0 rounded-l-full placeholder:text-stone-700 border-none placeholder:font-bold focus:outline-none bg-[#F1F1F1]" />
 
           <span className='absolute md:left-2'>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -47,7 +40,6 @@ const PopularClasses = () => {
             <FontAwesomeIcon icon={faMagnifyingGlass} />
             search</button>
         </div>
-
       </form>
 
       <div className='lg:flex lg:flex-row lg:justify-between lg:flex-wrap md:flex md:flex-row md:justify-between md:flex-wrap sm:flex sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
