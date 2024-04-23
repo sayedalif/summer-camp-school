@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Logo from "../../components/Logo";
+import DarkNLightModeToggle from "../../components/DarknLightModeToggle";
 
 const Navbar = () => {
   const location = useLocation();
@@ -42,7 +43,8 @@ const Navbar = () => {
           <Link to={`/about`}>about</Link>
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-3 flex flex-row justify-end items-center">
+        <DarkNLightModeToggle></DarkNLightModeToggle>
         {/* {
           !user ?
             <Link to={`/login`} className="bg-[#3B0200] text-white rounded-3xl px-6 py-2">Sign in</Link>
