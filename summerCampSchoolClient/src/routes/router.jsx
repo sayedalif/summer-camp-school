@@ -8,6 +8,7 @@ import Dashboard from "../pages/shared/Dashboard";
 import AddClass from "../pages/AddClass";
 import Main from "../Layout/Main";
 import Home from "../pages/Home/Home/Home";
+import Classes from "../pages/Classes";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
         path: '/register',
         element: <Register></Register>
       },
+      {
+        path: '/classes',
+        element: <Classes></Classes>
+      }
     ],
 
   },

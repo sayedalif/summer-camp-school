@@ -15,6 +15,7 @@ export const imageUpload = async (image) => {
   return data;
 };
 
+// this creates new badge color for every render
 const badges = ['#FFC4DF', '#FDE781', '#c5c5fe'];
 export function generateRandomColorString() {
   const index = Math.floor(Math.random() * badges.length);
@@ -22,3 +23,6 @@ export function generateRandomColorString() {
   const randomString = `${badges[index]}`;
   return randomString;
 }
+
+export const year = new Date().getFullYear();
+

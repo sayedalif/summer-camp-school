@@ -8,6 +8,16 @@ const Navbar = () => {
   // console.log("🚀 ~ Navbar ~ location:", location);
   const { user, signOut } = useAuth();
 
+  const li = [
+    'home',
+    'courses',
+    'instructors',
+    'classes',
+    'community',
+    'dashboard',
+    'about',
+  ];
+
   return (
 
     <div className="navbar bg-base-100">
@@ -17,15 +27,14 @@ const Navbar = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+
+            <Link to={`/`}><li className="font-semibold">Home</li></Link>
+            <Link to={`/instructors`}><li className="font-semibold">Instructors</li></Link>
+            <Link to={`/classes`}><li className="font-semibold">Classes</li></Link>
             <li>
-              <Link className="font-semibold" to={`/`}>Home</Link>
-            </li>
-            <li>
-              <Link className="font-medium" to={`/instructors`}>Instructors</Link>
-            </li>
-            <li>
-              <Link to={`/classes`}>Classes</Link>
-              {user && <Link to={`/dashboard`}>Dashboard</Link>}
+              {
+                user && <Link to={`/dashboard`}>Dashboard</Link>
+              }
             </li>
           </ul>
         </div>
@@ -34,13 +43,18 @@ const Navbar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 flex space-x-16 capitalize">
-          <Link className="font-semibold" to={`/`}>home</Link>
+          {/* <Link className="font-semibold" to={`/`}>home</Link>
           <Link className="font-semibold" to={`/courses`}>courses</Link>
           <Link className="font-semibold" to={`/dashboard/myclasses`}>instructors</Link>
           <Link to={`/allclasses`}>classes</Link>
           <Link to={`/community`}>community</Link>
           {user && <Link to={`/dashboard`}>Dashboard</Link>}
-          <Link to={`/about`}>about</Link>
+          <Link to={`/about`}>about</Link> */}
+          {
+            li.map((item, idx) => {
+              return <Link key={idx} className="font-semibold capitalize" to={`${item === 'home' ? '/' : `/${item}`}`}>{item}</Link>
+            })
+          }
         </ul>
       </div>
       <div className="navbar-end gap-3 flex flex-row justify-end items-center">

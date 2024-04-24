@@ -26,9 +26,9 @@ const GoToTop = () => {
   return (
     <div className="flex justify-center items-center relative">
       {isVisible && (
-        <div className="text-[1.4rem] w-[3rem] h-[3rem] bg-purple-600 shadow-lg shadow-indigo-500/50 rounded-full fixed bottom-[2rem] right-[1rem] z-[999] flex justify-center items-center cursor-pointer" onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }) }}>
+        <button className="text-[1.4rem] w-[3rem] h-[3rem] bg-purple-600 shadow-lg shadow-indigo-500/50 rounded-full fixed bottom-[2rem] right-[1rem] z-[999] flex justify-center items-center cursor-pointer" onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }) }}>
           <FaArrowUp className="animate-[gototop_1.2s_linear_infinite_alternate-reverse] text-white" />
-        </div>
+        </button>
       )}
     </div>
   );
