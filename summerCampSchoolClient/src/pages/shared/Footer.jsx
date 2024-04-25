@@ -3,7 +3,7 @@ import { year } from "../../hooks/utils/utils";
 
 const Footer = () => {
   return (
-    <footer className="footer items-center p-4 bg-neutral text-neutral-content">
+    <footer className="footer items-center p-4 bg-base-200 text-base-content">
       <aside className="items-center grid-flow-col">
         <Logo></Logo>
         <p>Copyright © {year} - All right reserved</p>
