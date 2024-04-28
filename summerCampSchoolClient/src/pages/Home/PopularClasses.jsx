@@ -1,16 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faIdBadge, faMagnifyingGlass, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 import BwArrowButton from '../../components/BwArrowButton';
-import UsePopularClasses from '../../hooks/UsePopularClasses';
-import { generateRandomColorString } from '../../hooks/utils/utils';
+import useFetch, { generateRandomColorString } from '../../hooks/utils/utils';
 
 
 const PopularClasses = () => {
+  const { data: classes = [], loading, error } = useFetch('/classes');
 
-  const { classes, isLoading } = UsePopularClasses();
-  console.log("🚀 ~ PopularClasses ~ classes:", classes)
-
-  const allPopularClasses = classes.length > 0 && Array.isArray(classes) && classes.filter(allClass => allClass.students_enrolled >= 400);
+  const allPopularClasses = classes?.length > 0 && Array?.isArray(classes) && classes?.filter(allClass => allClass?.students_enrolled >= 400);
 
 
   return (
@@ -31,8 +28,8 @@ const PopularClasses = () => {
       </form>
 
       <div className='lg:flex lg:flex-row lg:justify-between lg:flex-wrap md:flex md:flex-row md:justify-between md:flex-wrap sm:flex sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
-        {classes.length > 0 && Array.isArray(classes) &&
-          allPopularClasses.map((eachClass, idx) => {
+        {classes?.length > 0 && Array?.isArray(classes) &&
+          allPopularClasses?.map((eachClass, idx) => {
             const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>

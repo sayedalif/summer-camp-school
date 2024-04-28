@@ -36,8 +36,9 @@ export const year = new Date().getFullYear();
 
 // fetching for public data
 export default function useFetch(url) {
-
+  
   const [axiosPublic] = useAxiosPublic();
+
 
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
