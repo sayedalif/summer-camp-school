@@ -1,9 +1,9 @@
 import BwArrowButton from '../../components/BwArrowButton';
 import CurriculumButton from '../../components/CurriculumButton';
-import useCurriculum from '../../hooks/useCurriculum';
+import useFetch from '../../hooks/utils/utils';
 
 const Curriculum = () => {
-  const { curriculum, isLoading } = useCurriculum();
+  const { data: curriculum = [], loading, error } = useFetch('/curriculum');
   return (
     <div className='md:mx-8 md:my-16 sm:mt-6 mt-6'>
       <div className='xl:flex lg:flex md:flex justify-between'>

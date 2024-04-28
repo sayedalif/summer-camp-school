@@ -31,11 +31,10 @@ export function generateRandomColorString() {
   return randomString;
 }
 
+// full year for the footer
 export const year = new Date().getFullYear();
 
-
-
-
+// fetching for public data
 export default function useFetch(url) {
 
   const [axiosPublic] = useAxiosPublic();

@@ -1,9 +1,6 @@
-import useAnalytics from "../../hooks/useAnalytics";
 import useFetch from "../../hooks/utils/utils";
 
 const Analytics = () => {
-  // const { stats, isLoading } = useAnalytics();
-
   const { data: stats = [], loading, error } = useFetch('/stats');
 
   return (
