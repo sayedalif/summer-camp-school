@@ -1,8 +1,7 @@
-import useStudentReview from '../../hooks/useStudentReview';
 import { Rating, RoundedStar } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
-import { generateRandomColorString } from '../../hooks/utils/utils';
+import useFetch, { generateRandomColorString } from '../../hooks/utils/utils';
 
 
 // Declare it outside your component so it doesn't get re-created
@@ -13,7 +12,8 @@ const myStyles = {
 }
 
 const StudentsReview = () => {
-  const { reviews, isLoading } = useStudentReview();
+
+  const { data: reviews = [], loading, error } = useFetch('/reviews');
 
 
   return (
@@ -28,8 +28,8 @@ const StudentsReview = () => {
         {/* loop here */}
         <div className='lg:flex lg:flex-wrap lg:my-8 lg:mx-4 md:flex md:flex-row md:flex-wrap md:gap-3 flex flex-col items-center mt-4 mb-4'>
           {
-            reviews.length > 0 && Array.isArray(reviews) &&
-            reviews.map((review, idx) => {
+            reviews?.length > 0 && Array?.isArray(reviews) &&
+            reviews?.map((review, idx) => {
               console.log(review);
               const randomBadgeColors = generateRandomColorString();
               return (
