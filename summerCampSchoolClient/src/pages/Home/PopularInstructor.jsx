@@ -18,14 +18,18 @@ const PopularInstructor = () => {
 
             return (
               <div key={instructor_id} className="card relative lg:mb-0 md:mb-3 sm:mb-3 mb-3">
+                {/* instructor images */}
                 <img loading="lazy" className='rounded lg:w-[380px] md:w-80' src={instructor_image} alt="instructor_image" />
                 <div className='absolute bottom-0 left-4'>
+
+                  {/* name */}
                   <h2 className="text-white text-lg font-bold">
                     {instructor_name}
                   </h2>
+                  {/* class names */}
                   <span>{classes_names?.map((classes_name, index) => {
                     return (
-                      <h2 className='text-pretty text-base font-light capitalize' key={index}>{classes_name}</h2>
+                      <h2 className='text-white text-pretty text-base font-light capitalize' key={index}>{classes_name}</h2>
                     )
                   })}</span>
                 </div>

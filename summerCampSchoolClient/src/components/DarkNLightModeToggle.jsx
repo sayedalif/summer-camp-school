@@ -4,43 +4,36 @@ import sunSvgLogo from '../assets/sun-svgrepo-com.svg';
 
 const DarkNLightModeToggle = () => {
   const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  // console.log("🚀 ~ DarkNLightModeToggle ~ isSystemDark:", isSystemDark);
+  console.log("🚀 ~ DarkNLightModeToggle ~ isSystemDark:", isSystemDark);
 
   const [isDark, setIsDark] = useState(isSystemDark);
-  // console.log("🚀 ~ DarkNLightModeToggle ~ isDark:", isDark);
 
 
-
-/*   const handleToggle = () => {
-    setIsDark(toggle => !toggle)
-  } */
-
-  // isDark && localStorage.setItem('data-theme', 'dark') || localStorage.setItem('data-theme', 'light'); does not work
-  // isDark ? localStorage.setItem('data-theme', 'dark') : localStorage.setItem('data-theme', 'light');
+  const handleToggle = () => {
+    setIsDark(toggle => !toggle);
+  };
 
   useEffect(() => {
-    // const darkMode = localStorage.getItem('data-theme');
-    // console.log("🚀 ~ useEffect ~ darkMode:", darkMode);
 
     const htmlElement = document.querySelector("html");
-    htmlElement.setAttribute("data-theme", isDark ? 'dark': 'light');
+    htmlElement.setAttribute("data-theme", 
+    isDark ? 'dark' : 'light');
     return () => {
       // Resetting the data-theme attribute to its default value or to match the system preference
-      htmlElement.removeAttribute("data-theme", isDark ? 'dark': 'light');
+      htmlElement.removeAttribute("data-theme", isDark ? 'dark' : 'light');
     };
   }, [isDark]);
 
   return (
     <label className="swap swap-rotate">
       {/* this hidden checkbox controls the state */}
-      <input type="checkbox" onClick={() => setIsDark(toggle => !toggle)} />
+      <input type="checkbox" onClick={() => handleToggle()} />
 
       {
         isDark &&
         <img className="swap-off fill-current w-10 h-10" src={sunSvgLogo} alt="" />
         ||
         <img className="swap-on fill-current w-10 h-10" src={moonSvgLogo} alt="" />
-
       }
     </label>
   );

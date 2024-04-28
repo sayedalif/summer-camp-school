@@ -39,17 +39,10 @@ const Navbar = () => {
           </ul>
         </div>
         {/* logo component */}
-        <Logo color={'#323232'}></Logo>
+        <Logo></Logo>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 flex space-x-16 capitalize">
-          {/* <Link className="font-semibold" to={`/`}>home</Link>
-          <Link className="font-semibold" to={`/courses`}>courses</Link>
-          <Link className="font-semibold" to={`/dashboard/myclasses`}>instructors</Link>
-          <Link to={`/allclasses`}>classes</Link>
-          <Link to={`/community`}>community</Link>
-          {user && <Link to={`/dashboard`}>Dashboard</Link>}
-          <Link to={`/about`}>about</Link> */}
           {
             li.map((item, idx) => {
               return <Link key={idx} className="font-semibold capitalize" to={`${item === 'home' ? '/' : `/${item}`}`}>{item}</Link>

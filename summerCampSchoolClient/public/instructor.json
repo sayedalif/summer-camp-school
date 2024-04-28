@@ -25,18 +25,27 @@
     "instructor_name": "Astrid Celestial",
     "email": "astrid.celestial@example.com",
     "instructor_id": 4,
-    "instructor_image": "https://i.ibb.co/TM79gCY/alex-suprun-1-JGHAAdb-L-Y-unsplash-min.jpg"
+    "classes_names": ["astro"],
+    "image": "https://i.ibb.co/TM79gCY/alex-suprun-1-JGHAAdb-L-Y-unsplash-min.jpg",
+    "role": "instructor",
+    "total_classes": 1
   },
   {
     "instructor_name": "Eva Artiste",
     "email": "eva.artiste@example.com",
     "instructor_id": 5,
-    "instructor_image": "https://i.ibb.co/qFrdNX1/vadim-bogulov-5h-L0zy-Aci-Hk-unsplash-min.jpg"
+    "classes_names": ["fine art"],
+    "image": "https://i.ibb.co/zZhtWdm/eva-artiste.webp",
+    "role": "instructor",
+    "total_classes": 1
   },
   {
-    "instructor_name": "Realtor Photography Institute",
+    "instructor_name": "Marc lenin",
     "email": "realtor.institute@example.com",
     "instructor_id": 6,
-    "instructor_image": "https://i.ibb.co/C97hbhK/vadim-bogulov-rd-Hrr-FA1-KKg-unsplash-min.jpg"
+    "classes_names": ["real state"],
+    "image": "https://i.ibb.co/C97hbhK/vadim-bogulov-rd-Hrr-FA1-KKg-unsplash-min.jpg",
+    "role": "instructor",
+    "total_classes": 1
   }
 ]

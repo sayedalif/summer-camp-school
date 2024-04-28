@@ -143,9 +143,6 @@ const Register = () => {
                   </ul>
                 </div>
               )}
-              {/* <aside style={thumbsContainer}>
-                {thumbs}
-              </aside> */}
 
               {/* phone number */}
               <div className="form-control">

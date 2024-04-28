@@ -25,7 +25,7 @@ const SocialLoginButton = ({ authType }) => {
     >
       <img src={authType === 'google' ? googleLogo : facebookLogo} alt={authType === 'google' ? 'google logo' : 'facebook logo'} className="w-7 flex-none ml-2" />
       <span className="flex-auto font-[500] ml-2">Continue with <span>{authType === 'google' ? 'Google' : 'Facebook'}</span></span>
-    </button >
+    </button>
   );
 };
 

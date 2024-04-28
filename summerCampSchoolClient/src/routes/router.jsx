@@ -31,20 +31,19 @@ export const router = createBrowserRouter([
       {
         path: '/classes',
         element: <Classes></Classes>
-      }
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard></Dashboard>,
+        children: [
+          {
+            path: '/dashboard/addclass',
+            element: <AddClass></AddClass>
+          }
+        ]
+      },
     ],
 
   },
-  {
-    path: '/dashboard',
-    element: <Dashboard></Dashboard>,
-    children: [
-      {
-        path: '/dashboard/addclass',
-        element: <AddClass></AddClass>
-      }
-    ]
-  },
-
 ]);
 
