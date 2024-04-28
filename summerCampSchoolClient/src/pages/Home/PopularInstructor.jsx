@@ -1,9 +1,7 @@
-import usePopularInstructor from "../../hooks/usePopularInstructor";
+import useFetch from "../../hooks/utils/utils";
 
 const PopularInstructor = () => {
-
-  const { popularInstructors, isLoading } = usePopularInstructor();
-  console.log("🚀 ~ PopularInstructor ~ popularInstructors:", popularInstructors);
+  const { data: popularInstructors = [], loading, error } = useFetch('/popularinstructor');
 
   return (
     <div className='lg:my-24'>
