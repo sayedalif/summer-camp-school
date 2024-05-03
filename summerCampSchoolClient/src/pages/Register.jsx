@@ -124,9 +124,7 @@ const Register = () => {
                 :
                 ''
               }
-
-
-
+              
               {/* Display dropped images */}
               {droppedImages.length > 0 && (
                 <div>

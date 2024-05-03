@@ -125,6 +125,12 @@ async function run() {
       res.send(result);
     });
 
+    // * all instructors
+    app.get('/instructors', async (req, res) => {
+      const result = await summerCampSchoolUserCollection.find({ role: "instructor" }).toArray();
+      res.send(result);
+    });
+
     // * most popular instructor of all time api
     app.get('/mostpopularinstructor', async (req, res) => {
       const pipeline = [
@@ -209,7 +215,7 @@ async function run() {
       res.send(result);
     });
 
-    // popular instructor
+    // * popular instructor
     app.get('/popularinstructor', async (req, res) => {
       const pipeline = [
         // Match users with role 'instructor'
