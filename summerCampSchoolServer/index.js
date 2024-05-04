@@ -125,6 +125,21 @@ async function run() {
       res.send(result);
     });
 
+    // follow a specific instructor
+    app.put('/users/follow/:instructorId', async (req, res) => {
+      const { instructorId } = req.params;
+      const { userEmail } = req.body;
+
+      // Update user document to include the followed instructor's _id
+      await summerCampSchoolUserCollection.updateOne(
+        { email: userEmail },
+        { $addToSet: { following: instructorId } }
+      );
+
+      res.send({ message: 'Successfully followed instructor.' });
+    });
+
+
     // * all instructors
     app.get('/instructors', async (req, res) => {
       const result = await summerCampSchoolUserCollection.find({ role: "instructor" }).toArray();
