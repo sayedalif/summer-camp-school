@@ -7,12 +7,13 @@ const Instructors = () => {
   const { data: instructors = [], error, loading } = useFetch('/instructors');
   const { data: users = [], error: userError, loading: userLoading } = useFetch('/users');
   console.log(users);
-  const userFollowing= users?.map(user=> user?.following);
+  const userFollowing = users?.map(user => user?.following);
   console.log("🚀 ~ Instructors ~ userFollowing:", userFollowing);
-  
+
 
   const { user } = useAuth();
   console.log("🚀 ~ Instructors ~ user:", user);
+  const userEmail = user?.email;
 
 
   if (loading) {
@@ -55,12 +56,12 @@ const Instructors = () => {
                       <img loading="lazy" className='md:w-[200px] w-48 md:rounded-md sm:rounded-sm rounded' src={image} alt='instructor image' />
                     </figure>
                     <div className='text-right'>
-                      <button onClick={handleFollow} className='badge badge-info'>follow</button>
+                      <button onClick={() => handleFollow(_id)} className='badge badge-info'>follow</button>
                     </div>
                   </div>
                   <div className="card-body px-4 py-4">
                     <p>{name}</p>
-                    <p>Classes names: {classes_names.map(course => <>{course}</>)}</p>
+                    <p>Classes names: {classes_names.map((course, idx) => <span key={idx}>{course}</span>)}</p>
                     <p className='font-medium text-base'>
                       {email}
                     </p>

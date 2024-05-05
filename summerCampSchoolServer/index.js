@@ -125,10 +125,23 @@ async function run() {
       res.send(result);
     });
 
+    app.get('users/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const result = await summerCampSchoolUserCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.post('/users', async (req, res) => {
+      const user = req.body;
+      const result = await summerCampSchoolUserCollection.insertOne(user);
+      res.send(result);
+    });
+
     // follow a specific instructor
     app.put('/users/follow/:instructorId', async (req, res) => {
-      const { instructorId } = req.params;
-      const { userEmail } = req.body;
+      const { instructorId } = req?.params;
+      const { userEmail } = req?.body;
 
       // Update user document to include the followed instructor's _id
       await summerCampSchoolUserCollection.updateOne(

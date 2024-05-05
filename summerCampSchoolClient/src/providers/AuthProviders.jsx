@@ -13,7 +13,7 @@ const auth = getAuth(app);
 
 // auth provider
 const AuthProviders = ({ children }) => {
-
+  // axios public which has an instance setup
   const [axiosPublic] = useAxiosPublic();
 
   // create user with email and password
@@ -38,28 +38,32 @@ const AuthProviders = ({ children }) => {
     auth
   );
 
-  // email verification
+  // send email verification
   const [sendEmailVerification] = useSendEmailVerification(
     auth
   );
 
-  // update profile
+  // update users profile
   const [updateProfile] = useUpdateProfile(auth);
 
   // observer
   const [user, loading, error] = useAuthState(auth);
-  /*   console.log("🚀 ~ AuthProviders ~ loading:", loading);
-    console.log("🚀 ~ AuthProviders ~ user:", user);
-    console.log("🚀 ~ AuthProviders ~ error:", error); */
 
   if (user) {
-    /*  axiosPublic.get(`/users/${user?.email}:`).then(response => {
-       console.log(response.data);
-     }); */
+    axiosPublic.get(`/users/${user?.email}`).then(response => {
+      console.log('existing user', response.data);
 
-    const savedUser = { email: user.email, name: user.displayName, photoURL: user.photoURL };
+      if (!response.data) {
+        const savedUser = { email: user.email, name: user.displayName, photoURL: user.photoURL };
+
+        axiosPublic.post('/users', savedUser).then(res => {
+          console.log('new user', res.data);
+        }).catch(err => console.log(err));
+      }
+    });
   }
 
+  // sending all data to context
   const authInfo =
   {
     user, loading, error, signInWithGoogle, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, updateProfile

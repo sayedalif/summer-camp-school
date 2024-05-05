@@ -21,6 +21,7 @@ const Register = () => {
 
   // dropped images state
   const [droppedImages, setDroppedImages] = useState([]);
+  console.log("🚀 ~ Register ~ droppedImages:", droppedImages);
 
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -31,6 +32,13 @@ const Register = () => {
   const onSubmit = async data => {
     console.log(data);
     const { name, email, password, confirmPassword, address, phoneNumber } = data;
+
+    if (password !== confirmPassword) return alert('password not match')
+    createUserWithEmailAndPassword(email, password).then(() => {
+      updateProfile({
+        displayName: name, photoURL: droppedImages[0]
+      })
+    })
 
     console.log(['password fields'], password, confirmPassword);
 
@@ -124,7 +132,7 @@ const Register = () => {
                 :
                 ''
               }
-              
+
               {/* Display dropped images */}
               {droppedImages.length > 0 && (
                 <div>
