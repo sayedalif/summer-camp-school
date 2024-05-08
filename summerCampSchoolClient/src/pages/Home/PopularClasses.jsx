@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faIdBadge, faMagnifyingGlass, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 import BwArrowButton from '../../components/BwArrowButton';
 import useFetch, { generateRandomColorString } from '../../hooks/utils/utils';
+import ClassesCards from '../../components/ClassesCards';
 
 
 const PopularClasses = () => {
@@ -36,7 +37,7 @@ const PopularClasses = () => {
       <div className='lg:flex lg:flex-row lg:justify-between lg:flex-wrap md:flex md:flex-row md:justify-between md:flex-wrap sm:flex sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
         {classes?.length > 0 && Array?.isArray(classes) &&
           classes?.map((eachClass, idx) => {
-            const randomBadgeColors = generateRandomColorString();
+            {/* const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>
                 <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] bg-base-100 shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4 rounded-xl
@@ -72,7 +73,8 @@ const PopularClasses = () => {
                   </div>
                 </div>
               </div>
-            )
+            ) */}
+            return <ClassesCards key={idx} eachClass={eachClass}></ClassesCards>
           })}
       </div>
 
