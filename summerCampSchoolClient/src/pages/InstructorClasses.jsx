@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import useFetch, { generateRandomColorString } from '../hooks/utils/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +12,7 @@ const InstructorClasses = () => {
     return <Navigate to={`/instructors`}></Navigate>
   } */
 
-  const { data: classes = [], setData, error, loading } = useFetch(`/classes/${param?.id}`);
+  const { data: classes = [], error, loading } = useFetch(`/classes/${param?.id}`);
 
   console.log("🚀 ~ InstructorClasses ~ classes:", classes);
 

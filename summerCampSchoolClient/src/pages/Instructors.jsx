@@ -133,7 +133,7 @@ const Instructors = () => {
                     </figure>
                     {/* follow and unfollow button */}
                     <div className='text-right'>
-                      <button onClick={userFollowing?.includes(_id) ? () => handleUnFollow(_id) : () => handleFollow(_id)} className={`badge ${isFollowingLoading ? 'badge-ghost' : 'badge-info'} `}>{userFollowing?.includes(_id) ? 'unFollow' : 'Follow'}</button>
+                      <button onClick={userFollowing?.includes(_id) ? () => handleUnFollow(_id) : () => handleFollow(_id)} className={`badge ${isFollowingLoading || userFollowing?.includes(_id) ? 'badge-ghost' : 'badge-info'} `}>{userFollowing?.includes(_id) ? 'following' : 'Follow'}</button>
 
                     </div>
                   </div>

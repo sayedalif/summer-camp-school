@@ -5,9 +5,15 @@ import useFetch, { generateRandomColorString } from '../../hooks/utils/utils';
 
 
 const PopularClasses = () => {
-  const { data: classes = [], loading, error } = useFetch('/classes');
+  const { data: classes = [], loading, error } = useFetch('/popularclasses');
 
-  const allPopularClasses = classes?.length > 0 && Array?.isArray(classes) && classes?.filter(allClass => allClass?.students_enrolled >= 400);
+  if(loading){
+    return <h1>Loading...</h1>
+  }
+
+  if(error){
+    return <h1>{error}</h1>
+  }
 
 
   return (
@@ -29,7 +35,7 @@ const PopularClasses = () => {
 
       <div className='lg:flex lg:flex-row lg:justify-between lg:flex-wrap md:flex md:flex-row md:justify-between md:flex-wrap sm:flex sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
         {classes?.length > 0 && Array?.isArray(classes) &&
-          allPopularClasses?.map((eachClass, idx) => {
+          classes?.map((eachClass, idx) => {
             const randomBadgeColors = generateRandomColorString();
             return (
               <div key={idx} className='group cursor-pointer'>
