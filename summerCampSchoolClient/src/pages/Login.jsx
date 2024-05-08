@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import SocialLoginButton from '../components/SocialLoginButton';
@@ -8,6 +8,9 @@ import SocialLoginButton from '../components/SocialLoginButton';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("🚀 ~ Login ~ location:", location);
+  // user info from context
   const { signInWithEmailAndPassword, sendPasswordResetEmail } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,7 +50,7 @@ const Login = () => {
                   e.preventDefault();
                   const success = await signInWithEmailAndPassword(email, password);
                   if (success) {
-                    navigate('/');
+                    navigate("/", { state: { from: location } });
                     setLoading(false);
                   }
                 }

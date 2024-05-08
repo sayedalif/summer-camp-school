@@ -4,7 +4,7 @@ import sunSvgLogo from '../assets/sun-svgrepo-com.svg';
 
 const DarkNLightModeToggle = () => {
   const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  console.log("🚀 ~ DarkNLightModeToggle ~ isSystemDark:", isSystemDark);
+  // console.log("🚀 ~ DarkNLightModeToggle ~ isSystemDark:", isSystemDark);
 
   const [isDark, setIsDark] = useState(isSystemDark);
 

@@ -17,7 +17,7 @@ const SocialLoginButton = ({ authType }) => {
       onClick={authType === 'google' ? async () => {
         const success = await signInWithGoogle();
         if (success) {
-          toast.success('Success logged in with Google');
+          toast.success('Successfully logged in with Google');
           navigate('/');
         }
       } : () => toast.error(`hasn't implemented yet`)}

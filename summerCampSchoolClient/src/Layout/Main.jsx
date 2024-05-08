@@ -7,8 +7,9 @@ const Main = () => {
   return (
     <>
       <Navbar></Navbar>
-      <div className='min-h-[calc(100vh-1366px)]'>
-      <Outlet></Outlet>
+      {/* this calculated based on the navbar height to ensure the footer is always at the bottom */}
+      <div className='min-h-[calc(100vh-80px)]'>
+        <Outlet></Outlet>
       </div>
       <GoToTop></GoToTop>
       <Footer></Footer>

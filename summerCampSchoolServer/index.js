@@ -39,7 +39,7 @@ async function run() {
     app.put('/users/:email', async (req, res) => {
       const email = req.params.email;
       const user = req.body;
-      // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
+      // // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
       const filter = { email: email };
       const option = { upsert: true }
       const updateDoc = {
@@ -54,11 +54,8 @@ async function run() {
     // get single user info form the database
     app.get('/users/:email', async (req, res) => {
       const email = req.params.email;
-      console.log(email);
       const query = { email: email };
-      console.log(query);
       const result = await summerCampSchoolUserCollection.findOne(query);
-      console.log(result);
       res.send(result);
     });
 
@@ -125,6 +122,7 @@ async function run() {
       res.send(result);
     });
 
+    // this is for all the users based on their email
     app.get('users/:email', async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
@@ -132,6 +130,7 @@ async function run() {
       res.send(result);
     });
 
+    // save users info to database
     app.post('/users', async (req, res) => {
       const user = req.body;
       const result = await summerCampSchoolUserCollection.insertOne(user);
@@ -141,7 +140,9 @@ async function run() {
     // follow a specific instructor
     app.put('/users/follow/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;
+      // console.log("🚀 ~ app.put ~ instructorId:", instructorId)
       const { userEmail } = req?.body;
+      // console.log("🚀 ~ app.put ~ userEmail:", userEmail);
 
       // Update user document to include the followed instructor's _id
       await summerCampSchoolUserCollection.updateOne(
@@ -150,6 +151,31 @@ async function run() {
       );
 
       res.send({ message: 'Successfully followed instructor.' });
+    });
+
+
+    // delete specific instructor
+    app.patch('/users/unfollow/:instructorId', async (req, res) => {
+      const { instructorId } = req.params;
+      const { userEmail } = req.body;
+
+      // Find the user document using the email
+      const user = await summerCampSchoolUserCollection.findOne({ email: userEmail });
+
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Remove the instructorId from the list of followed instructors
+      const updatedFollowedInstructors = user.following.filter(id => id !== instructorId);
+
+      // Update the user document in the database with the new list of followed instructors
+      await summerCampSchoolUserCollection.updateOne(
+        { email: userEmail },
+        { $set: { following: updatedFollowedInstructors } }
+      );
+
+      res.status(200).json({ message: 'Successfully unfollowed instructor' });
     });
 
 
@@ -172,7 +198,7 @@ async function run() {
         {
           $lookup: {
             from: "classes",
-            localField: "instructor_id", // assuming instructor _id is stored here
+            localField: "_id", // assuming instructor _id is stored here
             foreignField: "instructor_id", // assuming instructor id in classes collection
             as: "classes"
           }
@@ -186,7 +212,7 @@ async function run() {
           $project: {
             _id: 0,
             instructor_id: "$_id",
-            instructor_name: "$instructor_name", // Assuming instructor name is stored in users collection
+            instructor_name: "$name", // Assuming instructor name is stored in users collection
             class_name: "$classes.className",
             available_seats: "$classes.available_seats",
             students_enrolled: "$classes.students_enrolled",
@@ -256,7 +282,7 @@ async function run() {
         {
           $lookup: {
             from: "classes",
-            localField: "instructor_id", // assuming instructor _id is stored here
+            localField: "_id", // assuming instructor _id is stored here
             foreignField: "instructor_id", // assuming instructor id in classes collection
             as: "classes"
           }

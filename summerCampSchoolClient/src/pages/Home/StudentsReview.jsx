@@ -30,7 +30,7 @@ const StudentsReview = () => {
           {
             reviews?.length > 0 && Array?.isArray(reviews) &&
             reviews?.map((review, idx) => {
-              console.log(review);
+              {/* console.log(review); */}
               const randomBadgeColors = generateRandomColorString();
               return (
                 <div key={idx}>
