@@ -10,6 +10,10 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   console.log("🚀 ~ Login ~ location:", location);
+
+  let from = location.state?.from?.pathname || "/";
+  console.log("🚀 ~ Login ~ from:", from);
+  
   // user info from context
   const { signInWithEmailAndPassword, sendPasswordResetEmail } = useAuth();
   const [email, setEmail] = useState('');
@@ -50,7 +54,7 @@ const Login = () => {
                   e.preventDefault();
                   const success = await signInWithEmailAndPassword(email, password);
                   if (success) {
-                    navigate("/", { state: { from: location } });
+                    navigate(from, { replace: true });
                     setLoading(false);
                   }
                 }

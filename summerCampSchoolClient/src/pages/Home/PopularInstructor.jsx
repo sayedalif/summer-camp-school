@@ -3,6 +3,13 @@ import useFetch from "../../hooks/utils/utils";
 const PopularInstructor = () => {
   const { data: popularInstructors = [], loading, error } = useFetch('/popularinstructor');
 
+  if (loading) {
+    return <h1>Loading...</h1>
+  }
+  if (error) {
+    return <h1>{error}</h1>
+  }
+
   return (
     <div className='lg:my-24'>
       <h1 className='text-center md:my-8 text-[#000000] lg:text-5xl md:text-5xl font-bold text-2xl mb-7'>Learn from Creative Experts</h1>

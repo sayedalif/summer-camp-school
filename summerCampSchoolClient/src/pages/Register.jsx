@@ -40,7 +40,7 @@ const Register = () => {
       })
     })
 
-    console.log(['password fields'], password, confirmPassword);
+    // console.log(['password fields'], password, confirmPassword);
 
   };
 

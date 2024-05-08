@@ -12,7 +12,6 @@ import Classes from "../pages/Classes";
 import MyClass from "../pages/MyClass";
 import Instructors from "../pages/Instructors";
 import InstructorClasses from "../pages/InstructorClasses";
-import axios from "axios";
 
 export const router = createBrowserRouter([
   {

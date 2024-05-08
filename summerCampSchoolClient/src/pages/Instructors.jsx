@@ -1,47 +1,29 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useFetch from '../hooks/utils/utils';
-import useAuth from '../hooks/useAuth';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import useUserInfo from '../hooks/useUserInfo';
 import toast from 'react-hot-toast';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const Instructors = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  // console.log("🚀 ~ Instructors ~ location:", location);
-  const from = location?.pathname;
-  // console.log("🚀 ~ Instructors ~ from:", from);
-
   const [axiosPublic] = useAxiosPublic();
+  
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [isFollowingLoading, setIsFollowingLoading] = useState(false);
 
-  // getting the logged in user from auth
-  // const { user } = useAuth();
+  // getting the user data from the database
+  const { data: user, error: userInfoError, isLoading, refetch } = useUserInfo();
 
-  // // console.log("🚀 ~ Instructors ~ user:", user);
-  // const userEmail = user?.email;
+  const userFollowing = user?.following;
+  const userEmail = user?.email;
+
 
   // fetching data to get all the instructors
-  const { data: instructors = [], setData: setInstructor = [], error, loading } = useFetch('/instructors');
-
-  // fetching data to get all the users
-  // const { data: userInfo = [], error: userError, loading: userLoading } = useFetch(`/users/${userEmail}`);
-
-  const { data, error: userInfoError, isLoading, refetch } = useUserInfo();
-  // console.log("🚀 ~ Instructors ~ isLoading:", isLoading);
-  // console.log("🚀 ~ Instructors ~ data:", data);
-
-  // // console.log("🚀 ~ Instructors ~ userInfo:", userInfo);
-
-  const userFollowing = data?.following;
-  const userEmail = data?.email;
-
-
-
+  const { data: instructors = [], error, loading } = useFetch('/instructors');
 
   if (loading) {
     return <h1>Loading...</h1>
@@ -51,27 +33,22 @@ const Instructors = () => {
   }
 
   const handleFollow = async (instructorId) => {
-
-    // // console.log("🚀 ~ handleFollow ~ instructorId:", instructorId);
-    if (!userEmail) {
-      toast.error('Please login to follow an instructor');
-      return navigate("/login");
+    if (!user) {
+      // toast.error('Please login to follow an instructor');
+      // return <Navigate to="/login" state={{ from: location }} replace></Navigate>
+      return navigate("/login", { state: { from: location } });
     }
+
     setIsFollowingLoading(true);
     try {
       const response = await axiosPublic.put(`/users/follow/${instructorId}`, { userEmail });
       const data = await response.data;
-      // console.log("🚀 ~ handleFollow ~ data:", data);
-      // updating the instructor data didnt work because the data is changing in the user collection database not in the instructor database.
-
-      // const updated = instructors.find(instructor => instructor._id === instructorId);
-      // // console.log("🚀 ~ handleFollow ~ updated:", updated);
-      // const remaining = instructors.filter(instructor => instructor._id !== instructorId);
-      // // console.log("🚀 ~ handleFollow ~ remaining:", remaining);
-      // setInstructor([...remaining, updated]);
+      toast.success(`${data?.message}`);
       setIsFollowingLoading(false);
+
+      // updating the instructor data didn't work because the data is changing in the user collection database not in the instructor database.
       refetch();
-      console.log('Successfully followed instructor.');
+      // console.log('Successfully followed instructor.');
     } catch (error) {
       console.error('Error following instructor:', error);
       setIsFollowingLoading(false);
@@ -81,15 +58,14 @@ const Instructors = () => {
   };
 
   const handleUnFollow = async (instructorId) => {
-    // console.log("🚀 ~ handleUnFollow ~ instructorId:", instructorId);
     setIsFollowingLoading(true);
     try {
       const response = await axiosPublic.patch(`/users/unfollow/${instructorId}`, { userEmail });
       const data = await response.data;
-      // console.log("🚀 ~ handleFollow ~ data:", data);
+      toast.success(`${data?.message}`);
       setIsFollowingLoading(false);
       refetch();
-      console.log('Successfully unfollowed instructor.');
+      // console.log('Successfully unfollowed instructor.');
     } catch (error) {
       console.error('Error unfollowing instructor:', error);
       setIsFollowingLoading(false);
@@ -122,7 +98,7 @@ const Instructors = () => {
         instructors?.length > 0 && Array?.isArray(instructors) &&
         instructors?.map((instructor) => {
           const {
-            _id, email, role, classes_names, image, name, total_classes } = instructor;
+            _id, email, classes_names, image, name, total_classes } = instructor;
           return (
             <div key={_id} className='group cursor-pointer'>
               <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] bg-base-100 shadow-xl mb-4 rounded-xl">
@@ -157,7 +133,7 @@ const Instructors = () => {
                     <div className="card-actions flex justify-end">
                       <Link to={`/instructors/${_id}`}>
                         <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2 lg:px-4" onClick={() => handleSeeClasses(_id)}>See classes
-                        <FontAwesomeIcon icon={faArrowRight} />
+                          <FontAwesomeIcon icon={faArrowRight} />
                         </button>
                       </Link>
                     </div>
