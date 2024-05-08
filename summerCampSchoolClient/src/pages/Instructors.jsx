@@ -5,6 +5,8 @@ import useAxiosPublic from '../hooks/useAxiosPublic';
 import useUserInfo from '../hooks/useUserInfo';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const Instructors = () => {
   const navigate = useNavigate();
@@ -122,7 +124,7 @@ const Instructors = () => {
           const {
             _id, email, role, classes_names, image, name, total_classes } = instructor;
           return (
-            <div key={_id} className=' cursor-pointer'>
+            <div key={_id} className='group cursor-pointer'>
               <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] bg-base-100 shadow-xl mb-4 rounded-xl">
 
                 <div className='flex flex-col justify-between h-full'>
@@ -155,6 +157,7 @@ const Instructors = () => {
                     <div className="card-actions flex justify-end">
                       <Link to={`/instructors/${_id}`}>
                         <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2 lg:px-4" onClick={() => handleSeeClasses(_id)}>See classes
+                        <FontAwesomeIcon icon={faArrowRight} />
                         </button>
                       </Link>
                     </div>
