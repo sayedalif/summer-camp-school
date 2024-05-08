@@ -11,6 +11,8 @@ import Home from "../pages/Home/Home/Home";
 import Classes from "../pages/Classes";
 import MyClass from "../pages/MyClass";
 import Instructors from "../pages/Instructors";
+import InstructorClasses from "../pages/InstructorClasses";
+import axios from "axios";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +37,10 @@ export const router = createBrowserRouter([
         element: <Instructors></Instructors>,
       },
       {
+        path: '/instructors/:id',
+        element: <InstructorClasses></InstructorClasses>,
+      },
+      {
         path: '/classes',
         element: <Classes></Classes>
       },
@@ -52,7 +58,7 @@ export const router = createBrowserRouter([
           }
         ]
       },
-      
+
     ],
 
   },

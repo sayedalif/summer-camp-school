@@ -4,14 +4,14 @@ import useAuth from '../hooks/useAuth';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import useUserInfo from '../hooks/useUserInfo';
 import toast from 'react-hot-toast';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Instructors = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("🚀 ~ Instructors ~ location:", location);
+  // console.log("🚀 ~ Instructors ~ location:", location);
   const from = location?.pathname;
-  console.log("🚀 ~ Instructors ~ from:", from);
+  // console.log("🚀 ~ Instructors ~ from:", from);
 
   const [axiosPublic] = useAxiosPublic();
 
@@ -20,7 +20,7 @@ const Instructors = () => {
   // getting the logged in user from auth
   // const { user } = useAuth();
 
-  // console.log("🚀 ~ Instructors ~ user:", user);
+  // // console.log("🚀 ~ Instructors ~ user:", user);
   // const userEmail = user?.email;
 
   // fetching data to get all the instructors
@@ -30,10 +30,10 @@ const Instructors = () => {
   // const { data: userInfo = [], error: userError, loading: userLoading } = useFetch(`/users/${userEmail}`);
 
   const { data, error: userInfoError, isLoading, refetch } = useUserInfo();
-  console.log("🚀 ~ Instructors ~ isLoading:", isLoading);
-  console.log("🚀 ~ Instructors ~ data:", data);
+  // console.log("🚀 ~ Instructors ~ isLoading:", isLoading);
+  // console.log("🚀 ~ Instructors ~ data:", data);
 
-  // console.log("🚀 ~ Instructors ~ userInfo:", userInfo);
+  // // console.log("🚀 ~ Instructors ~ userInfo:", userInfo);
 
   const userFollowing = data?.following;
   const userEmail = data?.email;
@@ -50,7 +50,7 @@ const Instructors = () => {
 
   const handleFollow = async (instructorId) => {
 
-    // console.log("🚀 ~ handleFollow ~ instructorId:", instructorId);
+    // // console.log("🚀 ~ handleFollow ~ instructorId:", instructorId);
     if (!userEmail) {
       toast.error('Please login to follow an instructor');
       return navigate("/login");
@@ -59,13 +59,13 @@ const Instructors = () => {
     try {
       const response = await axiosPublic.put(`/users/follow/${instructorId}`, { userEmail });
       const data = await response.data;
-      console.log("🚀 ~ handleFollow ~ data:", data);
+      // console.log("🚀 ~ handleFollow ~ data:", data);
       // updating the instructor data didnt work because the data is changing in the user collection database not in the instructor database.
 
       // const updated = instructors.find(instructor => instructor._id === instructorId);
-      // console.log("🚀 ~ handleFollow ~ updated:", updated);
+      // // console.log("🚀 ~ handleFollow ~ updated:", updated);
       // const remaining = instructors.filter(instructor => instructor._id !== instructorId);
-      // console.log("🚀 ~ handleFollow ~ remaining:", remaining);
+      // // console.log("🚀 ~ handleFollow ~ remaining:", remaining);
       // setInstructor([...remaining, updated]);
       setIsFollowingLoading(false);
       refetch();
@@ -79,12 +79,12 @@ const Instructors = () => {
   };
 
   const handleUnFollow = async (instructorId) => {
-    console.log("🚀 ~ handleUnFollow ~ instructorId:", instructorId);
+    // console.log("🚀 ~ handleUnFollow ~ instructorId:", instructorId);
     setIsFollowingLoading(true);
     try {
       const response = await axiosPublic.patch(`/users/unfollow/${instructorId}`, { userEmail });
       const data = await response.data;
-      console.log("🚀 ~ handleFollow ~ data:", data);
+      // console.log("🚀 ~ handleFollow ~ data:", data);
       setIsFollowingLoading(false);
       refetch();
       console.log('Successfully unfollowed instructor.');
@@ -104,7 +104,13 @@ const Instructors = () => {
   // 3. refetch the userfollowing data by creating a custom hook using tan stack query -- worked
 
 
-  const handleSeeClasses = (instructorId) => {
+  // see all the classes taken by the instructor
+  const handleSeeClasses = async (instructorId) => {
+    console.log("🚀 ~ handleSeeClasses ~ instructorId:", instructorId);
+
+    const response = await axiosPublic.get(`/classes/${instructorId}`);
+    const data = await response.data;
+    console.log("🚀 ~ handleSeeClasses ~ data:", data);
 
   };
 
@@ -114,7 +120,7 @@ const Instructors = () => {
         instructors?.length > 0 && Array?.isArray(instructors) &&
         instructors?.map((instructor) => {
           const {
-            _id, email, instructor_id, role, classes_names, image, name, total_classes } = instructor;
+            _id, email, role, classes_names, image, name, total_classes } = instructor;
           return (
             <div key={_id} className=' cursor-pointer'>
               <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] bg-base-100 shadow-xl mb-4 rounded-xl">
@@ -147,8 +153,10 @@ const Instructors = () => {
                     </div>
                     {/* see all classes by specific instructor */}
                     <div className="card-actions flex justify-end">
-                      <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2 lg:px-4" onClick={() => handleSeeClasses(_id)}>See classes
-                      </button>
+                      <Link to={`/instructors/${_id}`}>
+                        <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2 lg:px-4" onClick={() => handleSeeClasses(_id)}>See classes
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

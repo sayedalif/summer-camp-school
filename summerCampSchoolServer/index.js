@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.iegqqxy.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -73,9 +73,18 @@ async function run() {
     });
 
 
-    // these are for all the classes
+    // for all the classes
     app.get('/classes', async (req, res) => {
       const result = await summerCampSchoolClassesCollection.find().toArray();
+      res.send(result);
+    });
+
+    // for specific instructor classes
+    app.get('/classes/:instructorId', async (req, res) => {
+      const { instructorId } = req?.params;
+      console.log("🚀 ~ app.get ~ instructorId:", instructorId);
+
+      const result = await summerCampSchoolClassesCollection.find({ instructor_id: instructorId }).toArray();
       res.send(result);
     });
 
