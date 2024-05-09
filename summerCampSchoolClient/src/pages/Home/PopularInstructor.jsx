@@ -7,7 +7,7 @@ const PopularInstructor = () => {
     return <h1>Loading...</h1>
   }
   if (error) {
-    return <h1>{error}</h1>
+    return <h1 className="text-center text-red-500 text-2xl mt-10">{error?.message}</h1>
   }
 
   return (

@@ -12,6 +12,7 @@ import Classes from "../pages/Classes";
 import MyClass from "../pages/MyClass";
 import Instructors from "../pages/Instructors";
 import InstructorClasses from "../pages/InstructorClasses";
+import Profile from "../pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>
+      },
+      {
+        path: '/profile',
+        element: <Profile></Profile>
       },
       {
         path: '/instructors',

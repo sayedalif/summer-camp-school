@@ -56,7 +56,7 @@ export default function useFetch(url) {
         }
       }
     )()
-  }, [url])
+  }, [url]);
 
   return { data, setData, error, loading };
 

@@ -3,6 +3,13 @@ import useFetch from "../../hooks/utils/utils";
 const Analytics = () => {
   const { data: stats = [], loading, error } = useFetch('/stats');
 
+  if (loading) {
+    return <h1>Loading...</h1>
+  }
+  if (error) {
+    return <h1 className="text-center text-red-500 text-2xl mt-10">{error?.message}</h1>
+  }
+
   return (
     <div className='lg:flex lg:justify-center lg:my-24 lg:space-x-5 lg:space-y-0 md:grid md:grid-cols-2 md:space-x-0 md:gap-5 md:space-y-0 md:my-10 sm:space-y-5 sm:my-0 space-y-5 my-10'>
       {

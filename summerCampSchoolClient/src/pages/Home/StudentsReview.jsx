@@ -15,6 +15,13 @@ const StudentsReview = () => {
 
   const { data: reviews = [], loading, error } = useFetch('/reviews');
 
+  if (loading) {
+    return <h1>Loading...</h1>
+  }
+  if (error) {
+    return <h1 className="text-center text-red-500 text-2xl mt-10">{error?.message}</h1>
+  }
+
 
   return (
     <div className='mb-24'>
@@ -30,7 +37,7 @@ const StudentsReview = () => {
           {
             reviews?.length > 0 && Array?.isArray(reviews) &&
             reviews?.map((review, idx) => {
-              {/* console.log(review); */}
+              {/* console.log(review); */ }
               const randomBadgeColors = generateRandomColorString();
               return (
                 <div key={idx}>

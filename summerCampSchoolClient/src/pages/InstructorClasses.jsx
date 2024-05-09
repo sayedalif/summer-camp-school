@@ -22,7 +22,7 @@ const InstructorClasses = () => {
     return <h1>Loading...</h1>
   }
   if (error) {
-    console.log(error);
+    return <h1>{error?.message}</h1>
   }
 
   return (
