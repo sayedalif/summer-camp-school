@@ -194,162 +194,46 @@ async function run() {
       res.send(result);
     });
 
-    // * most popular instructor of all time api
-    app.get('/mostpopularinstructor', async (req, res) => {
-      const pipeline = [
-        // Match users with role 'instructor'
-        {
-          $match: {
-            role: "instructor"
-          }
-        },
-        // Lookup classes for each instructor
-        {
-          $lookup: {
-            from: "classes",
-            localField: "_id", // assuming instructor _id is stored here
-            foreignField: "instructor_id", // assuming instructor id in classes collection
-            as: "classes"
-          }
-        },
-        // Unwind the classes array
-        {
-          $unwind: "$classes"
-        },
-        // Project to calculate percentage for each class
-        {
-          $project: {
-            _id: 0,
-            instructor_id: "$_id",
-            instructor_name: "$name", // Assuming instructor name is stored in users collection
-            class_name: "$classes.className",
-            available_seats: "$classes.available_seats",
-            students_enrolled: "$classes.students_enrolled",
-            percentage: {
-              $multiply: [
-                {
-                  $divide: ["$classes.students_enrolled", "$classes.available_seats"]
-                },
-                100
-              ]
-            }
-          }
-        },
-        // Filter only popular instructors (percentage >= 70)
-        {
-          $match: {
-            percentage: { $gte: 70 }
-          }
-        },
-        // Group by instructor to calculate total popular classes and total classes
-        {
-          $group: {
-            _id: "$instructor_id",
-            instructor_name: { $first: "$instructor_name" },
-            total_popular_classes: { $sum: 1 },
-            total_classes: { $sum: 1 }
-          }
-        },
-        // Project to calculate percentage of popular classes
-        {
-          $project: {
-            _id: 0,
-            instructor_id: "$_id",
-            instructor_name: 1,
-            popularity_percentage: {
-              $multiply: [
-                {
-                  $divide: ["$total_popular_classes", "$total_classes"]
-                },
-                100
-              ]
-            }
-          }
-        },
-        // Sort by popularity_percentage in descending order
-        {
-          $sort: {
-            popularity_percentage: -1
-          }
-        }
-      ];
-
-      const result = await summerCampSchoolUserCollection.aggregate(pipeline).toArray();
-      res.send(result);
-    });
-
     // * popular instructor
+    // i have users collection in mongoDB which has role as 'instructor', i want to create an mongodb aggregate pipeline that will will take the only users which has role as 'instructor' and will return the top 5 popular instructor based on their classes on the classes collection. in classes collection i have 'instructor_id' which contains the _id of the 'role': 'instructor' and 'students_enrolled' which contains the number of students enrolled in that class and available seats which contains the number of available seats in that class. if the students enrolled are 70% of the available seats then that instructor is popular and i only want the top 5 popular instructor.
     app.get('/popularinstructor', async (req, res) => {
+
       const pipeline = [
         // Match users with role 'instructor'
-        {
-          $match: {
-            role: "instructor"
-          }
-        },
-        // Lookup classes for each instructor
+        { $match: { role: 'instructor' } },
+        // Convert _id to string
+        { $addFields: { "_id": { $toString: "$_id" } } },
+      
+        // Lookup classes by instructor_id
         {
           $lookup: {
-            from: "classes",
-            localField: "_id", // assuming instructor _id is stored here
-            foreignField: "instructor_id", // assuming instructor id in classes collection
-            as: "classes"
+            from: 'classes',
+            localField: '_id',
+            foreignField: 'instructor_id',
+            as: 'classes'
           }
         },
-        // Unwind the classes array
+        // Unwind classes array
+        { $unwind: '$classes' },
+        // Calculate the ratio of students enrolled to available seats
         {
-          $unwind: "$classes"
-        },
-        // Project to calculate percentage for each class
-        {
-          $project: {
-            _id: 0,
-            instructor_id: "$_id",
-            instructor_name: "$name", // Assuming instructor name is stored in users collection
-            email: "$email",
-            instructor_image: "$image",
-            class_name: "$classes.className",
-            available_seats: "$classes.available_seats",
-            students_enrolled: "$classes.students_enrolled",
-            percentage: {
-              $multiply: [
-                {
-                  $divide: ["$classes.students_enrolled", "$classes.available_seats"]
-                },
-                100
-              ]
-            }
+          $addFields: {
+            popularityRatio: { $divide: ['$classes.students_enrolled', '$classes.available_seats'] }
           }
         },
-        // Filter only popular classes (percentage >= 70)
-        {
-          $match: {
-            percentage: { $gte: 70 }
-          }
-        },
-        // Group by instructor to get distinct popular instructors
+        // Filter instructors with popularity ratio >= 0.7
+        { $match: { popularityRatio: { $gte: 0.7 } } },
+        // Group by instructor and collect class names
         {
           $group: {
-            _id: "$instructor_id",
-            instructor_name: { $first: "$instructor_name" },
-            email: { $first: "$email" },
-            instructor_image: { $first: "$instructor_image" },
-            total_classes: { $sum: 1 },
-            classes_names: { $push: "$class_name" }
+            _id: '$_id',
+            instructorName: { $first: '$name' },
+            image: { $first: '$image' }, // Assuming 'image' field exists in users collection
+            classesNames: { $push: '$classes.className' } // Assuming 'className' field exists in classes collection
           }
         },
-        // Project to reshape the output
-        {
-          $project: {
-            _id: 0,
-            instructor_id: "$_id",
-            instructor_name: 1,
-            email: 1,
-            instructor_image: 1,
-            total_classes: 1,
-            classes_names: 1
-          }
-        }
+        // Sort by instructor name
+        { $sort: { instructorName: 1 } }
       ];
 
       const result = await summerCampSchoolUserCollection.aggregate(pipeline).toArray();

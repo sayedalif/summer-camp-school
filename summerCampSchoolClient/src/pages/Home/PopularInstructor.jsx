@@ -19,22 +19,22 @@ const PopularInstructor = () => {
         {
           popularInstructors && popularInstructors?.length && Array?.isArray(popularInstructors) && popularInstructors?.map((instructor) => {
             {/* console.log("🚀 ~ popularInstructor&&popularInstructor.length&&Array.isArray ~ instructor:", instructor); */ }
-            const { classes_names, instructor_image, instructor_id, instructor_name } = instructor;
+            const { _id, classesNames, image, instructorName } = instructor;
 
             return (
-              <div key={instructor_id} className="card relative lg:mb-0 md:mb-3 sm:mb-3 mb-3">
+              <div key={_id} className="card relative lg:mb-0 md:mb-3 sm:mb-3 mb-3">
                 {/* instructor images */}
-                <img loading="lazy" className='rounded lg:w-[380px] md:w-80' src={instructor_image} alt="instructor_image" />
+                <img loading="lazy" className='rounded lg:w-[360px] md:w-80' src={image} alt="instructor_image" />
                 <div className='absolute bottom-0 left-4'>
 
                   {/* name */}
                   <h2 className="text-white text-lg font-bold">
-                    {instructor_name}
+                    {instructorName}
                   </h2>
                   {/* class names */}
-                  <span>{classes_names?.map((classes_name, index) => {
+                  <span>{classesNames?.map((classesName, index) => {
                     return (
-                      <h2 className='text-white text-pretty text-base font-light capitalize' key={index}>{classes_name}</h2>
+                      <h2 className='text-white text-pretty text-base font-light capitalize' key={index}>{classesName}</h2>
                     )
                   })}</span>
                 </div>

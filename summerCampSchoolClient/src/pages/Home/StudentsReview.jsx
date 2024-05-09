@@ -34,7 +34,7 @@ const StudentsReview = () => {
               const randomBadgeColors = generateRandomColorString();
               return (
                 <div key={idx}>
-                  <div className="card lg:w-[22rem] lg:h-[20rem] lg:mr-4 md:w-[20rem] sm:w-[20rem] w-[18rem] bg-base-100 shadow-xl mb-4">
+                  <div className="card lg:w-[20rem] lg:h-[20rem] lg:mr-4 md:w-[20rem] sm:w-[20rem] w-[18rem] bg-base-100 shadow-xl mb-4">
 
                     <div className='flex justify-between items-start lg:px-4 lg:py-4 md:px-3 md:py-3 px-4 py-4'>
                       <figure className='md:mr-3'>

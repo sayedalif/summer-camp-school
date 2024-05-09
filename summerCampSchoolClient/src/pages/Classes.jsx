@@ -1,7 +1,6 @@
 import ClassesCards from "../components/ClassesCards";
 import useFetch from "../hooks/utils/utils";
 
-
 const Classes = () => {
   const { data: classes = [], error, loading } = useFetch('/classes');
   if (loading) {
