@@ -146,6 +146,24 @@ async function run() {
       res.send(result);
     });
 
+    // save users more info to database
+    app.post('/users/save-user-data', async (req, res) => {
+      const { email, bio, address, phone, gender } = req?.body;
+      const result = await summerCampSchoolUserCollection.updateOne(
+        { email },
+        {
+          $set: {
+            bio,
+            address,
+            phone,
+            gender
+          }
+        },
+        { upsert: false }
+      );
+      res.send(result);
+    });
+
     // follow a specific instructor
     app.put('/users/follow/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;
@@ -187,7 +205,6 @@ async function run() {
       res.status(200).json({ message: 'Successfully unfollowed instructor' });
     });
 
-
     // * all instructors
     app.get('/instructors', async (req, res) => {
       const result = await summerCampSchoolUserCollection.find({ role: "instructor" }).toArray();
@@ -195,7 +212,6 @@ async function run() {
     });
 
     // * popular instructor
-    // i have users collection in mongoDB which has role as 'instructor', i want to create an mongodb aggregate pipeline that will will take the only users which has role as 'instructor' and will return the top 5 popular instructor based on their classes on the classes collection. in classes collection i have 'instructor_id' which contains the _id of the 'role': 'instructor' and 'students_enrolled' which contains the number of students enrolled in that class and available seats which contains the number of available seats in that class. if the students enrolled are 70% of the available seats then that instructor is popular and i only want the top 5 popular instructor.
     app.get('/popularinstructor', async (req, res) => {
 
       const pipeline = [
@@ -203,7 +219,7 @@ async function run() {
         { $match: { role: 'instructor' } },
         // Convert _id to string
         { $addFields: { "_id": { $toString: "$_id" } } },
-      
+
         // Lookup classes by instructor_id
         {
           $lookup: {
