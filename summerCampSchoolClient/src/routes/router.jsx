@@ -13,6 +13,7 @@ import MyClass from "../pages/MyClass";
 import Instructors from "../pages/Instructors";
 import InstructorClasses from "../pages/InstructorClasses";
 import Profile from "../pages/Profile";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +35,9 @@ export const router = createBrowserRouter([
       },
       {
         path: '/profile',
-        element: <Profile></Profile>
+        element: <PrivateRoute>
+          <Profile></Profile>
+        </PrivateRoute>
       },
       {
         path: '/instructors',

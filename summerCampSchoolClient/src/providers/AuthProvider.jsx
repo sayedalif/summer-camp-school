@@ -11,7 +11,7 @@ export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 // auth provider
-const AuthProviders = ({ children }) => {
+const AuthProvider = ({ children }) => {
   // axios public which has an instance setup
   const [axiosPublic] = useAxiosPublic();
 
@@ -75,4 +75,4 @@ const AuthProviders = ({ children }) => {
   );
 };
 
-export default AuthProviders;
+export default AuthProvider;
