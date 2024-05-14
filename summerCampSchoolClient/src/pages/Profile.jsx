@@ -3,7 +3,6 @@ import useUserInfo from '../hooks/useUserInfo';
 import { BiSolidQuoteRight } from "react-icons/bi";
 import Container from '../components/Container';
 import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import toast from 'react-hot-toast';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 
@@ -114,9 +113,9 @@ const Profile = () => {
             </p>
           </div>
           {
-           user && !user?.bio && !user?.address && !user?.phone && !user?.gender && <button className='btn bg-[#fca5a5] mt-3 outline-none border-0'
-            onClick={handleUserInfoUpdate}
-          >save</button>
+            user && !user?.bio && !user?.address && !user?.phone && !user?.gender && <button className='btn bg-[#fca5a5] mt-3 outline-none border-0'
+              onClick={handleUserInfoUpdate}
+            >save</button>
           }
         </div>
       </div>

@@ -4,7 +4,6 @@ import { app } from '../firebase/firebase.config';
 import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignInWithGoogle, useSendPasswordResetEmail, useSignOut, useSendEmailVerification, useUpdateProfile } from 'react-firebase-hooks/auth';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 
-
 // context
 export const AuthContext = createContext(null);
 
