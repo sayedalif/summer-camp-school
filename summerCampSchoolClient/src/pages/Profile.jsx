@@ -56,7 +56,7 @@ const Profile = () => {
         <div className='text-center p-5'>
           {/* user image */}
 
-          <img src={photoURL} className='rounded-full mx-auto mb-3' alt="user profile picture" />
+          <img src={photoURL} className='rounded-full mx-auto mb-3 w-16' alt="user profile picture" />
 
 
           {/* name */}

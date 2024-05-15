@@ -6,6 +6,10 @@ import useAuth from "../hooks/useAuth";
 import useUserInfo from "../hooks/useUserInfo";
 
 const ClassesCards = ({ key, eachClass }) => {
+  // console.log("🚀 ~ ClassesCards ~ eachClass:", eachClass);
+
+
+
   // these are for dropping of the user in same page after login
   const location = useLocation();
   const navigate = useNavigate();

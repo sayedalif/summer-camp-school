@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import SocialLoginButton from '../components/SocialLoginButton';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   // navigate
@@ -30,17 +31,19 @@ const Register = () => {
   // from submit
   // react hook form
   const onSubmit = async data => {
-    console.log(data);
+    console.log("🚀 ~ onSubmit ~ data:", data);
+
     const { name, email, password, confirmPassword, address, phoneNumber } = data;
 
-    if (password !== confirmPassword) return alert('password not match')
-    createUserWithEmailAndPassword(email, password).then(() => {
-      updateProfile({
-        displayName: name, photoURL: droppedImages[0]
-      })
-    })
-
-    // console.log(['password fields'], password, confirmPassword);
+    if (password !== confirmPassword) {
+      return toast.error('Password not match');
+    } else {
+      createUserWithEmailAndPassword(email, password).then(() => {
+        updateProfile({
+          displayName: name, photoURL: droppedImages[0]
+        })
+      });
+    }
 
   };
 
@@ -50,7 +53,7 @@ const Register = () => {
   // react-dropzone
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
-    console.log(acceptedFiles);
+    console.log("🚀 ~ onDrop ~ acceptedFiles:", acceptedFiles);
     // setting the drop image to use state function
     setDroppedImages(acceptedFiles);
   }, []);
@@ -98,10 +101,7 @@ const Register = () => {
                   ...register("password", { required: true, minLength: 8 }, { pattern: /^[A-Za-z-0-9]+$/i },
 
                   )
-
-
                   }
-
                 />
               </div>
 

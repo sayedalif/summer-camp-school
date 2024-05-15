@@ -6,6 +6,7 @@ import { Navigate, useLocation } from "react-router";
 const PrivateRoute = ({ children }) => {
   // form auth provider
   const { user, loading } = useContext(AuthContext);
+
   // location for navigation
   const location = useLocation();
 

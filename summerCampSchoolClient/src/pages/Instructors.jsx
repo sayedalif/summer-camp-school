@@ -3,13 +3,13 @@ import useFetch from '../hooks/utils/utils';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import useUserInfo from '../hooks/useUserInfo';
 import toast from 'react-hot-toast';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const Instructors = () => {
   const [axiosPublic] = useAxiosPublic();
-  
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -82,16 +82,6 @@ const Instructors = () => {
   // 3. refetch the userfollowing data by creating a custom hook using tan stack query -- worked
 
 
-  // see all the classes taken by the instructor
-  const handleSeeClasses = async (instructorId) => {
-    console.log("🚀 ~ handleSeeClasses ~ instructorId:", instructorId);
-
-    const response = await axiosPublic.get(`/classes/${instructorId}`);
-    const data = await response.data;
-    console.log("🚀 ~ handleSeeClasses ~ data:", data);
-
-  };
-
   return (
     <div className='lg:flex lg:flex-row lg:justify-between lg:flex-wrap md:flex md:flex-row md:justify-between md:flex-wrap sm:flex sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
       {
@@ -120,7 +110,7 @@ const Instructors = () => {
                     {/* name */}
                     <p>{name}</p>
                     {/* instructor taken classes */}
-                    <p>Classes names: {classes_names.map((course, idx) => <span key={idx}>{course}</span>)}</p>
+                    <p>Classes names: {classes_names?.map((course, idx) => <span key={idx}>{course}</span>)}</p>
                     {/* instructor email */}
                     <p className='font-medium text-base'>
                       {email}
@@ -132,7 +122,7 @@ const Instructors = () => {
                     {/* see all classes by specific instructor */}
                     <div className="card-actions flex justify-end">
                       <Link to={`/instructors/${_id}`}>
-                        <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2 lg:px-4" onClick={() => handleSeeClasses(_id)}>See classes
+                        <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2 lg:px-4">See classes
                           <FontAwesomeIcon icon={faArrowRight} />
                         </button>
                       </Link>
