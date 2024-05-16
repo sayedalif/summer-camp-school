@@ -48,6 +48,7 @@ const AuthProvider = ({ children }) => {
   // observer
   const [user, loading, error] = useAuthState(auth);
 
+  // todo: fix the double user creation issue in the database
   if (user) {
     axiosPublic.get(`/users/${user?.email}`).then(response => {
       console.log('existing user', response.data);

@@ -9,6 +9,9 @@ import SocialLoginButton from '../components/SocialLoginButton';
 import toast from 'react-hot-toast';
 
 const Register = () => {
+  // todo: fix the name and image update issue
+  // todo: implement email verification but don't apply it until deployment because it's not required and the email im using are all fake.
+
   // navigate
   // to navigate user after login
   const navigate = useNavigate();
@@ -17,12 +20,11 @@ const Register = () => {
   const { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } = useAuth();
 
   // loading state
-
   const [loading, setLoading] = useState(false);
 
   // dropped images state
   const [droppedImages, setDroppedImages] = useState([]);
-  console.log("🚀 ~ Register ~ droppedImages:", droppedImages);
+  // console.log("🚀 ~ Register ~ droppedImages:", droppedImages);
 
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -30,21 +32,36 @@ const Register = () => {
 
   // from submit
   // react hook form
-  const onSubmit = async data => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
+  const onSubmit = async (data) => {
+    // console.log("🚀 ~ onSubmit ~ data:", data);
 
     const { name, email, password, confirmPassword, address, phoneNumber } = data;
 
     if (password !== confirmPassword) {
       return toast.error('Password not match');
-    } else {
-      createUserWithEmailAndPassword(email, password).then(() => {
-        updateProfile({
-          displayName: name, photoURL: droppedImages[0]
-        })
-      });
     }
 
+    try {
+      setLoading(true);
+      const success = await createUserWithEmailAndPassword(email, password);
+      // console.log("🚀 ~ onSubmit ~ success:", success);
+
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    } finally {
+      toast.success('Successfully created account');
+      
+      updateProfile({
+        displayName: name, photoURL: droppedImages[0]
+      }).then(response => {
+        toast.success('Successfully updated profile');
+        console.log("🚀 ~ onSubmit ~ response:", response);
+      }).catch(error => {
+        console.log("🚀 ~ onSubmit ~ error:", error);
+      })
+      setLoading(false);
+    }
   };
 
   console.log(errors);
@@ -53,7 +70,7 @@ const Register = () => {
   // react-dropzone
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
-    console.log("🚀 ~ onDrop ~ acceptedFiles:", acceptedFiles);
+    // console.log("🚀 ~ onDrop ~ acceptedFiles:", acceptedFiles);
     // setting the drop image to use state function
     setDroppedImages(acceptedFiles);
   }, []);
@@ -143,7 +160,6 @@ const Register = () => {
                         <div key={index}>
                           <img src={URL.createObjectURL(file)} alt={`Dropped Image ${index}`} style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '5px' }} />
                         </div>
-
                       ))
                     }
                   </ul>
@@ -156,11 +172,9 @@ const Register = () => {
                   <span className="label-text text-base">Phone Number <i className='text-gray-500'> - optional</i></span>
                 </label>
                 <input type="tel" placeholder="Phone number" className="input input-bordered"
-
                   {
                   ...register("phoneNumber", { required: false, })
                   }
-
                 />
               </div>
 
@@ -171,11 +185,9 @@ const Register = () => {
                   <span className="label-text text-base">Address <i className='text-gray-500'> - optional</i></span>
                 </label>
                 <input type="text" placeholder="Address" className="input input-bordered"
-
                   {
                   ...register("address", { required: false, })
                   }
-
                 />
               </div>
 

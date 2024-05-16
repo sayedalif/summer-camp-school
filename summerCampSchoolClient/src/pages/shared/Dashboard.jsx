@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import useUserInfo from '../../hooks/useUserInfo';
 
 const Dashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  console.log("🚀 ~ Dashboard ~ isDrawerOpen:", isDrawerOpen);
+  // console.log("🚀 ~ Dashboard ~ isDrawerOpen:", isDrawerOpen);
+
+  const { data: userInfo, error, isLoading, refetch } = useUserInfo();
   return (
     <div>
       <div className="drawer lg:drawer-open z-40">
@@ -21,8 +24,24 @@ const Dashboard = () => {
           <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content rounded-tr-md">
             {/* Sidebar content here */}
-            <li className='md:py-4 text-2xl normal-case'><Link to={`/dashboard/addclass`}>Add a class</Link></li>
-            <li className='text-2xl normal-case'><Link to={`/dashboard/myclass`}>My classes</Link></li>
+            {
+              userInfo?.role === 'instructor' ?
+                <>
+                  <li className='md:py-4 text-2xl normal-case'>
+                    <Link to={`/dashboard/addclass`}>Add a class</Link>
+                  </li>
+                  <li className='text-2xl normal-case'><Link to={`/dashboard/myclass`}>My classes</Link></li>
+                </>
+                :
+                <>
+                  <li className='md:py-4 text-2xl normal-case'>
+                    <Link to={`/dashboard/selectedclasses`}>Selected classes</Link>
+                  </li>
+                  <li className='md:py-4 text-2xl normal-case'>
+                    <Link to={`/dashboard/enrolledclasses`}>Enrolled classes</Link>
+                  </li>
+                </>
+            }
           </ul>
 
         </div>
