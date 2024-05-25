@@ -61,15 +61,15 @@ export const router = createBrowserRouter([
         </PrivateRoute>,
         children: [
           {
-            path: '/dashboard/enrolledclasses',
-            element: <PrivateRoute>
-              <EnrolledClasses></EnrolledClasses>
-            </PrivateRoute>,
-          },
-          {
             path: '/dashboard/selectedclasses',
             element: <PrivateRoute>
               <SelectedClasses></SelectedClasses>
+            </PrivateRoute>,
+          },
+          {
+            path: '/dashboard/enrolledclasses',
+            element: <PrivateRoute>
+              <EnrolledClasses></EnrolledClasses>
             </PrivateRoute>,
           },
           {

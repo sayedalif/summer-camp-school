@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -35,31 +36,8 @@ async function run() {
     const summerCampSchoolClassesCollection = client.db('summerCampSchool').collection('classes');
     const summerCampSchoolReviewsCollection = client.db('summerCampSchool').collection('reviews');
 
-    // save user to database
-    app.put('/users/:email', async (req, res) => {
-      const email = req.params.email;
-      const user = req.body;
-      // // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
-      const filter = { email: email };
-      const option = { upsert: true }
-      const updateDoc = {
-        $set: user
-      };
+    // banner data
 
-      const result = await summerCampSchoolUserCollection.updateOne(filter, updateDoc, option);
-      // console.log(result);
-      res.send(result);
-    });
-
-    // get single user info form the database
-    app.get('/users/:email', async (req, res) => {
-      const email = req.params.email;
-      const query = { email: email };
-      const result = await summerCampSchoolUserCollection.findOne(query);
-      res.send(result);
-    });
-
-    // banner
     // images and description
     app.get('/banner', async (req, res) => {
       const result = await summerCampSchoolBannerCollection.find().toArray();
@@ -82,7 +60,7 @@ async function run() {
     // for specific instructor classes
     app.get('/classes/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;
-      console.log("🚀 ~ app.get ~ instructorId:", instructorId);
+      // console.log("🚀 ~ app.get ~ instructorId:", instructorId);
 
       const result = await summerCampSchoolClassesCollection.find({ instructor_id: instructorId }).toArray();
       res.send(result);
@@ -132,14 +110,38 @@ async function run() {
     });
 
     // this is for all the users based on their email
-    app.get('users/:email', async (req, res) => {
+    /* app.get('users/:email', verifyJWT, async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const result = await summerCampSchoolUserCollection.findOne(query);
+      res.send(result);
+    }); */
+
+    // save specific user information to database
+    app.put('/users/:email', async (req, res) => {
+      const email = req.params.email;
+      const user = req.body;
+      // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
+      const filter = { email: email };
+      const option = { upsert: true }
+      const updateDoc = {
+        $set: user
+      };
+
+      const result = await summerCampSchoolUserCollection.updateOne(filter, updateDoc, option);
+      // console.log(result);
+      res.send(result);
+    });
+
+    // get single user info form the database
+    app.get('/users/:email', async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
       const result = await summerCampSchoolUserCollection.findOne(query);
       res.send(result);
     });
 
-    // save users info to database
+    // save users info to database when they login for the first time
     app.post('/users', async (req, res) => {
       const user = req.body;
       const result = await summerCampSchoolUserCollection.insertOne(user);
@@ -181,7 +183,7 @@ async function run() {
     });
 
 
-    // delete specific instructor
+    // delete / unfollow specific instructor
     app.patch('/users/unfollow/:instructorId', async (req, res) => {
       const { instructorId } = req.params;
       const { userEmail } = req.body;
@@ -205,7 +207,7 @@ async function run() {
       res.status(200).json({ message: 'Successfully unfollowed instructor' });
     });
 
-    // * all instructors
+    // * for getting all instructors
     app.get('/instructors', async (req, res) => {
       const result = await summerCampSchoolUserCollection.find({ role: "instructor" }).toArray();
       res.send(result);

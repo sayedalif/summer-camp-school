@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
 import useAuth from "./useAuth";
+import axios from "axios";
+
+// * this is for getting users info from the database
 
 const useUserInfo = () => {
   const [axiosPublic] = useAxiosPublic();
@@ -11,7 +14,7 @@ const useUserInfo = () => {
     enabled: !!user,
     queryKey: ['userInfo'],
     queryFn: async () => {
-      const response = await axiosPublic.get(`/users/${user?.email}`);
+      const response = await axiosPublic(`/users/${user?.email}`,);
       const data = await response?.data;
       return data;
     }

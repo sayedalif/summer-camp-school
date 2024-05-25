@@ -4,16 +4,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import SocialLoginButton from '../components/SocialLoginButton';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("🚀 ~ Login ~ location:", location);
+  const [axiosPublic] = useAxiosPublic();
+  // console.log("🚀 ~ Login ~ location:", location);
 
   let from = location.state?.from?.pathname || "/";
-  console.log("🚀 ~ Login ~ from:", from);
-  
+  // console.log("🚀 ~ Login ~ from:", from);
+
   // user info from context
   const { signInWithEmailAndPassword, sendPasswordResetEmail } = useAuth();
   const [email, setEmail] = useState('');
