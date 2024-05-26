@@ -52,6 +52,7 @@ async function run() {
 
 
     // for all the classes
+    // using it in the classes route
     app.get('/classes', async (req, res) => {
       const result = await summerCampSchoolClassesCollection.find().toArray();
       res.send(result);
@@ -61,13 +62,12 @@ async function run() {
     app.get('/classes/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;
       // console.log("🚀 ~ app.get ~ instructorId:", instructorId);
-
       const result = await summerCampSchoolClassesCollection.find({ instructor_id: instructorId }).toArray();
       res.send(result);
     });
 
-    // here is the api for popular classes
-    // i'm deciding popular classes based on their available seats and students enrolled in that class if the students enrolled are 70% of the available seats then that class is popular
+    // * here is the api for popular classes
+    // * i'm deciding popular classes based on their available seats and students enrolled in that class if the students enrolled are 70% of the available seats then that class is popular
     app.get('/popularclasses', async (req, res) => {
       const pipeline = [
         {
@@ -108,14 +108,6 @@ async function run() {
       const result = await summerCampSchoolUserCollection.find().toArray();
       res.send(result);
     });
-
-    // this is for all the users based on their email
-    /* app.get('users/:email', verifyJWT, async (req, res) => {
-      const email = req.params.email;
-      const query = { email: email };
-      const result = await summerCampSchoolUserCollection.findOne(query);
-      res.send(result);
-    }); */
 
     // save specific user information to database
     app.put('/users/:email', async (req, res) => {

@@ -51,7 +51,7 @@ const Register = () => {
       console.log(error);
     } finally {
       toast.success('Successfully created account');
-      
+      navigate('/');
       updateProfile({
         displayName: name, photoURL: droppedImages[0]
       }).then(response => {
