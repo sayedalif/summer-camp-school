@@ -1,7 +1,7 @@
 import { generateRandomColorString } from "../hooks/utils/utils";
 import { faArrowRight, faIdBadge, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useUserInfo from "../hooks/useUserInfo";
 import { BiSolidEdit } from "react-icons/bi";
@@ -65,9 +65,11 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
             </div>
             <div className="card-actions flex justify-between items-center">
               <span className='md:text-3xl text-2xl font-bold'>${eachClass?.price}</span>
-              <button onClick={() => !user && navigate("/login", { state: { from: location } })} className={`btn bg-[#FFFFFF] text-[#101218] rounded-full px-2 lg:px-4 ${eachClass?.available_seats === eachClass?.student_enrolled || (userInfo?.role === 'instructor' || userInfo?.role === 'admin') ? 'btn-disabled' : 'hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5]'}`}>Join Now
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>
+              <Link to={`/payment`}>
+                <button onClick={() => !user && navigate("/login", { state: { from: location } })} className={`btn bg-[#FFFFFF] text-[#101218] rounded-full px-2 lg:px-4 ${eachClass?.available_seats === eachClass?.student_enrolled || (userInfo?.role === 'instructor' || userInfo?.role === 'admin') ? 'btn-disabled' : 'hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5]'}`}>Join Now
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </button>
+              </Link>
             </div>
           </div>
         </div>
