@@ -38,7 +38,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
     }
     const addedToCart = {
       email: user?.email,
-      className: eachClass?.eachClass,
+      className: eachClass?.className,
       class_thumbnail: eachClass?.class_thumbnail,
       instructor_id: eachClass?.instructor_id,
       class_id: eachClass?._id,
@@ -53,6 +53,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
       console.log("🚀 ~ response:", response.data);
       if (response?.data?.acknowledged === true && response?.data?.insertedId) {
         toast.success('Joined class successfully');
+        return navigate("/dashboard/enrolledclasses");
       }
     } catch (error) {
       console.log("🚀 ~ handleAddToCart ~ error:", error);

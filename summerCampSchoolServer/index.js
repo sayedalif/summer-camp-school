@@ -215,6 +215,13 @@ async function run() {
       return res.send(result);
     });
 
+    // * get specific user booked data
+    app.get('/cart', async (req, res) => {
+      const email = req?.query?.email;
+      const result = await summerCampSchoolCartsCollection.find({ email: email }).toArray();
+      return res.send(result);
+    });
+
     // * for getting all instructors
     app.get('/instructors', async (req, res) => {
       const result = await summerCampSchoolUserCollection.find({ role: "instructor" }).toArray();
