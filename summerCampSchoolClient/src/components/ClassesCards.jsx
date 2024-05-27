@@ -5,6 +5,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useUserInfo from "../hooks/useUserInfo";
 import { BiSolidEdit } from "react-icons/bi";
+import axios from "axios";
+import toast from "react-hot-toast";
+
 
 const ClassesCards = ({ key, eachClass, status, feedback }) => {
   // these are for dropping of the user in same page after login
@@ -19,6 +22,42 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
 
   // this generates random badge color for the cards
   const randomBadgeColors = generateRandomColorString();
+
+  // this function add class to cart and ridirects to enrolled class
+  const handleAddToCart = async (eachClass) => {
+    // console.log("🚀 ~ handleAddToCart ~ eachClass:", eachClass);
+    // className
+    // class_thumbnail
+    // instructor_id
+    // _id
+    // price
+    // available_seats / students_enrolled
+    if (!user) {
+      toast('Please login first');
+      return navigate("/login", { state: { from: location } });
+    }
+    const addedToCart = {
+      email: user?.email,
+      className: eachClass?.eachClass,
+      class_thumbnail: eachClass?.class_thumbnail,
+      instructor_id: eachClass?.instructor_id,
+      class_id: eachClass?._id,
+      price: eachClass?.price,
+      available_seats: eachClass?.available_seats,
+      students_enrolled: eachClass?.students_enrolled,
+    };
+    console.log("🚀 ~ handleAddToCart ~ addedToCart:", addedToCart);
+
+    try {
+      const response = await axios.post(`http://localhost:5000/cart?email=${user?.email}`, addedToCart);
+      console.log("🚀 ~ response:", response.data);
+      if (response?.data?.acknowledged === true && response?.data?.insertedId) {
+        toast.success('Joined class successfully');
+      }
+    } catch (error) {
+      console.log("🚀 ~ handleAddToCart ~ error:", error);
+    }
+  }
 
   return (
     <div key={key} className='group cursor-pointer'>
@@ -65,11 +104,9 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
             </div>
             <div className="card-actions flex justify-between items-center">
               <span className='md:text-3xl text-2xl font-bold'>${eachClass?.price}</span>
-              <Link to={`/payment`}>
-                <button onClick={() => !user && navigate("/login", { state: { from: location } })} className={`btn bg-[#FFFFFF] text-[#101218] rounded-full px-2 lg:px-4 ${eachClass?.available_seats === eachClass?.student_enrolled || (userInfo?.role === 'instructor' || userInfo?.role === 'admin') ? 'btn-disabled' : 'hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5]'}`}>Join Now
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </button>
-              </Link>
+              <button onClick={() => handleAddToCart(eachClass)} className={`btn bg-[#FFFFFF] text-[#101218] rounded-full px-2 lg:px-4 ${eachClass?.available_seats === eachClass?.student_enrolled || (userInfo?.role === 'instructor' || userInfo?.role === 'admin') ? 'btn-disabled' : 'hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5]'}`}>Join Now
+                <FontAwesomeIcon icon={faArrowRight} />
+              </button>
             </div>
           </div>
         </div>

@@ -40,6 +40,7 @@ async function run() {
     const summerCampSchoolCurriculumCollection = client.db('summerCampSchool').collection('curriculum');
     const summerCampSchoolClassesCollection = client.db('summerCampSchool').collection('classes');
     const summerCampSchoolReviewsCollection = client.db('summerCampSchool').collection('reviews');
+    const summerCampSchoolCartsCollection = client.db('summerCampSchool').collection('carts');
 
     // banner data
 
@@ -202,6 +203,16 @@ async function run() {
       );
 
       res.status(200).json({ message: 'Successfully unfollowed instructor' });
+    });
+
+    // * for add to cart
+    app.post('/cart', async (req, res) => {
+      const email = req?.query?.email;
+      console.log("🚀 ~ app.post ~ email:", email);
+      const addedToCart = req?.body;
+      console.log("🚀 ~ app.post ~ addedToCart:", addedToCart);
+      const result = await summerCampSchoolCartsCollection.insertOne(addedToCart);
+      return res.send(result);
     });
 
     // * for getting all instructors
