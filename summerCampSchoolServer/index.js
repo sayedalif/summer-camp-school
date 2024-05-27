@@ -3,7 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 // This is your test secret API key.
-const stripe = require("stripe")(import.meta.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const port = process.env.PORT || 5000;
