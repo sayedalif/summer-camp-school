@@ -2,11 +2,16 @@ const express = require('express')
 const cors = require('cors');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+// This is your test secret API key.
+const stripe = require("stripe")(import.meta.env.STRIPE_SECRET_KEY);
+
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+
 
 app.get('/', (req, res) => {
   res.send('summer camp school server is running!')
@@ -248,6 +253,26 @@ async function run() {
 
       const result = await summerCampSchoolUserCollection.aggregate(pipeline).toArray();
       res.send(result);
+    });
+
+    // payment-intent
+    app.post("/create-payment-intent", async (req, res) => {
+      const { price } = req.body;
+
+      const amount = price * 100;
+      // Create a PaymentIntent with the order amount and currency
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: "usd",
+        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+
+      res.send({
+        clientSecret: paymentIntent.client_secret,
+      });
     });
 
     // reviews
