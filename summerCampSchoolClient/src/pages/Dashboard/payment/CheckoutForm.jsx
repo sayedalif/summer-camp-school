@@ -110,7 +110,7 @@ const CheckoutForm = ({ totalPrice, carts }) => {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <CardElement
           options={{
@@ -137,7 +137,7 @@ const CheckoutForm = ({ totalPrice, carts }) => {
           Pay
         </button>
       </form>
-    </>
+    </div>
   );
 };
 
