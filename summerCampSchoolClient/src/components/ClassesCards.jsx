@@ -53,7 +53,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
       console.log("🚀 ~ response:", response.data);
       if (response?.data?.acknowledged === true && response?.data?.insertedId) {
         toast.success('Joined class successfully');
-        return navigate("/dashboard/enrolledclasses");
+        return navigate("/dashboard/selectedclasses");
       }
     } catch (error) {
       console.log("🚀 ~ handleAddToCart ~ error:", error);

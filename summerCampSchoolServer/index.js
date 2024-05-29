@@ -41,6 +41,7 @@ async function run() {
     const summerCampSchoolClassesCollection = client.db('summerCampSchool').collection('classes');
     const summerCampSchoolReviewsCollection = client.db('summerCampSchool').collection('reviews');
     const summerCampSchoolCartsCollection = client.db('summerCampSchool').collection('carts');
+    const summerCampSchoolPaymentCollection = client.db('summerCampSchool').collection('payments');
 
     // banner data
 
@@ -220,6 +221,16 @@ async function run() {
       const email = req?.query?.email;
       const result = await summerCampSchoolCartsCollection.find({ email: email }).toArray();
       return res.send(result);
+    });
+
+    // store all payment information to database.
+    app.post('/payment', async (req, res) => {
+      const { payment } = req?.body;
+      const insertedResult = await summerCampSchoolPaymentCollection.insertOne(payment);
+      const query = { _id: { $in: payment?.carts_id?.map(_id => new ObjectId(_id)) } };
+      const deletedResult = await summerCampSchoolCartsCollection.deleteMany(query);
+
+      res.send({ insertedResult, deletedResult });
     });
 
     // * for getting all instructors

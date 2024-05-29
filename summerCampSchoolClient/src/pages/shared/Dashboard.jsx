@@ -35,10 +35,10 @@ const Dashboard = () => {
                 :
                 <>
                   <li className='md:py-4 text-2xl normal-case'>
-                    <Link to={`/dashboard/selectedclasses`}>Selected classes</Link>
+                    <Link to={`/dashboard/enrolledclasses`}>Enrolled classes</Link>
                   </li>
                   <li className='md:py-4 text-2xl normal-case'>
-                    <Link to={`/dashboard/enrolledclasses`}>Enrolled classes</Link>
+                    <Link to={`/dashboard/selectedclasses`}>Selected classes</Link>
                   </li>
                 </>
             }

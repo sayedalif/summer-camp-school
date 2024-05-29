@@ -4,7 +4,7 @@ import axios from 'axios';
 import useAuth from '../src/hooks/useAuth';
 // import './stripeStyle.css';
 
-const CheckoutForm = ({ totalPrice }) => {
+const CheckoutForm = ({ totalPrice, carts }) => {
   // user
   const { user } = useAuth();
   const price = parseFloat(totalPrice);
@@ -25,6 +25,7 @@ const CheckoutForm = ({ totalPrice }) => {
 
   // creating payment intend on the database
   useEffect(() => {
+    // if the price is greater than 0 than make a payment intend
     if (price > 0) {
       axios.post('http://localhost:5000/create-payment-intent', { price }).then(response => {
         console.log(response?.data);
@@ -93,6 +94,19 @@ const CheckoutForm = ({ totalPrice }) => {
     if (paymentIntent?.status === 'succeeded') {
       console.log(['transaction id'], paymentIntent?.id);
       setTransactionId(paymentIntent?.id);
+
+      // after successful payment send payment info to database
+      const payment = {
+        email: user?.email,
+        transactionId: paymentIntent?.id,
+        totalPrice: price,
+        purchaseDate: new Date(),
+        classes_id: carts?.map(cart => cart?.class_id),
+        carts_id: carts?.map(cart => cart?._id),
+      };
+      axios.post('http://localhost:5000/payment', { payment }).then(response => {
+        console.log(response.data);
+      })
     }
   };
 
