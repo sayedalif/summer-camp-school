@@ -275,7 +275,9 @@ async function run() {
 
     // payment-intent
     app.post("/create-payment-intent", async (req, res) => {
-      const { price } = req.body;
+      const { price } = req?.body;
+      console.log("🚀 ~ app.post ~ price:", typeof (price));
+      console.log("🚀 ~ app.post ~ price:", price);
 
       const amount = price * 100;
       // Create a PaymentIntent with the order amount and currency
