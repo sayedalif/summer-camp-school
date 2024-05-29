@@ -1,4 +1,4 @@
-import DragAndDrop from '../components/DragAndDrop';
+import DragAndDrop from "../../components/DragAndDrop";
 
 const AddClass = () => {
   return (

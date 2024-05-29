@@ -1,8 +1,9 @@
+import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import React from 'react';
 import CheckoutForm from './CheckOutForm';
-import useCart from '../src/hooks/useCart';
+import useCart from '../../../hooks/useCart';
+import './payment.css';
 
 const Payment = () => {
   const { carts, error, isLoading, refetch, totalPrice } = useCart();

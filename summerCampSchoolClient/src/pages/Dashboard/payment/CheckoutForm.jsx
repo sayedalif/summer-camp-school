@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import useAuth from '../src/hooks/useAuth';
-// import './stripeStyle.css';
+import useAuth from '../../../hooks/useAuth';
 
 const CheckoutForm = ({ totalPrice, carts }) => {
   // user

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import useUserInfo from '../../hooks/useUserInfo';
+import useUserInfo from '../hooks/useUserInfo';
 
 const Dashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

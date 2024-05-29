@@ -1,6 +1,6 @@
-import ClassesCards from "../components/ClassesCards";
-import useUserInfo from "../hooks/useUserInfo";
-import useFetch from "../hooks/utils/utils";
+import ClassesCards from "../../components/ClassesCards";
+import useUserInfo from "../../hooks/useUserInfo";
+import useFetch from "../../hooks/utils/utils";
 
 const MyClass = () => {
   const { data: userInfoData, error: userInfoError, isLoading, refetch } = useUserInfo();
