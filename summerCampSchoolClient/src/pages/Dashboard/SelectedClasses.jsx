@@ -101,7 +101,7 @@ const SelectedClasses = () => {
                       <td>$ {price}</td>
                       <th>
                         <button onClick={() => handleDeleteFromCart(_id)} className="btn btn-ghost btn-xs"
-                        disabled={deleteLoading}
+                          disabled={deleteLoading}
                         >delete</button>
                       </th>
                     </tr>
@@ -112,7 +112,12 @@ const SelectedClasses = () => {
 
           </table>
             :
-            <p className='flex justify-center items-center h-screen text-xl'>You haven't join any classes yet  <Link to={`/classes`}>  <span className='btn btn-primary btn-sm'>  Join now</span></Link></p>
+            <p className='flex justify-center items-center h-screen text-xl'>
+              <p className='mr-1'>No selected classes found!!!</p>
+              <Link to={`/classes`}>
+                <button className='btn btn-primary btn-sm'>  Join now</button>
+              </Link>
+            </p>
         }
       </div>
     </div>
