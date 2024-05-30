@@ -207,7 +207,7 @@ async function run() {
     });
 
     // * for add to cart
-    app.post('/cart', async (req, res) => {
+    app.post('/carts', async (req, res) => {
       const email = req?.query?.email;
       console.log("🚀 ~ app.post ~ email:", email);
       const addedToCart = req?.body;
@@ -216,8 +216,16 @@ async function run() {
       return res.send(result);
     });
 
+    // delete a specific item from cart
+    app.delete('/carts:/id', async (req, res) => {
+      const id = req?.params?.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await summerCampSchoolCartsCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // * get specific user booked data
-    app.get('/cart', async (req, res) => {
+    app.get('/carts', async (req, res) => {
       const email = req?.query?.email;
       const result = await summerCampSchoolCartsCollection.find({ email: email }).toArray();
       return res.send(result);

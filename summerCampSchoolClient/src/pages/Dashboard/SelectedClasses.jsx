@@ -79,7 +79,7 @@ const SelectedClasses = () => {
 
           </table>
             :
-            <p className='flex justify-center items-center h-screen'>You haven't bought anything <Link to={`/classes`}><button>buy</button></Link> now</p>
+            <p className='flex justify-center items-center h-screen text-xl'>You haven't join any classes yet  <Link to={`/classes`}>  <span className='btn btn-primary btn-sm'>  Join now</span></Link></p>
         }
       </div>
     </div>

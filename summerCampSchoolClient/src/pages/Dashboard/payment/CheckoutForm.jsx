@@ -110,33 +110,35 @@ const CheckoutForm = ({ totalPrice, carts }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: '16px',
-                color: '#424770',
-                '::placeholder': {
-                  color: '#aab7c4',
+    <div className='flex justify-center items-center h-screen'>
+      <div className='card w-96 bg-base-100 shadow-xl py-3 px-3'>
+        <form onSubmit={handleSubmit}>
+          <CardElement
+            options={{
+              style: {
+                base: {
+                  fontSize: '16px',
+                  color: '#424770',
+                  '::placeholder': {
+                    color: '#aab7c4',
+                  },
+                },
+                invalid: {
+                  color: '#9e2146',
                 },
               },
-              invalid: {
-                color: '#9e2146',
-              },
-            },
-          }}
-        />
-        {
-          cardError && <p className='text-red-500 text-lg font-bold'>{cardError}</p>
-        }
-        {transactionId && <p className='text-xl'>Transaction Id: <span className='text-green-500'>{transactionId}</span>
-        </p>}
-        <button type="submit" className='btn btn-primary btn-sm' disabled={!stripe || !clientSecret || processing}>
-          Pay
-        </button>
-      </form>
+            }}
+          />
+          {
+            cardError && <p className='text-red-500 text-lg font-bold'>{cardError}</p>
+          }
+          {transactionId && <p className='text-xl'>Transaction Id: <span className='text-green-500'>{transactionId}</span>
+          </p>}
+          <button type="submit" className='btn btn-primary btn-sm' disabled={!stripe || !clientSecret || processing}>
+            Pay
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
