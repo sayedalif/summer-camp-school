@@ -217,8 +217,9 @@ async function run() {
     });
 
     // delete a specific item from cart
-    app.delete('/carts:/id', async (req, res) => {
+    app.delete('/carts/:id', async (req, res) => {
       const id = req?.params?.id;
+      console.log("🚀 ~ app.delete ~ id:", id);
       const query = { _id: new ObjectId(id) };
       const result = await summerCampSchoolCartsCollection.deleteOne(query);
       res.send(result);

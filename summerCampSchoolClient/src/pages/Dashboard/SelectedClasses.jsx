@@ -1,11 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useCart from '../../hooks/useCart';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const SelectedClasses = () => {
+  // custom hooks
+  // axios public is the less secure version, which has base url.
+  const [axiosPublic] = useAxiosPublic();
+  // for getting cart data
   const { carts, error, isLoading, refetch, totalPrice } = useCart();
+  // this is for disabling the delete button when the delete api call is processing...
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
-  console.log("🚀 ~ EnrolledClasses ~ cart:", carts);
+  const handleDeleteFromCart = async (id) => {
+    setDeleteLoading(true);
+    console.log("🚀 ~ handleDeleteFromCart ~ id:", id);
+
+    try {
+      const response = await axiosPublic.delete(`/carts/${id}`);
+      const data = await response?.data;
+      console.log("🚀 ~ handleDeleteFromCart ~ data:", data);
+      if (data?.acknowledged === true && data?.deletedCount > 0) {
+        toast.success('Deleted successfully');
+      }
+      // refetching so that in ui data's will be updated
+      refetch();
+    } catch (error) {
+      console.log("🚀 ~ handleDeleteFromCart ~ error:", error);
+    } finally {
+      setDeleteLoading(false);
+    }
+
+  }
 
   return (
     <div>
@@ -42,14 +70,17 @@ const SelectedClasses = () => {
               {/* row 1 */}
               {
                 carts?.map((cart) => {
-                  const { email,
+                  const {
+                    _id,
+                    email,
                     className,
                     class_thumbnail,
                     instructor_id,
                     class_id,
                     price,
                     available_seats,
-                    students_enrolled } = cart
+                    students_enrolled
+                  } = cart
                   return (
                     <tr key={cart?._id}>
                       <td>
@@ -69,7 +100,9 @@ const SelectedClasses = () => {
                       </td>
                       <td>$ {price}</td>
                       <th>
-                        <button className="btn btn-ghost btn-xs">delete</button>
+                        <button onClick={() => handleDeleteFromCart(_id)} className="btn btn-ghost btn-xs"
+                        disabled={deleteLoading}
+                        >delete</button>
                       </th>
                     </tr>
                   )

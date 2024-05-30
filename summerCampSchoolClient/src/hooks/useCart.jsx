@@ -11,7 +11,7 @@ const useCart = () => {
     enabled: !!user && !loading,
     queryKey: ['cart'],
     queryFn: async () => {
-      const response = await axiosPublic.get(`/cart?email=${user?.email}`);
+      const response = await axiosPublic.get(`/carts?email=${user?.email}`);
       const data = await response?.data;
       return data;
     },

@@ -7,6 +7,7 @@ import useUserInfo from "../hooks/useUserInfo";
 import { BiSolidEdit } from "react-icons/bi";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useCart from "../hooks/useCart";
 
 
 const ClassesCards = ({ key, eachClass, status, feedback }) => {
@@ -22,6 +23,13 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
 
   // this generates random badge color for the cards
   const randomBadgeColors = generateRandomColorString();
+
+  // 
+  const { carts, error: cartsError, isLoading: cartsIsLoading, refetch: cartsRefetch, totalPrice } = useCart();
+
+  const joinedClassIds = carts.map(cart => cart.class_id);
+  console.log("🚀 ~ ClassesCards ~ joinedClassIds:", joinedClassIds);
+
 
   // this function add class to cart and ridirects to enrolled class
   const handleAddToCart = async (eachClass) => {
@@ -49,7 +57,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
     console.log("🚀 ~ handleAddToCart ~ addedToCart:", addedToCart);
 
     try {
-      const response = await axios.post(`http://localhost:5000/cart?email=${user?.email}`, addedToCart);
+      const response = await axios.post(`http://localhost:5000/carts?email=${user?.email}`, addedToCart);
       console.log("🚀 ~ response:", response.data);
       if (response?.data?.acknowledged === true && response?.data?.insertedId) {
         toast.success('Joined class successfully');
@@ -61,7 +69,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
   }
 
   return (
-    <div key={key} className='group cursor-pointer'>
+    <div onClick={()=> joinedClassIds.includes(eachClass?._id) && toast.success('Already Joined')} key={key} className='group cursor-pointer'>
 
       {
         location?.pathname === '/dashboard/myclass' && userInfo?.role === 'instructor' && <div className="flex justify-between px-4 py-3">
@@ -105,8 +113,12 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
             </div>
             <div className="card-actions flex justify-between items-center">
               <span className='md:text-3xl text-2xl font-bold'>${eachClass?.price}</span>
-              <button onClick={() => handleAddToCart(eachClass)} className={`btn bg-[#FFFFFF] text-[#101218] rounded-full px-2 lg:px-4 ${eachClass?.available_seats === eachClass?.student_enrolled || (userInfo?.role === 'instructor' || userInfo?.role === 'admin') ? 'btn-disabled' : 'hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5]'}`}>Join Now
-                <FontAwesomeIcon icon={faArrowRight} />
+              <button onClick={() => handleAddToCart(eachClass)} disabled={joinedClassIds.includes(eachClass?._id)} className={`btn bg-[#FFFFFF] text-[#101218] rounded-full px-2 lg:px-4 ${eachClass?.available_seats === eachClass?.student_enrolled || (userInfo?.role === 'instructor' || userInfo?.role === 'admin') ? 'btn-disabled' : 'hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5]'}`}>
+                {
+                  joinedClassIds.includes(eachClass?._id) ? 'Joined' : <>
+                    Join Now <FontAwesomeIcon icon={faArrowRight} />
+                  </>
+                }
               </button>
             </div>
           </div>
