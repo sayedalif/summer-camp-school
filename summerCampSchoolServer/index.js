@@ -65,6 +65,24 @@ async function run() {
       res.send(result);
     });
 
+    // for updating the student enrolled seats on specific classes
+    app.patch('/classes/:id', async (req, res) => {
+      const { id } = req.params;
+      const filter = { _id: new ObjectId(id) };
+      const updateStudentEnrolledSeats = req.body;
+      console.log("🚀 ~ app.patch ~ updateStudentEnrolledSeats:", updateStudentEnrolledSeats);
+      const updateDoc = {
+        $set: {
+          students_enrolled: updateStudentEnrolledSeats?.students_enrolled,
+        },
+      }
+      console.log("🚀 ~ app.patch ~ updateDoc:", updateDoc);
+      const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
+      console.log("🚀 ~ app.patch ~ result:", result);
+      
+      return res.send(result);
+    });
+
     // for specific instructor classes
     app.get('/classes/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;

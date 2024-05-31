@@ -1,8 +1,3 @@
-import React, { useEffect } from 'react';
-import useCart from '../../hooks/useCart';
-import axios from 'axios';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
-import useAuth from '../../hooks/useAuth';
 import usePaymentClasses from '../../hooks/usePaymentClasses';
 
 const EnrolledClasses = () => {

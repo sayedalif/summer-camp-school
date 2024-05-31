@@ -9,6 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import useCart from "../hooks/useCart";
 import usePaymentClasses from "../hooks/usePaymentClasses";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 const ClassesCards = ({ key, eachClass, status, feedback }) => {
@@ -19,6 +20,9 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
 
   // user authentication data
   const { user } = useAuth();
+
+  const [axiosPublic] = useAxiosPublic();
+
   // userinfo data
   const { data: userInfo, error, isLoading, refetch } = useUserInfo();
 
@@ -51,6 +55,13 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
       toast('Please login first');
       return navigate("/login", { state: { from: location } });
     }
+
+    axiosPublic.patch(`/classes/${eachClass?._id}`, { students_enrolled: eachClass?.students_enrolled + 1 }).then(response => {
+      console.log("🚀 ~ axiosPublic.patch ~ response:", response);
+    }).catch(err => {
+      console.log(err);
+    })
+
     const addedToCart = {
       email: user?.email,
       className: eachClass?.className,

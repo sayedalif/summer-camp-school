@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
+import { useEffect, useState } from 'react';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 

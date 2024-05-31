@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import useUserInfo from '../hooks/useUserInfo';
+import ActiveLink from '../components/ActiveLink';
+import useCart from '../hooks/useCart';
 
 const Dashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   // console.log("🚀 ~ Dashboard ~ isDrawerOpen:", isDrawerOpen);
 
+  // user info from hook
   const { data: userInfo, error, isLoading, refetch } = useUserInfo();
+
+  // 
+  const { carts, error: cartsError, isLoading: cartsIsLoading, refetch: cartsRefetch, totalPrice } = useCart();
+
   return (
     <div>
       <div className="drawer lg:drawer-open z-40">
@@ -27,18 +34,28 @@ const Dashboard = () => {
             {
               userInfo?.role === 'instructor' ?
                 <>
-                  <li className='md:py-4 text-2xl normal-case'>
-                    <Link to={`/dashboard/addclass`}>Add a class</Link>
-                  </li>
-                  <li className='text-2xl normal-case'><Link to={`/dashboard/myclass`}>My classes</Link></li>
+                  <ActiveLink to={`/dashboard/addclass`}>
+                    <li className='md:py-4 text-2xl normal-case'>
+                      Add a class
+                    </li>
+                  </ActiveLink>
+                  <ActiveLink to={`/dashboard/myclass`}>
+                    <li className='text-2xl normal-case'>My classes</li>
+                  </ActiveLink>
                 </>
                 :
                 <>
-                  <li className='md:py-4 text-2xl normal-case'>
-                    <Link to={`/dashboard/enrolledclasses`}>Enrolled classes</Link>
+                  <li className='md:my-2 text-2xl normal-case'>
+                    <ActiveLink to={`/dashboard/enrolledclasses`}>
+                      Enrolled classes
+                    </ActiveLink>
                   </li>
-                  <li className='md:py-4 text-2xl normal-case'>
-                    <Link to={`/dashboard/selectedclasses`}>Selected classes</Link>
+
+                  <li className='md:my-2 text-2xl normal-case'>
+                    <ActiveLink to={`/dashboard/selectedclasses`}>
+                      Selected classes
+                      <span className="badge badge-primary">{carts?.length}</span>
+                    </ActiveLink>
                   </li>
                 </>
             }
