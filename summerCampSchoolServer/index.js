@@ -68,7 +68,7 @@ async function run() {
     // for specific instructor classes
     app.get('/classes/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;
-      // console.log("🚀 ~ app.get ~ instructorId:", instructorId);
+      // // console.log("🚀 ~ app.get ~ instructorId:", instructorId);
       const result = await summerCampSchoolClassesCollection.find({ instructor_id: instructorId }).toArray();
       res.send(result);
     });
@@ -120,7 +120,7 @@ async function run() {
     app.put('/users/:email', async (req, res) => {
       const email = req.params.email;
       const user = req.body;
-      // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
+      // // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
       const filter = { email: email };
       const option = { upsert: true }
       const updateDoc = {
@@ -168,9 +168,9 @@ async function run() {
     // follow a specific instructor
     app.put('/users/follow/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;
-      // console.log("🚀 ~ app.put ~ instructorId:", instructorId)
+      // // console.log("🚀 ~ app.put ~ instructorId:", instructorId)
       const { userEmail } = req?.body;
-      // console.log("🚀 ~ app.put ~ userEmail:", userEmail);
+      // // console.log("🚀 ~ app.put ~ userEmail:", userEmail);
 
       // Update user document to include the followed instructor's _id
       await summerCampSchoolUserCollection.updateOne(
@@ -209,9 +209,9 @@ async function run() {
     // * for add to cart
     app.post('/carts', async (req, res) => {
       const email = req?.query?.email;
-      console.log("🚀 ~ app.post ~ email:", email);
+      // console.log("🚀 ~ app.post ~ email:", email);
       const addedToCart = req?.body;
-      console.log("🚀 ~ app.post ~ addedToCart:", addedToCart);
+      // console.log("🚀 ~ app.post ~ addedToCart:", addedToCart);
       const result = await summerCampSchoolCartsCollection.insertOne(addedToCart);
       return res.send(result);
     });
@@ -219,7 +219,7 @@ async function run() {
     // delete a specific item from cart
     app.delete('/carts/:id', async (req, res) => {
       const id = req?.params?.id;
-      console.log("🚀 ~ app.delete ~ id:", id);
+      // console.log("🚀 ~ app.delete ~ id:", id);
       const query = { _id: new ObjectId(id) };
       const result = await summerCampSchoolCartsCollection.deleteOne(query);
       res.send(result);
@@ -240,6 +240,63 @@ async function run() {
       const deletedResult = await summerCampSchoolCartsCollection.deleteMany(query);
 
       res.send({ insertedResult, deletedResult });
+    });
+
+    // paid user classes
+    app.get('/payments/classes', async (req, res) => {
+      const email = req?.query?.email;
+      console.log("🚀 ~ app.get ~ email:", email);
+      // const db = await connectToDatabase();
+
+      try {
+        // Find all payments for the user
+        const payments = await summerCampSchoolPaymentCollection.find({ email: email }).toArray();
+        console.log("🚀 ~ app.get ~ payments:", payments);
+
+        if (payments.length === 0) {
+          return res.status(404).send('No successful payments found for this user.');
+        }
+
+        /* // Extract the classes_ids from the payments
+        // const query = payments?.classes_id?.map(id => new ObjectId(id));
+        const query = { _id: { $in: payments?.classes_id?.map(id => new ObjectId(id)) } };
+
+        // Fetch the class details
+        const classes = await summerCampSchoolClassesCollection.find(query).toArray(); */
+
+        /* // Extract the classes_ids from the payments
+        const classesIds = payments.map(payment => payment.classes_id).filter(Boolean);
+        console.log("🚀 ~ app.get ~ classesIds:", classesIds);
+
+        if (classesIds.length === 0) {
+          return res.status(404).send('No classes found for the successful payments.');
+        }
+
+        // Form the query
+        const query = { _id: { $in: classesIds.map(id => new ObjectId(id)) } };
+
+        // Fetch the class details
+        const classes = await summerCampSchoolClassesCollection.find(query).toArray(); */
+        // ! $in aie method gula sikha.
+        // ! concat method ta sikha.
+
+        // Extract class IDs from successful payments
+        const classIds = payments?.map(payment => payment?.classes_id);
+        console.log("🚀 ~ app.get ~ classIds:", classIds);
+
+        const flattenedClassIds = [].concat(...classIds);
+        console.log("🚀 ~ app.get ~ flattenedClassIds:", flattenedClassIds);
+
+        // Find classes corresponding to the class IDs
+        const userClasses = await summerCampSchoolClassesCollection.find({ _id: { $in: flattenedClassIds?.map(id => new ObjectId(id)) } }).toArray();
+        console.log("🚀 ~ app.get ~ userClasses:", userClasses);
+
+        res.send(userClasses);
+        // res.send('fixing');
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+      }
     });
 
     // * for getting all instructors
@@ -296,8 +353,8 @@ async function run() {
     // payment-intent
     app.post("/create-payment-intent", async (req, res) => {
       const { price } = req?.body;
-      console.log("🚀 ~ app.post ~ price:", typeof (price));
-      console.log("🚀 ~ app.post ~ price:", price);
+      // console.log("🚀 ~ app.post ~ price:", typeof (price));
+      // console.log("🚀 ~ app.post ~ price:", price);
 
       const amount = price * 100;
       // Create a PaymentIntent with the order amount and currency
