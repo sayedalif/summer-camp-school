@@ -76,9 +76,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
   }
 
   return (
-    <div onClick={
-      () => joinedClassIds.includes(eachClass?._id) || paymentClass.map(classes => classes?._id) && toast.success('Already Joined')
-    } key={key} className='group cursor-pointer'>
+    <div key={key} className='group cursor-pointer'>
 
       {
         location?.pathname === '/dashboard/myclass' && userInfo?.role === 'instructor' && <div className="flex justify-between px-4 py-3">

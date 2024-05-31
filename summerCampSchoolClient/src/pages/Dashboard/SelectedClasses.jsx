@@ -11,6 +11,7 @@ const SelectedClasses = () => {
   const [axiosPublic] = useAxiosPublic();
   // for getting cart data
   const { carts, error, isLoading, refetch, totalPrice } = useCart();
+
   // this is for disabling the delete button when the delete api call is processing...
   const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -40,7 +41,7 @@ const SelectedClasses = () => {
       <div className="overflow-x-auto">
         {/* total items and price */}
         {
-          carts?.length > 0 && <div className="flex items-center justify-evenly font-bold my-4">
+          carts && Array.isArray(carts) && carts?.length > 0 && <div className="flex items-center justify-evenly font-bold my-4">
             <h1>Total Items: {carts?.length}</h1>
             <h1>Total Price: ${totalPrice}</h1>
             <Link to={`/dashboard/payment`}>
@@ -49,7 +50,7 @@ const SelectedClasses = () => {
           </div>
         }
         {
-          carts?.length ? <table className="table">
+          carts && Array.isArray(carts) && carts?.length > 0 ? <table className="table">
             {/* head */}
             <thead>
               <tr>
