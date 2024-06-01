@@ -44,13 +44,6 @@ const PaymentHistory = () => {
             {/* head */}
             <thead>
               <tr>
-                {
-                  /* <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th> */
-                }
                 <th>Class name</th>
                 <th>Date(DD-MM-YYYY)</th>
                 <th>Transaction Id</th>
@@ -62,10 +55,6 @@ const PaymentHistory = () => {
               {/* row 1 */}
               {
                 payments?.map((payment) => {
-                  {/* 
-                  _id, email, transactionId, totalPrice, purchaseDate, className, class_thumbnail
-    },
-                   */}
                   const {
                     _id, email, transactionId, totalPrice, purchaseDate, className, class_thumbnail
                   } = payment;
@@ -80,7 +69,8 @@ const PaymentHistory = () => {
                             </div>
                           </div>
                           <div>
-                            <div className="font-bold">{className}</div>
+                            <div className="font-bold">{className}
+                            </div>
                           </div>
                         </div>
                       </td>
