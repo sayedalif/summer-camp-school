@@ -314,3 +314,77 @@ Show all approved classes on this page. Each Class will have the following:
 
 ### Earn your Reward:
 The greatest joys of life aren't gifted; they're earned.
+
+
+<!-- 
+<div>
+      <div className="overflow-x-auto">
+        {
+          carts && Array.isArray(carts) && carts?.length > 0 ? <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                {
+                  /* <th>
+                  <label>
+                    <input type="checkbox" className="checkbox" />
+                  </label>
+                </th> */
+                }
+                <th>Class name</th>
+                <th>Transaction Id</th>
+                <th>Date</th>
+                <th>Price</th>
+                {/* <th></th> */}
+              </tr>
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              {
+                carts?.map((cart) => {
+                  const {
+                    _id,
+                    email,
+                    className,
+                    class_thumbnail,
+                    instructor_id,
+                    class_id,
+                    price,
+                    available_seats,
+                    students_enrolled
+                  } = cart
+                  return (
+                    <tr key={cart?._id}>
+                      <td>
+                        <div className="flex items-center gap-3">
+                          <div className="avatar">
+                            <div className="mask mask-squircle w-12 h-12">
+                              <img src={class_thumbnail} alt="class thumbnail" />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold">{className}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span>{students_enrolled}</span> / <span>{available_seats}</span>
+                      </td>
+                      <td>$ {price}</td>
+                      <th>
+                        <button className="btn btn-ghost btn-xs"
+                        >Paid</button>
+                      </th>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+
+          </table>
+            :
+            <></>
+        }
+      </div>
+    </div>
+ -->

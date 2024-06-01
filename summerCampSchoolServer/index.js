@@ -79,7 +79,7 @@ async function run() {
       console.log("🚀 ~ app.patch ~ updateDoc:", updateDoc);
       const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
       console.log("🚀 ~ app.patch ~ result:", result);
-      
+
       return res.send(result);
     });
 
@@ -258,6 +258,58 @@ async function run() {
       const deletedResult = await summerCampSchoolCartsCollection.deleteMany(query);
 
       res.send({ insertedResult, deletedResult });
+    });
+
+    // get all the payment of a specific user
+    app.get('/payments', async (req, res) => {
+      const user = req?.query?.email;
+      console.log("🚀 ~ app.get ~ user:", user);
+
+      // const result = await summerCampSchoolPaymentCollection.find({ email: user }).toArray();
+
+      if (!user) {
+        return res.status(400).send({ message: 'Email query parameter is required' });
+      }
+
+      const pipeline = [
+        {
+          $match: { email: user } // Filter payments by user email
+        },
+        {
+          $unwind: '$classes_id' // Unwind the classes_id array
+        },
+        {
+          $addFields: {
+            classes_id: { $toObjectId: '$classes_id' }
+          } // Convert classes_id to ObjectId
+        },
+        {
+          $lookup: {
+            from: 'classes',
+            localField: 'classes_id',
+            foreignField: '_id',
+            as: 'classInfo'
+          }
+        },
+        {
+          $unwind: '$classInfo' // Unwind the resulting classInfo array
+        },
+        {
+          $project: {
+            transactionId: 1,
+            email: 1,
+            purchaseDate: 1,
+            totalPrice: 1,
+            className: '$classInfo.className',
+            class_thumbnail: '$classInfo.class_thumbnail'
+          }
+        }
+      ];
+
+      const results = await summerCampSchoolPaymentCollection.aggregate(pipeline).toArray();
+      console.log("🚀 ~ app.get ~ results:", results);
+
+      return res.send(results);
     });
 
     // paid user classes
