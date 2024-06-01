@@ -2,17 +2,21 @@ import { useEffect, useState } from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
+import useCart from '../../../hooks/useCart';
 
-const CheckoutForm = ({ totalPrice, carts }) => {
+const CheckoutForm = ({ totalPrice, carts, cartRefetch }) => {
   // user
   const { user } = useAuth();
+
   const price = parseFloat(totalPrice);
+
   // for error messages
   const [cardError, setCardError] = useState('');
 
   // client secret
   const [clientSecret, setClientSecret] = useState('');
   // console.log("🚀 ~ CheckoutForm ~ clientSecret:", clientSecret);
+
   // card processing loading information
   const [processing, setProcessing] = useState(false);
 
@@ -91,6 +95,9 @@ const CheckoutForm = ({ totalPrice, carts }) => {
     console.log('paymentIntent', paymentIntent);
 
     if (paymentIntent?.status === 'succeeded') {
+      // 
+      cartRefetch();
+      
       console.log(['transaction id'], paymentIntent?.id);
       setTransactionId(paymentIntent?.id);
 
@@ -103,6 +110,7 @@ const CheckoutForm = ({ totalPrice, carts }) => {
         classes_id: carts?.map(cart => cart?.class_id),
         carts_id: carts?.map(cart => cart?._id),
       };
+
       axios.post('http://localhost:5000/payment', { payment }).then(response => {
         console.log(response.data);
       })

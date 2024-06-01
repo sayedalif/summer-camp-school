@@ -24,9 +24,9 @@ const SelectedClasses = () => {
       console.log("🚀 ~ handleDeleteFromCart ~ data:", data);
       if (data?.acknowledged === true && data?.deletedCount > 0) {
         toast.success('Deleted successfully');
+        // refetching so that in ui data's will be updated
+        refetch();
       }
-      // refetching so that in ui data's will be updated
-      refetch();
     } catch (error) {
       console.log("🚀 ~ handleDeleteFromCart ~ error:", error);
     } finally {

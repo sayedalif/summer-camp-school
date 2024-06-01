@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import useUserInfo from '../hooks/useUserInfo';
 import ActiveLink from '../components/ActiveLink';
 import useCart from '../hooks/useCart';
@@ -54,7 +54,17 @@ const Dashboard = () => {
                   <li className='md:my-2 text-2xl normal-case'>
                     <ActiveLink to={`/dashboard/selectedclasses`}>
                       Selected classes
-                      <span className="badge badge-primary">{carts?.length}</span>
+                      <span className="badge badge-primary">
+                        {
+                          carts?.length
+                        }
+                      </span>
+                    </ActiveLink>
+                  </li>
+
+                  <li className='md:my-2 text-2xl normal-case'>
+                    <ActiveLink to={`/dashboard/paymentshistory`}>
+                      All payments
                     </ActiveLink>
                   </li>
                 </>
