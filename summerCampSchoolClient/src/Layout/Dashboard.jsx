@@ -23,7 +23,7 @@ const Dashboard = () => {
           <Outlet></Outlet>
           {/* this div is here to to keep the drawer center */}
           <div className='flex flex-col items-center justify-center' onClick={() => setIsDrawerOpen(!isDrawerOpen)}>
-            <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button xl:hidden lg:hidden z-50">{isDrawerOpen ? 'Open' : 'Close'}drawer</label>
+            <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button xl:hidden lg:hidden z-50">{isDrawerOpen ? 'Close' : 'Open'} drawer</label>
           </div>
 
         </div>

@@ -1,28 +1,30 @@
 import usePaymentClasses from '../../hooks/usePaymentClasses';
+import { FaPlay } from "react-icons/fa";
 
 const EnrolledClasses = () => {
 
   const { paymentClass, isLoading, error, refetch } = usePaymentClasses();
+  console.log("🚀 ~ EnrolledClasses ~ paymentClass:", paymentClass);
+
   return (
-    <div>
+    <div className='lg:flex lg:flex-row lg:flex-wrap lg:justify-center'>
       {
-        paymentClass?.map(classes => {
-          console.log(classes);
-          const {
-            _id, video_link, video_length, students_enrolled, status, rating, price, instructor_name, instructor_id, description, class_thumbnail, className, category, available_seats
-          } = classes;
+        paymentClass?.map(eachClass => {
+          console.log("🚀 ~ EnrolledClasses ~ eachClass:", eachClass);
+          const { available_seats, category, className, class_thumbnail, description, instructor_id, instructor_name, price, rating, status, students_enrolled, video_length, video_link, _id } = eachClass;
           return (
-            <div className="card card-side bg-base-100 shadow-xl mb-3" key={_id}>
+            <div key={_id} className="card lg:card-side bg-base-100 shadow-xl mb-3 w-96">
               <figure>
-                <img className='w-80' src={class_thumbnail} alt="Movie" />
+                <img className='h-48 w-full object-cover md:h-full md:w-48' src={class_thumbnail} alt="Album" />
               </figure>
-              {/* <div className="card-body">
-                <h2 className="card-title">New movie is released!</h2>
-                <p>Click the button to watch on Jetflix app.</p>
+              <div className="card-body">
+                {/* <h2 className="card-title">{className}</h2>
+                <p>{description}</p> */}
+                <h2>{className}</h2>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-primary">Watch</button>
+                  <button className="btn btn-primary">Play <FaPlay /></button>
                 </div>
-              </div> */}
+              </div>
             </div>
           )
         })

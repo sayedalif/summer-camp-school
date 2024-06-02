@@ -42,7 +42,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
   console.log("🚀 ~ ClassesCards ~ paidClassIds:", paidClassIds);
 
 
-  // this function add class to cart and ridirects to enrolled class
+  // this function add class to cart and redirects to enrolled class
   const handleAddToCart = async (eachClass) => {
     // console.log("🚀 ~ handleAddToCart ~ eachClass:", eachClass);
     // className
