@@ -5,9 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import SocialLoginButton from '../components/SocialLoginButton';
 import useAxiosPublic from '../hooks/useAxiosPublic';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '../providers/AuthProvider';
 
 
 const Login = () => {
+
   const navigate = useNavigate();
   const location = useLocation();
   const [axiosPublic] = useAxiosPublic();
@@ -17,12 +20,22 @@ const Login = () => {
   // console.log("🚀 ~ Login ~ from:", from);
 
   // user info from context
-  const { signInWithEmailAndPassword, sendPasswordResetEmail } = useAuth();
+  // const { signInWithEmailAndPassword, sendPasswordResetEmail } = useAuth();
+
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useSignInWithEmailAndPassword(auth);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [loading, setLoading] = useState(false);
-
+  // const [loading, setLoading] = useState(false);
+  console.log("🚀 ~ Login ~ user:", user);
+  console.log("🚀 ~ Login ~ error:", error);
+  console.log(loading);
 
   return (
     <div>
@@ -34,30 +47,33 @@ const Login = () => {
                 <label className="label">
                   <span className="label-text text-base">Email</span>
                 </label>
-                <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email" className="input input-bordered" required />
+                <input onChange={(e) => setEmail(e?.target?.value)} type="email" placeholder="email" className="input input-bordered" required />
               </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-base">Password</span>
                 </label>
-                <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" className="input input-bordered" required />
+                <input onChange={(e) => setPassword(e?.target?.value)} type="password" placeholder="password" className="input input-bordered" required />
                 <label className="label">
                   <span onClick={async () => {
-                    const success = await sendPasswordResetEmail(email);
-                    if (success) {
-                      toast.success('Password reset sent successfully');
-                    }
+                    // const success = await sendPasswordResetEmail(email);
+                    // if (success) {
+                    //   toast.success('Password reset sent successfully');
+                    // }
                   }} className="label-text-alt link link-hover">Forgot password?</span>
                 </label>
               </div>
+              {
+                error && <p className='text-red-500'>{error?.message}</p>
+              }
               <div className="form-control mt-6">
                 <button onClick={async (e) => {
-                  setLoading(true);
+                  // setLoading(true);
                   e.preventDefault();
                   const success = await signInWithEmailAndPassword(email, password);
                   if (success) {
                     navigate(from, { replace: true });
-                    setLoading(false);
+                    // setLoading(false);
                   }
                 }
                 } className={`bg-primary text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-primary'}`} disabled={loading}>Login</button>

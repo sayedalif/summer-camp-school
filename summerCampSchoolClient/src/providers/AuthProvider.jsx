@@ -8,7 +8,7 @@ import useAxiosPublic from '../hooks/useAxiosPublic';
 export const AuthContext = createContext(null);
 
 // auth firebase
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 // auth provider
 const AuthProvider = ({ children }) => {
