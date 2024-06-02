@@ -45,7 +45,7 @@ const PaymentHistory = () => {
             <thead>
               <tr>
                 <th>Class name</th>
-                <th>Date(DD-MM-YYYY)</th>
+                <th>Date(MM-DD-YYYY)</th>
                 <th>Transaction Id</th>
                 <th>Price</th>
                 <th>Status</th>
@@ -93,7 +93,7 @@ const PaymentHistory = () => {
 
           </table>
             :
-            <></>
+            <p className='flex justify-center items-center h-screen text-xl'>No payment are made yet</p>
         }
       </div>
     </div>
