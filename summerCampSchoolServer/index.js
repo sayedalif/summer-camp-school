@@ -252,9 +252,25 @@ async function run() {
 
     // store all payment information to database.
     app.post('/payment', async (req, res) => {
-      const { payment } = req?.body;
-      const insertedResult = await summerCampSchoolPaymentCollection.insertOne(payment);
-      const query = { _id: { $in: payment?.carts_id?.map(_id => new ObjectId(_id)) } };
+      const { email,
+        transactionId,
+        totalPrice,
+        purchaseDate,
+        classes_id,
+        carts_id } = req?.body?.payment;
+
+      const date = new Date(purchaseDate);
+      const newPayment = {
+        email,
+        transactionId,
+        totalPrice,
+        purchaseDate: date,
+        classes_id,
+        carts_id
+      };
+
+      const insertedResult = await summerCampSchoolPaymentCollection.insertOne(newPayment);
+      const query = { _id: { $in: newPayment?.carts_id?.map(_id => new ObjectId(_id)) } };
       const deletedResult = await summerCampSchoolCartsCollection.deleteMany(query);
 
       res.send({ insertedResult, deletedResult });
@@ -303,6 +319,9 @@ async function run() {
             className: '$classInfo.className',
             class_thumbnail: '$classInfo.class_thumbnail'
           }
+        },
+        {
+          $sort: { purchaseDate: -1 } // Sort by purchaseDate in descending order
         }
       ];
 

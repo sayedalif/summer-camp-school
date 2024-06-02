@@ -95,9 +95,7 @@ const CheckoutForm = ({ totalPrice, carts, cartRefetch }) => {
     console.log('paymentIntent', paymentIntent);
 
     if (paymentIntent?.status === 'succeeded') {
-      // 
-      cartRefetch();
-      
+
       console.log(['transaction id'], paymentIntent?.id);
       setTransactionId(paymentIntent?.id);
 
@@ -113,7 +111,9 @@ const CheckoutForm = ({ totalPrice, carts, cartRefetch }) => {
 
       axios.post('http://localhost:5000/payment', { payment }).then(response => {
         console.log(response.data);
-      })
+        // 
+        cartRefetch();
+      }).catch(error => console.log(error.message));
     }
   };
 
