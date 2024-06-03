@@ -7,6 +7,8 @@ import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import SocialLoginButton from '../components/SocialLoginButton';
 import toast from 'react-hot-toast';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '../providers/AuthProvider';
 
 const Register = () => {
   // todo: fix the name and image update issue
@@ -17,50 +19,58 @@ const Register = () => {
   const navigate = useNavigate();
 
   // use auth hook
-  const { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } = useAuth();
+  // const { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } = useAuth();
+
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useCreateUserWithEmailAndPassword(auth);
 
   // loading state
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   // dropped images state
   const [droppedImages, setDroppedImages] = useState([]);
   // console.log("🚀 ~ Register ~ droppedImages:", droppedImages);
 
 
+  // react hook form
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-
   // from submit
-  // react hook form
   const onSubmit = async (data) => {
     // console.log("🚀 ~ onSubmit ~ data:", data);
 
     const { name, email, password, confirmPassword, address, phoneNumber } = data;
 
     if (password !== confirmPassword) {
-      return toast.error('Password not match');
+      return toast.error('Password not match please recheck');
     }
 
     try {
-      setLoading(true);
+      // setLoading(true);
       const success = await createUserWithEmailAndPassword(email, password);
       // console.log("🚀 ~ onSubmit ~ success:", success);
+      if (success) {
+        navigate('/');
+        return toast.success('Successfully created account');
+      }
 
     } catch (error) {
-      setLoading(false);
+      // setLoading(false);
       console.log(error);
     } finally {
-      toast.success('Successfully created account');
-      navigate('/');
-      updateProfile({
+      /* updateProfile({
         displayName: name, photoURL: droppedImages[0]
       }).then(response => {
         toast.success('Successfully updated profile');
         console.log("🚀 ~ onSubmit ~ response:", response);
       }).catch(error => {
         console.log("🚀 ~ onSubmit ~ error:", error);
-      })
-      setLoading(false);
+      }) */
+      // setLoading(false);
     }
   };
 
@@ -190,7 +200,9 @@ const Register = () => {
                   }
                 />
               </div>
-
+              {
+                error && <div className='text-center text-red-500'>{error?.message}</div>
+              }
               <div className="form-control mt-6">
                 <button type='submit' className={`bg-accent text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-accent'}`} disabled={loading}>Sign up</button>
               </div>

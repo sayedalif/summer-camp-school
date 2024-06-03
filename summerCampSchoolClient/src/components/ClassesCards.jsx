@@ -15,7 +15,7 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 const ClassesCards = ({ key, eachClass, status, feedback }) => {
   // these are for dropping of the user in same page after login
   const location = useLocation();
-  console.log("🚀 ~ ClassesCards ~ location:", location);
+  // console.log("🚀 ~ ClassesCards ~ location:", location);
   const navigate = useNavigate();
 
   // user authentication data
@@ -34,17 +34,17 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
 
   // payment info data
   const { paymentClass, isLoading: paymentIsLoading, error: paymentError, refetch: paymentRefetch } = usePaymentClasses();
-  console.log("🚀 ~ ClassesCards ~ paymentClass:", paymentClass);
+  // console.log("🚀 ~ ClassesCards ~ paymentClass:", paymentClass);
 
   const joinedClassIds = carts.map(cart => cart.class_id);
-  console.log("🚀 ~ ClassesCards ~ joinedClassIds:", joinedClassIds);
+  // console.log("🚀 ~ ClassesCards ~ joinedClassIds:", joinedClassIds);
   const paidClassIds = paymentClass.map(classes => classes?._id);
-  console.log("🚀 ~ ClassesCards ~ paidClassIds:", paidClassIds);
+  // console.log("🚀 ~ ClassesCards ~ paidClassIds:", paidClassIds);
 
 
   // this function add class to cart and redirects to enrolled class
   const handleAddToCart = async (eachClass) => {
-    // console.log("🚀 ~ handleAddToCart ~ eachClass:", eachClass);
+    // // console.log("🚀 ~ handleAddToCart ~ eachClass:", eachClass);
     // className
     // class_thumbnail
     // instructor_id
@@ -57,7 +57,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
     }
 
     axiosPublic.patch(`/classes/${eachClass?._id}`, { students_enrolled: eachClass?.students_enrolled + 1 }).then(response => {
-      console.log("🚀 ~ axiosPublic.patch ~ response:", response);
+      // console.log("🚀 ~ axiosPublic.patch ~ response:", response);
     }).catch(err => {
       console.log(err);
     })
@@ -72,17 +72,17 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
       available_seats: eachClass?.available_seats,
       students_enrolled: eachClass?.students_enrolled,
     };
-    console.log("🚀 ~ handleAddToCart ~ addedToCart:", addedToCart);
+    // console.log("🚀 ~ handleAddToCart ~ addedToCart:", addedToCart);
 
     try {
       const response = await axios.post(`http://localhost:5000/carts?email=${user?.email}`, addedToCart);
-      console.log("🚀 ~ response:", response.data);
+      // console.log("🚀 ~ response:", response.data);
       if (response?.data?.acknowledged === true && response?.data?.insertedId) {
         toast.success('Joined class successfully');
         return navigate("/dashboard/selectedclasses");
       }
     } catch (error) {
-      console.log("🚀 ~ handleAddToCart ~ error:", error);
+      // console.log("🚀 ~ handleAddToCart ~ error:", error);
     }
   }
 
