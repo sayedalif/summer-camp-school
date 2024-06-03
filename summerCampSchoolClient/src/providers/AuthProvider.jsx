@@ -20,22 +20,12 @@ const AuthProvider = ({ children }) => {
     createUserWithEmailAndPassword,
   ] = useCreateUserWithEmailAndPassword(auth);
 
-  // email password sign in
-  const [
-    signInWithEmailAndPassword,
-  ] = useSignInWithEmailAndPassword(auth);
-
 
   // google pop up sign in
   const [signInWithGoogle,] = useSignInWithGoogle(auth);
 
   // logout
   const [signOut] = useSignOut(auth);
-
-  // password reset / forget password
-  const [sendPasswordResetEmail] = useSendPasswordResetEmail(
-    auth
-  );
 
   // send email verification
   const [sendEmailVerification] = useSendEmailVerification(
@@ -66,7 +56,7 @@ const AuthProvider = ({ children }) => {
   // sending all data to context
   const authInfo =
   {
-    user, loading, error, signInWithGoogle, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, updateProfile
+    user, loading, error, signInWithGoogle, signOut, createUserWithEmailAndPassword, sendEmailVerification, updateProfile
   };
 
   return (

@@ -1,26 +1,16 @@
 import { useState } from 'react';
-import useAuth from '../hooks/useAuth';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import SocialLoginButton from '../components/SocialLoginButton';
-import useAxiosPublic from '../hooks/useAxiosPublic';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../providers/AuthProvider';
 
 
 const Login = () => {
-
   const navigate = useNavigate();
   const location = useLocation();
-  const [axiosPublic] = useAxiosPublic();
-  // console.log("🚀 ~ Login ~ location:", location);
-
   let from = location.state?.from?.pathname || "/";
-  // console.log("🚀 ~ Login ~ from:", from);
-
-  // user info from context
-  // const { signInWithEmailAndPassword, sendPasswordResetEmail } = useAuth();
 
   const [
     signInWithEmailAndPassword,
@@ -29,13 +19,12 @@ const Login = () => {
     error,
   ] = useSignInWithEmailAndPassword(auth);
 
+  // password reset / forget password
+  const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+  console.log("🚀 ~ Login ~ sending:", sending);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  // const [loading, setLoading] = useState(false);
-  console.log("🚀 ~ Login ~ user:", user);
-  console.log("🚀 ~ Login ~ error:", error);
-  console.log(loading);
 
   return (
     <div>
@@ -56,11 +45,16 @@ const Login = () => {
                 <input onChange={(e) => setPassword(e?.target?.value)} type="password" placeholder="password" className="input input-bordered" required />
                 <label className="label">
                   <span onClick={async () => {
-                    // const success = await sendPasswordResetEmail(email);
-                    // if (success) {
-                    //   toast.success('Password reset sent successfully');
-                    // }
+
+                    const success = await sendPasswordResetEmail(email);
+
+                    if (success) {
+                      toast.success('Password reset sent successfully');
+                    } else {
+                      toast.error('Password reset failed');
+                    }
                   }} className="label-text-alt link link-hover">Forgot password?</span>
+
                 </label>
               </div>
               {
@@ -68,12 +62,12 @@ const Login = () => {
               }
               <div className="form-control mt-6">
                 <button onClick={async (e) => {
-                  // setLoading(true);
                   e.preventDefault();
                   const success = await signInWithEmailAndPassword(email, password);
                   if (success) {
+                    toast.success('Login successfully');
                     navigate(from, { replace: true });
-                    // setLoading(false);
+
                   }
                 }
                 } className={`bg-primary text-white rounded-md px-6 py-2 ${loading && 'cursor-progress bg-primary'}`} disabled={loading}>Login</button>
