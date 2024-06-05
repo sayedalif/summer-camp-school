@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/UseAxiosSecure';
 
 const PaymentHistory = () => {
 
-  const [axiosPublic] = useAxiosPublic();
+  // const [axiosPublic] = useAxiosPublic();
+  const [axiosSecure] = useAxiosSecure();
+
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +18,7 @@ const PaymentHistory = () => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axiosPublic(`/payments?email=${user?.email}`);
+        const response = await axiosSecure(`/payments?email=${user?.email}`);
         const data = await response?.data;
         setPayments(data);
         console.log(data);

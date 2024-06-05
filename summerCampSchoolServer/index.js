@@ -341,7 +341,7 @@ async function run() {
     });
 
     // get all the payment of a specific user
-    app.get('/payments', async (req, res) => {
+    app.get('/payments', verifyToken, async (req, res) => {
       const user = req?.query?.email;
       // console.log("🚀 ~ app.get ~ user:", user);
 
