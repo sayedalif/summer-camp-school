@@ -1,17 +1,15 @@
-import React from 'react';
-import useAxiosPublic from './useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from './useAuth';
+import useAxiosSecure from './UseAxiosSecure';
 
 const useCart = () => {
-
-  const [axiosPublic] = useAxiosPublic();
+  const [axiosSecure] = useAxiosSecure();
   const { user, loading } = useAuth();
   const { isLoading, data: carts = [], refetch, error, } = useQuery({
     enabled: !!user && !loading,
     queryKey: ['cart'],
     queryFn: async () => {
-      const response = await axiosPublic.get(`/carts?email=${user?.email}`);
+      const response = await axiosSecure.get(`/carts?email=${user?.email}`);
       const data = await response?.data;
       return data;
     },

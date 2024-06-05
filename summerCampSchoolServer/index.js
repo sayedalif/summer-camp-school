@@ -308,7 +308,7 @@ async function run() {
     });
 
     // * get specific user booked data
-    app.get('/carts', async (req, res) => {
+    app.get('/carts', verifyToken, async (req, res) => {
       const email = req?.query?.email;
       const result = await summerCampSchoolCartsCollection.find({ email: email }).toArray();
       return res.send(result);
@@ -396,7 +396,7 @@ async function run() {
     });
 
     // paid user classes
-    app.get('/payments/classes', async (req, res) => {
+    app.get('/payments/classes', verifyToken, async (req, res) => {
       const email = req?.query?.email;
       // console.log("🚀 ~ app.get ~ email:", email);
       // const db = await connectToDatabase();

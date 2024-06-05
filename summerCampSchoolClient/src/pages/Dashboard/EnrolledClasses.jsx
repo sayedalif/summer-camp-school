@@ -9,6 +9,7 @@ const EnrolledClasses = () => {
   return (
     <div className='lg:flex lg:flex-row lg:flex-wrap lg:justify-center'>
       {
+
         paymentClass?.map(eachClass => {
           console.log("🚀 ~ EnrolledClasses ~ eachClass:", eachClass);
           const { available_seats, category, className, class_thumbnail, description, instructor_id, instructor_name, price, rating, status, students_enrolled, video_length, video_link, _id } = eachClass;
