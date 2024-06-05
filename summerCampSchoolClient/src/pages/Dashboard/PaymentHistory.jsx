@@ -30,7 +30,7 @@ const PaymentHistory = () => {
       }
     };
     fetchData();
-  }, [axiosPublic, user]);
+  }, [axiosSecure, user]);
 
   if (loading) {
     return <h1>Loading...</h1>
