@@ -25,10 +25,10 @@ const verifyToken = (req, res, next) => {
     return res.status(401).send({ message: 'unauthorized access' });
   }
   const token = req.headers.authorization.split(' ')[1];
-  console.log("🚀 ~ verifyToken ~ token:", token);
+  // console.log("🚀 ~ verifyToken ~ token:", token);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-    console.log("🚀 ~ jwt.verify ~ decoded:", decoded);
+    // console.log("🚀 ~ jwt.verify ~ decoded:", decoded);
     if (err) {
       return res.status(401).send({ message: 'unauthorized access' })
     }
@@ -106,7 +106,7 @@ async function run() {
     // using it in the classes route
     app.get('/classes', verifyToken, async (req, res) => {
       const result = await summerCampSchoolClassesCollection.find().toArray();
-      console.log("🚀 ~ app.get ~ result:", result);
+      // console.log("🚀 ~ app.get ~ result:", result);
       res.send(result);
     });
 
@@ -115,23 +115,23 @@ async function run() {
       const { id } = req.params;
       const filter = { _id: new ObjectId(id) };
       const updateStudentEnrolledSeats = req.body;
-      console.log("🚀 ~ app.patch ~ updateStudentEnrolledSeats:", updateStudentEnrolledSeats);
+      // console.log("🚀 ~ app.patch ~ updateStudentEnrolledSeats:", updateStudentEnrolledSeats);
       const updateDoc = {
         $set: {
           students_enrolled: updateStudentEnrolledSeats?.students_enrolled,
         },
       }
-      console.log("🚀 ~ app.patch ~ updateDoc:", updateDoc);
+      // console.log("🚀 ~ app.patch ~ updateDoc:", updateDoc);
       const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
-      console.log("🚀 ~ app.patch ~ result:", result);
+      // console.log("🚀 ~ app.patch ~ result:", result);
 
       return res.send(result);
     });
 
     // for specific instructor classes
-    app.get('/classes/:instructorId', async (req, res) => {
+    app.get('/classes/:instructorId', verifyToken, async (req, res) => {
       const { instructorId } = req?.params;
-      // // console.log("🚀 ~ app.get ~ instructorId:", instructorId);
+      // // // console.log("🚀 ~ app.get ~ instructorId:", instructorId);
       const result = await summerCampSchoolClassesCollection.find({ instructor_id: instructorId }).toArray();
       res.send(result);
     });
@@ -176,7 +176,7 @@ async function run() {
     // * this is for getting all the users
     app.get('/users', async (req, res) => {
       const userEmail = req?.query?.email;
-      console.log("🚀 ~ app.get ~ userEmail:", userEmail);
+      // console.log("🚀 ~ app.get ~ userEmail:", userEmail);
 
       const query = { email: userEmail }
       const result = await summerCampSchoolUserCollection.find(query).toArray();
@@ -202,7 +202,7 @@ async function run() {
     /*     app.put('/users/:email', async (req, res) => {
           const email = req.params.email;
           const user = req.body;
-          // // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
+          // // // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
           const filter = { email: email };
           const option = { upsert: true }
           const updateDoc = {
@@ -250,9 +250,9 @@ async function run() {
     // follow a specific instructor
     app.put('/users/follow/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;
-      // // console.log("🚀 ~ app.put ~ instructorId:", instructorId)
+      // // // console.log("🚀 ~ app.put ~ instructorId:", instructorId)
       const { userEmail } = req?.body;
-      // // console.log("🚀 ~ app.put ~ userEmail:", userEmail);
+      // // // console.log("🚀 ~ app.put ~ userEmail:", userEmail);
 
       // Update user document to include the followed instructor's _id
       await summerCampSchoolUserCollection.updateOne(
@@ -291,9 +291,9 @@ async function run() {
     // * for add to cart
     app.post('/carts', async (req, res) => {
       const email = req?.query?.email;
-      // console.log("🚀 ~ app.post ~ email:", email);
+      // // console.log("🚀 ~ app.post ~ email:", email);
       const addedToCart = req?.body;
-      // console.log("🚀 ~ app.post ~ addedToCart:", addedToCart);
+      // // console.log("🚀 ~ app.post ~ addedToCart:", addedToCart);
       const result = await summerCampSchoolCartsCollection.insertOne(addedToCart);
       return res.send(result);
     });
@@ -301,7 +301,7 @@ async function run() {
     // delete a specific item from cart
     app.delete('/carts/:id', async (req, res) => {
       const id = req?.params?.id;
-      // console.log("🚀 ~ app.delete ~ id:", id);
+      // // console.log("🚀 ~ app.delete ~ id:", id);
       const query = { _id: new ObjectId(id) };
       const result = await summerCampSchoolCartsCollection.deleteOne(query);
       res.send(result);
@@ -343,7 +343,7 @@ async function run() {
     // get all the payment of a specific user
     app.get('/payments', async (req, res) => {
       const user = req?.query?.email;
-      console.log("🚀 ~ app.get ~ user:", user);
+      // console.log("🚀 ~ app.get ~ user:", user);
 
       // const result = await summerCampSchoolPaymentCollection.find({ email: user }).toArray();
 
@@ -390,7 +390,7 @@ async function run() {
       ];
 
       const results = await summerCampSchoolPaymentCollection.aggregate(pipeline).toArray();
-      console.log("🚀 ~ app.get ~ results:", results);
+      // console.log("🚀 ~ app.get ~ results:", results);
 
       return res.send(results);
     });
@@ -398,13 +398,13 @@ async function run() {
     // paid user classes
     app.get('/payments/classes', async (req, res) => {
       const email = req?.query?.email;
-      console.log("🚀 ~ app.get ~ email:", email);
+      // console.log("🚀 ~ app.get ~ email:", email);
       // const db = await connectToDatabase();
 
       try {
         // Find all payments for the user
         const payments = await summerCampSchoolPaymentCollection.find({ email: email }).toArray();
-        console.log("🚀 ~ app.get ~ payments:", payments);
+        // console.log("🚀 ~ app.get ~ payments:", payments);
 
         if (payments.length === 0) {
           return res.status(404).send('No successful payments found for this user.');
@@ -419,7 +419,7 @@ async function run() {
 
         /* // Extract the classes_ids from the payments
         const classesIds = payments.map(payment => payment.classes_id).filter(Boolean);
-        console.log("🚀 ~ app.get ~ classesIds:", classesIds);
+        // console.log("🚀 ~ app.get ~ classesIds:", classesIds);
 
         if (classesIds.length === 0) {
           return res.status(404).send('No classes found for the successful payments.');
@@ -435,14 +435,14 @@ async function run() {
 
         // Extract class IDs from successful payments
         const classIds = payments?.map(payment => payment?.classes_id);
-        console.log("🚀 ~ app.get ~ classIds:", classIds);
+        // console.log("🚀 ~ app.get ~ classIds:", classIds);
 
         const flattenedClassIds = [].concat(...classIds);
-        console.log("🚀 ~ app.get ~ flattenedClassIds:", flattenedClassIds);
+        // console.log("🚀 ~ app.get ~ flattenedClassIds:", flattenedClassIds);
 
         // Find classes corresponding to the class IDs
         const userClasses = await summerCampSchoolClassesCollection.find({ _id: { $in: flattenedClassIds?.map(id => new ObjectId(id)) } }).toArray();
-        console.log("🚀 ~ app.get ~ userClasses:", userClasses);
+        // console.log("🚀 ~ app.get ~ userClasses:", userClasses);
 
         res.send(userClasses);
         // res.send('fixing');
@@ -506,8 +506,8 @@ async function run() {
     // payment-intent
     app.post("/create-payment-intent", async (req, res) => {
       const { price } = req?.body;
-      // console.log("🚀 ~ app.post ~ price:", typeof (price));
-      // console.log("🚀 ~ app.post ~ price:", price);
+      // // console.log("🚀 ~ app.post ~ price:", typeof (price));
+      // // console.log("🚀 ~ app.post ~ price:", price);
 
       const amount = price * 100;
       // Create a PaymentIntent with the order amount and currency

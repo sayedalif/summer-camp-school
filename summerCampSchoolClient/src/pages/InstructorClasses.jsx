@@ -2,13 +2,40 @@ import { Navigate, useParams } from 'react-router-dom';
 import useFetch from '../hooks/utils/utils';
 import toast from 'react-hot-toast';
 import ClassesCards from '../components/ClassesCards';
+import useAxiosSecure from '../hooks/UseAxiosSecure';
+import { useEffect, useState } from 'react';
 
 const InstructorClasses = () => {
   const param = useParams();
 
-  const { data: classes = [], error, loading } = useFetch(`/classes/${param?.id}`);
+  // const { data: classes = [], error, loading } = useFetch(`/classes/${param?.id}`);
 
-  if (classes?.length === 0) {
+  const [axiosSecure] = useAxiosSecure();
+
+  const [data, setData] = useState(null);
+  console.log("🚀 ~ Classes ~ data:", data);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (
+      async function () {
+        try {
+          setLoading(true);
+          const response = await axiosSecure.get(`/classes/${param?.id}`);
+          const data = await response?.data;
+          setData(data);
+        } catch (err) {
+          setError(err);
+        } finally {
+          setLoading(false);
+        }
+      }
+    )()
+  }, [axiosSecure]);
+
+
+  if (data?.length === 0) {
     toast.error('Invalid parameter returning you to instructor page');
 
     return <Navigate to={`/instructors`}></Navigate>
@@ -21,7 +48,7 @@ const InstructorClasses = () => {
     return <h1>{error?.message}</h1>
   }
 
-  const approvedClasses = classes?.filter(eachClass => eachClass?.status === 'approved');
+  const approvedClasses = data?.filter(eachClass => eachClass?.status === 'approved');
   // console.log("🚀 ~ InstructorClasses ~ approvedClasses:", approvedClasses);
 
   return (
