@@ -26,7 +26,7 @@ const verifyToken = (req, res, next) => {
   }
   const token = req.headers.authorization.split(' ')[1];
   console.log("🚀 ~ verifyToken ~ token:", token);
-  
+
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     console.log("🚀 ~ jwt.verify ~ decoded:", decoded);
     if (err) {
@@ -453,7 +453,7 @@ async function run() {
     });
 
     // * for getting all instructors
-    app.get('/instructors', async (req, res) => {
+    app.get('/instructors', verifyToken, async (req, res) => {
       const result = await summerCampSchoolUserCollection.find({ role: "instructor" }).toArray();
       res.send(result);
     });

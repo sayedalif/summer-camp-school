@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFetch from '../hooks/utils/utils';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import useUserInfo from '../hooks/useUserInfo';
@@ -6,10 +6,12 @@ import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import useAxiosSecure from '../hooks/UseAxiosSecure';
 
 const Instructors = () => {
   const [axiosPublic] = useAxiosPublic();
 
+  // for dropping off user where they came from, if they are not logged in.
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,7 +25,31 @@ const Instructors = () => {
 
 
   // fetching data to get all the instructors
-  const { data: instructors = [], error, loading } = useFetch('/instructors');
+  // const { data: instructors = [], error, loading } = useFetch('/instructors');
+
+  const [axiosSecure] = useAxiosSecure();
+
+  const [data, setData] = useState(null);
+  console.log("🚀 ~ Classes ~ data:", data);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (
+      async function () {
+        try {
+          setLoading(true);
+          const response = await axiosSecure.get(`/instructors`);
+          const data = await response?.data;
+          setData(data);
+        } catch (err) {
+          setError(err);
+        } finally {
+          setLoading(false);
+        }
+      }
+    )()
+  }, [axiosSecure]);
 
   if (loading) {
     return <h1>Loading...</h1>
@@ -85,8 +111,8 @@ const Instructors = () => {
   return (
     <div className='lg:flex lg:flex-row lg:justify-between lg:flex-wrap md:flex md:flex-row md:justify-between md:flex-wrap sm:flex sm:flex-wrap lg:my-8 lg:mx-4 mt-4 mb-4 flex flex-col items-center'>
       {
-        instructors?.length > 0 && Array?.isArray(instructors) &&
-        instructors?.map((instructor) => {
+        data?.length > 0 && Array?.isArray(data) &&
+        data?.map((instructor) => {
           const {
             _id, email, classes_names, image, name, total_classes } = instructor;
           return (

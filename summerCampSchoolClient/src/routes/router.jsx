@@ -46,15 +46,21 @@ export const router = createBrowserRouter([
       },
       {
         path: '/instructors',
-        element: <Instructors></Instructors>,
+        element: <PrivateRoute>
+          <Instructors></Instructors>
+        </PrivateRoute>,
       },
       {
         path: '/instructors/:id',
-        element: <InstructorClasses></InstructorClasses>,
+        element: <PrivateRoute>
+          <InstructorClasses></InstructorClasses>
+        </PrivateRoute>,
       },
       {
         path: '/classes',
-        element: <PrivateRoute><Classes></Classes></PrivateRoute>
+        element: <PrivateRoute>
+          <Classes></Classes>
+        </PrivateRoute>,
       },
       {
         path: '/dashboard',
@@ -88,11 +94,15 @@ export const router = createBrowserRouter([
           },
           {
             path: '/dashboard/payment',
-            element: <Payment></Payment>
+            element: <PrivateRoute>
+              <Payment></Payment>
+            </PrivateRoute>
           },
           {
             path: '/dashboard/paymentshistory',
-            element: <PaymentHistory></PaymentHistory>
+            element: <PrivateRoute>
+              <PaymentHistory></PaymentHistory>
+            </PrivateRoute>
           }
         ]
       },
