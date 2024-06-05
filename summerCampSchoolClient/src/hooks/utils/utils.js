@@ -47,7 +47,7 @@ export default function useFetch(url) {
       async function () {
         try {
           setLoading(true)
-          const response = await axiosPublic.get(url)
+          const response = await axiosPublic.get(url);
           setData(response.data)
         } catch (err) {
           setError(err)

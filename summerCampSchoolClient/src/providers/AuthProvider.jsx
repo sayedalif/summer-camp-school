@@ -39,21 +39,22 @@ const AuthProvider = ({ children }) => {
   // observer
   const [user, loading, error] = useAuthState(auth);
   console.log("🚀 ~ AuthProvider ~ user:", user);
-
-  // todo: fix the double user creation issue in the database
   if (user) {
-    /* axiosPublic.get(`/users/${user?.email}`).then(response => {
-      console.log('existing user', response.data);
-
-      if (!response.data) {
-        const savedUser = { email: user.email, name: user.displayName, photoURL: user.photoURL };
-
-        axiosPublic.post('/users', savedUser).then(res => {
-          console.log('new user', res.data);
-        }).catch(err => console.log(err));
-      }
-    }); */
-    
+    if (user) {
+      // get token and store client
+      // const userInfo = { email: user?.email };
+      axiosPublic.post('/jwt', { email: user?.email })
+        .then(res => {
+          if (res?.data?.token) {
+            localStorage.setItem('access-token', res.data.token);
+            // setLoading(false);
+          }
+        })
+    }
+    else {
+      // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
+      localStorage.removeItem('access-token');
+    }
   }
 
   // sending all data to context

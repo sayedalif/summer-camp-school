@@ -71,6 +71,7 @@ const Navbar = () => {
               <li onClick={async () => {
                 const success = await signOut();
                 if (success) {
+                  localStorage.removeItem('access-token');
                   console.log('successfully signed out');
                 }
               }}><a>Logout</a></li>
