@@ -14,7 +14,7 @@ const useUserInfo = () => {
     enabled: !!user,
     queryKey: ['userInfo'],
     queryFn: async () => {
-      const response = await axiosPublic(`/users/${user?.email}`,);
+      const response = await axiosPublic(`/users?email=${user?.email}`,);
       const data = await response?.data;
       return data;
     }

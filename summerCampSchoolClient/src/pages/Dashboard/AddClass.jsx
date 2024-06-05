@@ -55,11 +55,11 @@ const AddClass = () => {
           </div>
           <input type="text" placeholder="Type here" className="input input-bordered" />
         </label> */}
-        <div>
+        {/* <div>
           <DragAndDrop text={`upload video`} fileType={`video`}></DragAndDrop>
 
           <DragAndDrop text={`upload thumbnail`} fileType={`image`}></DragAndDrop>
-        </div>
+        </div> */}
         {/* description */}
         <label className="form-control row-start-3 row-end-5 col-span-2 order-last">
           <div className="label">

@@ -7,33 +7,31 @@ import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import SocialLoginButton from '../components/SocialLoginButton';
 import toast from 'react-hot-toast';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { auth } from '../providers/AuthProvider';
+import DragAndDrop from '../components/DragAndDrop';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const Register = () => {
   // todo: fix the name and image update issue
   // todo: implement email verification but don't apply it until deployment because it's not required and the email im using are all fake.
 
+  // hooks
+  const [axiosPublic] = useAxiosPublic();
+
   // navigate
   // to navigate user after login
   const navigate = useNavigate();
 
-  // use auth hook
-  // const { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } = useAuth();
-
+  // hooks
   const [
     createUserWithEmailAndPassword,
     user,
     loading,
     error,
   ] = useCreateUserWithEmailAndPassword(auth);
-
-  // loading state
-  // const [loading, setLoading] = useState(false);
-
-  // dropped images state
-  const [droppedImages, setDroppedImages] = useState([]);
-  // console.log("🚀 ~ Register ~ droppedImages:", droppedImages);
+  console.log('user', user);
+  const [updateProfile, updating] = useUpdateProfile(auth);
 
 
   // react hook form
@@ -43,50 +41,54 @@ const Register = () => {
   const onSubmit = async (data) => {
     // console.log("🚀 ~ onSubmit ~ data:", data);
 
-    const { name, email, password, confirmPassword, address, phoneNumber } = data;
+    const { name, email, password, confirmPassword, address, number } = data;
+    console.log("🚀 ~ onSubmit ~ name:", name);
+
+    console.log("🚀 ~ onSubmit ~ number:", number);
+
+    console.log("🚀 ~ onSubmit ~ password:", password);
+    console.log("🚀 ~ onSubmit ~ confirmPassword:", confirmPassword);
 
     if (password !== confirmPassword) {
+      console.log('pass not match');
       return toast.error('Password not match please recheck');
     }
 
     try {
-      // setLoading(true);
       const success = await createUserWithEmailAndPassword(email, password);
-      // console.log("🚀 ~ onSubmit ~ success:", success);
       if (success) {
         navigate('/');
+
+        updateProfile({ displayName: name, photoURL: '' }).then(response => {
+          toast.success('Successfully updated profile');
+
+          // saving the user info to database
+          const userInfo = {
+            email: email,
+            name: name,
+          };
+          console.log("🚀 ~ AuthProvider ~ userInfo:", userInfo);
+
+          axiosPublic.post(`/users`, { userInfo }).then(response => {
+            console.log(response);
+          }).catch(err => {
+            console.log(err);
+          })
+          console.log("🚀 ~ onSubmit ~ response:", response);
+        }).catch(error => {
+          console.log("🚀 ~ onSubmit ~ error:", error);
+        })
         return toast.success('Successfully created account');
       }
+      console.log('create user with email and password is offline now');
 
     } catch (error) {
-      // setLoading(false);
       console.log(error);
-    } finally {
-      /* updateProfile({
-        displayName: name, photoURL: droppedImages[0]
-      }).then(response => {
-        toast.success('Successfully updated profile');
-        console.log("🚀 ~ onSubmit ~ response:", response);
-      }).catch(error => {
-        console.log("🚀 ~ onSubmit ~ error:", error);
-      }) */
-      // setLoading(false);
     }
   };
 
-  console.log(errors);
-
-
-  // react-dropzone
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-    // console.log("🚀 ~ onDrop ~ acceptedFiles:", acceptedFiles);
-    // setting the drop image to use state function
-    setDroppedImages(acceptedFiles);
-  }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop, accept: 'image/*' // Accepts all image MIME types
-  });
+  // console.log(errors);
+  console.log('create user with email and password error', error);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -140,41 +142,33 @@ const Register = () => {
                 <input type="password" placeholder="confirm password" className="input input-bordered"
 
                   {
-                  ...register("confirmPassword", { required: true })
+                  ...register("confirmPassword", { required: true, minLength: 8 }, { pattern: /^[A-Za-z-0-9]+$/i },
+
+                  )
                   }
 
                 />
               </div>
 
               {/* image drag and drop */}
-
-              {droppedImages.length === 0 ?
-                <div className='border-2 border-dashed border-[#A3A3F5] py-10 text-center h-full flex justify-center items-center rounded-md mt-2' {...getRootProps()}>
-                  <input type="file" name="img" accept="image/*" {...getInputProps()} />
-                  {isDragActive ?
-                    <p>Drop the files here ...</p> :
-                    <button className='btn btn-primary'>Drop your photo here, or click to select it</button>
-                  }
-                </div>
-                :
-                ''
-              }
+              <span>Profile photo</span>
+              <DragAndDrop></DragAndDrop>
 
               {/* Display dropped images */}
-              {droppedImages.length > 0 && (
+              {/* {droppedImages.length > 0 && (
                 <div>
                   <h2>Profile image:</h2>
                   <ul>
                     {
                       droppedImages.map((file, index) => (
                         <div key={index}>
-                          <img src={URL.createObjectURL(file)} alt={`Dropped Image ${index}`} style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '5px' }} />
+                          <img src={URL.createObjectURL(file)} alt={`Dropped Image ${index}`} style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '5px', borderRadius: '5px' }} />
                         </div>
                       ))
                     }
                   </ul>
                 </div>
-              )}
+              )} */}
 
               {/* phone number */}
               <div className="form-control">
@@ -183,7 +177,7 @@ const Register = () => {
                 </label>
                 <input type="tel" placeholder="Phone number" className="input input-bordered"
                   {
-                  ...register("phoneNumber", { required: false, })
+                  ...register("number", { required: false, })
                   }
                 />
               </div>

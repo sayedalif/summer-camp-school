@@ -9,6 +9,7 @@ export const AuthContext = createContext(null);
 
 // auth firebase
 export const auth = getAuth(app);
+console.log("🚀 ~ auth:", auth);
 
 // auth provider
 const AuthProvider = ({ children }) => {
@@ -37,10 +38,11 @@ const AuthProvider = ({ children }) => {
 
   // observer
   const [user, loading, error] = useAuthState(auth);
+  console.log("🚀 ~ AuthProvider ~ user:", user);
 
   // todo: fix the double user creation issue in the database
   if (user) {
-    axiosPublic.get(`/users/${user?.email}`).then(response => {
+    /* axiosPublic.get(`/users/${user?.email}`).then(response => {
       console.log('existing user', response.data);
 
       if (!response.data) {
@@ -50,7 +52,8 @@ const AuthProvider = ({ children }) => {
           console.log('new user', res.data);
         }).catch(err => console.log(err));
       }
-    });
+    }); */
+    
   }
 
   // sending all data to context

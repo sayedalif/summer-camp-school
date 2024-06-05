@@ -130,25 +130,44 @@ async function run() {
 
     // * this is for getting all the users
     app.get('/users', async (req, res) => {
-      const result = await summerCampSchoolUserCollection.find().toArray();
+      const userEmail = req?.query?.email;
+      console.log("🚀 ~ app.get ~ userEmail:", userEmail);
+
+      const query = { email: userEmail }
+      const result = await summerCampSchoolUserCollection.find(query).toArray();
       res.send(result);
+    });
+
+    // saving user info to the database.
+    app.post('/users', async (req, res) => {
+      const { userInfo } = req.body;
+      // console.log('req.body',req.body)
+      // insert email if user doesn't exists: 
+      // you can do this many ways (1. email unique, 2. upsert 3. simple checking)
+      const query = { email: userInfo?.email }
+      const existingUser = await summerCampSchoolUserCollection.findOne(query);
+      if (existingUser) {
+        return res.send({ message: 'user already exists', insertedId: null })
+      }
+      const result = await summerCampSchoolUserCollection.insertOne(userInfo);
+      return res.send(result);
     });
 
     // save specific user information to database
-    app.put('/users/:email', async (req, res) => {
-      const email = req.params.email;
-      const user = req.body;
-      // // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
-      const filter = { email: email };
-      const option = { upsert: true }
-      const updateDoc = {
-        $set: user
-      };
-
-      const result = await summerCampSchoolUserCollection.updateOne(filter, updateDoc, option);
-      // console.log(result);
-      res.send(result);
-    });
+    /*     app.put('/users/:email', async (req, res) => {
+          const email = req.params.email;
+          const user = req.body;
+          // // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
+          const filter = { email: email };
+          const option = { upsert: true }
+          const updateDoc = {
+            $set: user
+          };
+    
+          const result = await summerCampSchoolUserCollection.updateOne(filter, updateDoc, option);
+          // console.log(result);
+          res.send(result);
+        }); */
 
     // get single user info form the database
     app.get('/users/:email', async (req, res) => {
@@ -159,11 +178,11 @@ async function run() {
     });
 
     // save users info to database when they login for the first time
-    app.post('/users', async (req, res) => {
+    /* app.post('/users', async (req, res) => {
       const user = req.body;
       const result = await summerCampSchoolUserCollection.insertOne(user);
       res.send(result);
-    });
+    }); */
 
     // save users more info to database
     app.post('/users/save-user-data', async (req, res) => {
