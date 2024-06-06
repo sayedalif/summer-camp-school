@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import useUserInfo from '../hooks/useUserInfo';
 import ActiveLink from '../components/ActiveLink';
 import useCart from '../hooks/useCart';
+import useAdmin from '../hooks/useAdmin';
 
 const Dashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -13,6 +14,9 @@ const Dashboard = () => {
 
   // 
   const { carts, error: cartsError, isLoading: cartsIsLoading, refetch: cartsRefetch, totalPrice } = useCart();
+
+  const [isAdmin, isAdminLoading] = useAdmin();
+  console.log("🚀 ~ Dashboard ~ isAdmin:", isAdmin);
 
   return (
     <div>
@@ -32,42 +36,63 @@ const Dashboard = () => {
           <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content rounded-tr-md">
             {/* Sidebar content here */}
             {
-              userInfo?.role === 'instructor' ?
+              isAdmin ?
                 <>
-                  <ActiveLink to={`/dashboard/addclass`}>
+                  {/* if admin is true then this is for the admin */}
+                  <ActiveLink to={`/dashboard/manageclasses`}>
                     <li className='md:py-4 text-2xl normal-case'>
-                      Add a class
+                      Manage Classes
                     </li>
                   </ActiveLink>
-                  <ActiveLink to={`/dashboard/myclass`}>
-                    <li className='text-2xl normal-case'>My classes</li>
+                  <ActiveLink to={`/dashboard/managestudents`}>
+                    <li className='md:py-4 text-2xl normal-case'>
+                    Manage Students
+                    </li>
+                  </ActiveLink>
+                  <ActiveLink to={`/dashboard/manageusers`}>
+                    <li className='md:py-4 text-2xl normal-case'>
+                    Manage Users
+                    </li>
                   </ActiveLink>
                 </>
                 :
-                <>
-                  <li className='md:my-2 text-2xl normal-case'>
-                    <ActiveLink to={`/dashboard/enrolledclasses`}>
-                      Enrolled classes
+                userInfo?.role === 'instructor' ?
+                  <>
+                    <ActiveLink to={`/dashboard/addclass`}>
+                      <li className='md:py-4 text-2xl normal-case'>
+                        Add a class
+                      </li>
                     </ActiveLink>
-                  </li>
+                    <ActiveLink to={`/dashboard/myclass`}>
+                      <li className='text-2xl normal-case'>My classes</li>
+                    </ActiveLink>
+                  </>
+                  :
+                  <>
+                    {/* this is for the students */}
+                    <li className='md:my-2 text-2xl normal-case'>
+                      <ActiveLink to={`/dashboard/enrolledclasses`}>
+                        Enrolled classes
+                      </ActiveLink>
+                    </li>
 
-                  <li className='md:my-2 text-2xl normal-case'>
-                    <ActiveLink to={`/dashboard/selectedclasses`}>
-                      Selected classes
-                      <span className="badge badge-primary">
-                        {
-                          carts?.length
-                        }
-                      </span>
-                    </ActiveLink>
-                  </li>
+                    <li className='md:my-2 text-2xl normal-case'>
+                      <ActiveLink to={`/dashboard/selectedclasses`}>
+                        Selected classes
+                        <span className="badge badge-primary">
+                          {
+                            carts?.length
+                          }
+                        </span>
+                      </ActiveLink>
+                    </li>
 
-                  <li className='md:my-2 text-2xl normal-case'>
-                    <ActiveLink to={`/dashboard/paymentshistory`}>
-                      All payments
-                    </ActiveLink>
-                  </li>
-                </>
+                    <li className='md:my-2 text-2xl normal-case'>
+                      <ActiveLink to={`/dashboard/paymentshistory`}>
+                        All payments
+                      </ActiveLink>
+                    </li>
+                  </>
             }
           </ul>
 

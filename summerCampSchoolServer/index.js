@@ -230,7 +230,7 @@ async function run() {
       }
 
       const query = { email: email };
-      const user = await userCollection.findOne(query);
+      const user = await summerCampSchoolUserCollection.findOne(query);
       const result = { admin: user.role === 'admin' };
       res.send(result);
     });
