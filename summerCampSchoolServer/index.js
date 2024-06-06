@@ -222,6 +222,19 @@ async function run() {
       res.send(result);
     });
 
+    // check if a user is an admin or not
+    app.get('/users/admin/:email', verifyToken, async (req, res) => {
+      const email = req.params.email;
+      if (req.decoded.email !== email) {
+        return res.send({ admin: false });
+      }
+
+      const query = { email: email };
+      const user = await userCollection.findOne(query);
+      const result = { admin: user.role === 'admin' };
+      res.send(result);
+    });
+
     // save users info to database when they login for the first time
     /* app.post('/users', async (req, res) => {
       const user = req.body;
