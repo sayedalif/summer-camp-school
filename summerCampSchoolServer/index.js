@@ -80,7 +80,7 @@ async function run() {
     const verifyAdmin = async (req, res, next) => {
       const email = req.decoded.email;
       const query = { email: email };
-      const user = await userCollection.findOne(query);
+      const user = await summerCampSchoolUserCollection.findOne(query);
       const isAdmin = user?.role === 'admin';
       if (!isAdmin) {
         return res.status(403).send({ message: 'forbidden access' });
@@ -109,6 +109,80 @@ async function run() {
       // console.log("🚀 ~ app.get ~ result:", result);
       res.send(result);
     });
+
+    // for admin to update class status.
+    app.patch('/classes', verifyToken, verifyAdmin, async (req, res) => {
+      const { id, status } = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          status: status
+        },
+      }
+      const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
+    // purchased classes for admin to manage the students.
+    // app.get('/classes/:classId', async (req, res) => {
+    //   /* const { classId } = req.params;
+    //   console.log("🚀 ~ app.get ~ classId:", classId);
+    //   const classObjectIdString = classId;
+    //   const pipeline = [
+    //     {
+    //       $unwind: '$classes_id'
+    //     },
+    //     {
+    //       $match: {
+    //         _id: classObjectIdString
+    //       }
+    //     },
+    //     {
+    //       $lookup: {
+    //         from: 'payments',
+    //         localField: '_id',
+    //         foreignField: 'classes_id',
+    //         as: 'userDetails'
+    //       }
+    //     },
+    //     {
+    //       $unwind: '$userDetails'
+    //     },
+    //     {
+    //       $project: {
+    //         _id: 0,
+    //         user_id: 1,
+    //         email: '$userDetails.email',
+    //         name: '$userDetails.name'
+    //       }
+    //     }
+    //   ];
+
+    //   const result = await summerCampSchoolClassesCollection.aggregate(pipeline).toArray();
+
+    //   return res.send(result); */
+
+    //   // Find payments with the class ID
+    //   // const payments = await summerCampSchoolPaymentCollection.find({
+    //   //   classes_id: { $in: [classId] } // Use $in operator to search for classId in the array
+    //   // }).toArray();
+
+    //   // // Collect unique user emails from payments
+    //   // const userEmails = new Set();
+    //   // for (const payment of payments) {
+    //   //   // Assuming "user_email" field stores user email in payments collection
+    //   //   const userEmail = payment.email;
+    //   //   if (userEmail) {
+    //   //     userEmails.add(userEmail);
+    //   //   } else {
+    //   //     console.warn(`Payment with class ID "${classId}" is missing user email`);
+    //   //   }
+    //   // }
+
+    //   // res.send({
+    //   //   userEmails: Array.from(userEmails), // Convert Set to array
+    //   // });
+    // });
 
     // for updating the student enrolled seats on specific classes
     app.patch('/classes/:id', async (req, res) => {
@@ -174,21 +248,18 @@ async function run() {
 
 
     // * this is for getting all the users
-    app.get('/users', async (req, res) => {
-      const userEmail = req?.query?.email;
+    app.get('/users', verifyToken, verifyAdmin, async (req, res) => {
+      // const userEmail = req?.query?.email;
       // console.log("🚀 ~ app.get ~ userEmail:", userEmail);
 
-      const query = { email: userEmail }
-      const result = await summerCampSchoolUserCollection.find(query).toArray();
+      // const query = { email: userEmail }
+      const result = await summerCampSchoolUserCollection.find().toArray();
       res.send(result);
     });
 
     // saving user info to the database.
     app.post('/users', async (req, res) => {
       const { userInfo } = req.body;
-      // console.log('req.body',req.body)
-      // insert email if user doesn't exists: 
-      // you can do this many ways (1. email unique, 2. upsert 3. simple checking)
       const query = { email: userInfo?.email }
       const existingUser = await summerCampSchoolUserCollection.findOne(query);
       if (existingUser) {
@@ -197,22 +268,6 @@ async function run() {
       const result = await summerCampSchoolUserCollection.insertOne(userInfo);
       return res.send(result);
     });
-
-    // save specific user information to database
-    /*     app.put('/users/:email', async (req, res) => {
-          const email = req.params.email;
-          const user = req.body;
-          // // // console.log("🚀 ~ file: index.js:39 ~ app.put ~ user:", user);
-          const filter = { email: email };
-          const option = { upsert: true }
-          const updateDoc = {
-            $set: user
-          };
-    
-          const result = await summerCampSchoolUserCollection.updateOne(filter, updateDoc, option);
-          // console.log(result);
-          res.send(result);
-        }); */
 
     // get single user info form the database
     app.get('/users/:email', async (req, res) => {
@@ -235,13 +290,6 @@ async function run() {
       res.send(result);
     });
 
-    // save users info to database when they login for the first time
-    /* app.post('/users', async (req, res) => {
-      const user = req.body;
-      const result = await summerCampSchoolUserCollection.insertOne(user);
-      res.send(result);
-    }); */
-
     // save users more info to database
     app.post('/users/save-user-data', async (req, res) => {
       const { email, bio, address, phone, gender } = req?.body;
@@ -263,10 +311,7 @@ async function run() {
     // follow a specific instructor
     app.put('/users/follow/:instructorId', async (req, res) => {
       const { instructorId } = req?.params;
-      // // // console.log("🚀 ~ app.put ~ instructorId:", instructorId)
       const { userEmail } = req?.body;
-      // // // console.log("🚀 ~ app.put ~ userEmail:", userEmail);
-
       // Update user document to include the followed instructor's _id
       await summerCampSchoolUserCollection.updateOne(
         { email: userEmail },
@@ -304,9 +349,7 @@ async function run() {
     // * for add to cart
     app.post('/carts', async (req, res) => {
       const email = req?.query?.email;
-      // // console.log("🚀 ~ app.post ~ email:", email);
       const addedToCart = req?.body;
-      // // console.log("🚀 ~ app.post ~ addedToCart:", addedToCart);
       const result = await summerCampSchoolCartsCollection.insertOne(addedToCart);
       return res.send(result);
     });
@@ -314,7 +357,6 @@ async function run() {
     // delete a specific item from cart
     app.delete('/carts/:id', async (req, res) => {
       const id = req?.params?.id;
-      // // console.log("🚀 ~ app.delete ~ id:", id);
       const query = { _id: new ObjectId(id) };
       const result = await summerCampSchoolCartsCollection.deleteOne(query);
       res.send(result);

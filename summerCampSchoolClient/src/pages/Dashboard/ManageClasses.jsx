@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
-import ClassesCards from "../../components/ClassesCards";
-import useUserInfo from "../../hooks/useUserInfo";
-import useFetch from "../../hooks/utils/utils";
-import useAxiosSecure from "../../hooks/UseAxiosSecure";
+import React, { useEffect, useState } from 'react';
+import useUserInfo from '../../hooks/useUserInfo';
+import useAxiosSecure from '../../hooks/UseAxiosSecure';
+import ClassesCards from '../../components/ClassesCards';
 
-const MyClass = () => {
+const ManageClasses = () => {
   const { data: userInfoData, error: userInfoError, isLoading, refetch } = useUserInfo();
-  // console.log("🚀 ~ MyClass ~ userInfoData:", userInfoData);
 
-  /* const { data: classes = [], error, loading } = useFetch(`/classes/${userInfoData?._id}`);
-  console.log("🚀 ~ MyClass ~ classes:", classes); */
   const [axiosSecure] = useAxiosSecure();
 
   const [data, setData] = useState(null)
+  console.log("🚀 ~ ManageClasses ~ data:", data);
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -21,7 +18,7 @@ const MyClass = () => {
       async function () {
         try {
           setLoading(true)
-          const response = await axiosSecure.get(`/classes/${userInfoData?._id}`);
+          const response = await axiosSecure.get(`/classes`);
           setData(response.data)
         } catch (err) {
           setError(err)
@@ -53,4 +50,4 @@ const MyClass = () => {
   );
 };
 
-export default MyClass;
+export default ManageClasses;

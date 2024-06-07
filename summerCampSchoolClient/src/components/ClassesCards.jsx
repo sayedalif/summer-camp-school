@@ -121,6 +121,9 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
             {
               location?.pathname === '/dashboard/myclass' && userInfo?.role === 'instructor' && eachClass?.status && <p>Status: <span className={`${eachClass?.status === 'denied' ? 'text-red-500' : eachClass?.status === 'approved' ? 'text-green-500' : 'text-yellow-500'} capitalize font-bold`}>{eachClass?.status}</span></p>
             }
+            {
+              location?.pathname === '/dashboard/manageclasses' && userInfo?.role === 'admin' && eachClass?.status && <p>Status: <button className={`${eachClass?.status === 'denied' ? 'text-red-500' : eachClass?.status === 'approved' ? 'text-green-500' : 'text-yellow-500'} capitalize font-bold btn btn-xs`} disabled={eachClass?.status !== 'approved'}>{eachClass?.status}</button></p>
+            }
             <div className='flex justify-between items-center'>
               <span className='badge bg-[#E2F6FF] my-[16px]'>
                 <FontAwesomeIcon className='text-[#6FD1FF] pr-1' icon={faIdBadge} />

@@ -10,6 +10,8 @@ const usePaymentClasses = () => {
 
   const { data: paymentClass = [], isLoading, error, refetch } = useQuery({
     enabled: !!user,
+    retry:3,
+    
     queryKey: ['paymentClasses'],
     queryFn: async () => {
       const response = await axiosSecure(`/payments/classes?email=${user?.email}`);
