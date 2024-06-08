@@ -3,15 +3,17 @@ import useUserInfo from '../../hooks/useUserInfo';
 import useAxiosSecure from '../../hooks/UseAxiosSecure';
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
+import useManageUsers from '../../hooks/useManageUsers';
 
 const ManageUsers = () => {
   const [axiosSecure] = useAxiosSecure();
-  const [allUsers, setAllUsers] = useState([]);
-  // console.log("🚀 ~ ManageUsers ~ allUsers:", allUsers);
-  const [error, setError] = useState(null);
+  // const [allUsers, setAllUsers] = useState([]);
+  // const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const { allUsers, isLoading, error, refetch } = useManageUsers();
+
+  /* useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -25,13 +27,30 @@ const ManageUsers = () => {
       }
     }
     fetchData()
-  }, [axiosSecure]);
+  }, [axiosSecure]); */
 
-  if (loading) {
+  if (isLoading) {
     return <h1>Loading...</h1>
   }
   if (error) {
     return <h1>{error.message}</h1>
+  }
+
+  // make instructor
+
+  const handleMakeInstructor = async (email) => {
+    console.log("🚀 ~ email:", email);
+
+    try {
+      const response = await axiosSecure.patch(`/users?email=${email}`, { role: 'instructor' });
+      const data = await response?.data;
+      if (data.acknowledged === true && data.modifiedCount > 0 && data.modifiedCount > 0) {
+        refetch();
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -70,7 +89,7 @@ const ManageUsers = () => {
                               role === 'instructor' && <li><a>{role === 'instructor' && 'admin'}</a></li>
                             }
                             {
-                              role === 'student' && <li><a>{role === 'student' && 'instructor'}</a></li>
+                              role === 'student' && <li onClick={() => handleMakeInstructor(email)}><a>{role === 'student' && 'instructor'}</a></li>
                             }
                           </ul>
                         </div>

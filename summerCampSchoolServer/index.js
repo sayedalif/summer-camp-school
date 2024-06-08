@@ -20,7 +20,7 @@ app.use(express.json());
 
 // middlewares 
 const verifyToken = (req, res, next) => {
-  console.log('inside verify token', req.headers.authorization);
+  // console.log('inside verify token', req.headers.authorization);
   if (!req.headers.authorization) {
     return res.status(401).send({ message: 'unauthorized access' });
   }
@@ -260,6 +260,23 @@ async function run() {
       // const query = { email: userEmail }
       const result = await summerCampSchoolUserCollection.find().toArray();
       res.send(result);
+    });
+
+
+    // updates user role, this is for admin only
+    app.patch('/users', async (req, res) => {
+      const email = req?.query?.email;
+      console.log("🚀 ~ app.patch ~ email:", email);
+      const { role } = req.body;
+      console.log("🚀 ~ app.patch ~ role:", role);
+      const query = { email: email };
+      const updateDoc = {
+        $set: {
+          role: role
+        },
+      }
+      const result = await summerCampSchoolUserCollection.updateOne(query, updateDoc);
+      return res.send(result);
     });
 
     // saving user info to the database.
