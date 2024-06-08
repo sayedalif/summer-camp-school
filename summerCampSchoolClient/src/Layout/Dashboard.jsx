@@ -44,11 +44,6 @@ const Dashboard = () => {
                       Manage Classes
                     </li>
                   </ActiveLink>
-                  <ActiveLink to={`/dashboard/managestudents`}>
-                    <li className='md:py-4 text-2xl normal-case'>
-                    Manage Students
-                    </li>
-                  </ActiveLink>
                   <ActiveLink to={`/dashboard/manageusers`}>
                     <li className='md:py-4 text-2xl normal-case'>
                     Manage Users

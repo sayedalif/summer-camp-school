@@ -117,7 +117,7 @@ export const router = createBrowserRouter([
           }
           ,
           {
-            path: '/dashboard/managestudents',
+            path: '/dashboard/managestudents/:id',
             element: <AdminRoute>
               <ManageStudents></ManageStudents>
             </AdminRoute>

@@ -124,65 +124,70 @@ async function run() {
     });
 
     // purchased classes for admin to manage the students.
-    // app.get('/classes/:classId', async (req, res) => {
-    //   /* const { classId } = req.params;
-    //   console.log("🚀 ~ app.get ~ classId:", classId);
-    //   const classObjectIdString = classId;
-    //   const pipeline = [
-    //     {
-    //       $unwind: '$classes_id'
-    //     },
-    //     {
-    //       $match: {
-    //         _id: classObjectIdString
-    //       }
-    //     },
-    //     {
-    //       $lookup: {
-    //         from: 'payments',
-    //         localField: '_id',
-    //         foreignField: 'classes_id',
-    //         as: 'userDetails'
-    //       }
-    //     },
-    //     {
-    //       $unwind: '$userDetails'
-    //     },
-    //     {
-    //       $project: {
-    //         _id: 0,
-    //         user_id: 1,
-    //         email: '$userDetails.email',
-    //         name: '$userDetails.name'
-    //       }
-    //     }
-    //   ];
+    app.get('/classes/:classId', async (req, res) => {
+      const { classId } = req.params;
+      /* console.log("🚀 ~ app.get ~ classId:", classId);
+      const classObjectIdString = classId;
+      const pipeline = [
+        {
+          $unwind: '$classes_id'
+        },
+        {
+          $match: {
+            _id: classObjectIdString
+          }
+        },
+        {
+          $lookup: {
+            from: 'payments',
+            localField: '_id',
+            foreignField: 'classes_id',
+            as: 'userDetails'
+          }
+        },
+        {
+          $unwind: '$userDetails'
+        },
+        {
+          $project: {
+            _id: 0,
+            user_id: 1,
+            email: '$userDetails.email',
+            name: '$userDetails.name'
+          }
+        }
+      ];
 
-    //   const result = await summerCampSchoolClassesCollection.aggregate(pipeline).toArray();
+      const result = await summerCampSchoolClassesCollection.aggregate(pipeline).toArray();
 
-    //   return res.send(result); */
+      return res.send(result); */
 
-    //   // Find payments with the class ID
-    //   // const payments = await summerCampSchoolPaymentCollection.find({
-    //   //   classes_id: { $in: [classId] } // Use $in operator to search for classId in the array
-    //   // }).toArray();
+      // Find payments with the class ID
+      const payments = await summerCampSchoolPaymentCollection.find({
+        classes_id: { $in: [classId] } // Use $in operator to search for classId in the array
+      }).toArray();
 
-    //   // // Collect unique user emails from payments
-    //   // const userEmails = new Set();
-    //   // for (const payment of payments) {
-    //   //   // Assuming "user_email" field stores user email in payments collection
-    //   //   const userEmail = payment.email;
-    //   //   if (userEmail) {
-    //   //     userEmails.add(userEmail);
-    //   //   } else {
-    //   //     console.warn(`Payment with class ID "${classId}" is missing user email`);
-    //   //   }
-    //   // }
+      // Collect unique user emails from payments
+      // const userEmails = new Set();
+      let userInfo;
+      for (const payment of payments) {
+        console.log("🚀 ~ app.get ~ payment:", payment);
 
-    //   // res.send({
-    //   //   userEmails: Array.from(userEmails), // Convert Set to array
-    //   // });
-    // });
+        // Assuming "user_email" field stores user email in payments collection
+        userInfo = [
+          {
+            email: payment.email, purchaseDate: payment.purchaseDate, transactionId: payment?.transactionId
+          }
+        ];
+        /* if (userEmail) {
+          userEmails.add(userEmail);
+        } else {
+          console.warn(`Payment with class ID "${classId}" is missing user email`);
+        } */
+      }
+
+      res.send(userInfo);
+    });
 
     // for updating the student enrolled seats on specific classes
     app.patch('/classes/:id', async (req, res) => {

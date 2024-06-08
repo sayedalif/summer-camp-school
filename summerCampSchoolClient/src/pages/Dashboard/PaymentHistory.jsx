@@ -40,7 +40,6 @@ const PaymentHistory = () => {
   }
 
   return (
-    <div>
       <div className="overflow-x-auto">
         {
           payments && Array.isArray(payments) && payments?.length > 0 ? <table className="table">
@@ -99,7 +98,6 @@ const PaymentHistory = () => {
             <p className='flex justify-center items-center h-screen text-xl'>No payment are made yet</p>
         }
       </div>
-    </div>
   );
 };
 

@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import useCart from "../hooks/useCart";
 import usePaymentClasses from "../hooks/usePaymentClasses";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAdmin from "../hooks/useAdmin";
 
 
 const ClassesCards = ({ key, eachClass, status, feedback }) => {
@@ -20,6 +21,9 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
 
   // user authentication data
   const { user } = useAuth();
+
+  // admin data
+  const [isAdmin, isAdminLoading] = useAdmin();
 
   const [axiosPublic] = useAxiosPublic();
 
@@ -57,7 +61,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
     }
 
     axiosPublic.patch(`/classes/${eachClass?._id}`, { students_enrolled: eachClass?.students_enrolled + 1 }).then(response => {
-      // console.log("🚀 ~ axiosPublic.patch ~ response:", response);
+      console.log("🚀 ~ axiosPublic.patch ~ response:", response);
     }).catch(err => {
       console.log(err);
     })
@@ -134,13 +138,20 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
             </div>
             <div className="card-actions flex justify-between items-center">
               <span className='md:text-3xl text-2xl font-bold'>${eachClass?.price}</span>
-              <button onClick={() => handleAddToCart(eachClass)} disabled={joinedClassIds.includes(eachClass?._id) || paidClassIds?.includes(eachClass?._id)} className={`btn bg-[#FFFFFF] text-[#101218] rounded-full px-2 lg:px-4 ${eachClass?.available_seats === eachClass?.student_enrolled || (userInfo?.role === 'instructor' || userInfo?.role === 'admin') ? 'btn-disabled' : 'hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5]'}`}>
-                {
-                  joinedClassIds.includes(eachClass?._id) || paidClassIds?.includes(eachClass?._id) ? 'Joined' : <>
-                    Join Now <FontAwesomeIcon icon={faArrowRight} />
-                  </>
-                }
-              </button>
+              {
+                !isAdmin && <button onClick={() => handleAddToCart(eachClass)} disabled={joinedClassIds.includes(eachClass?._id) || paidClassIds?.includes(eachClass?._id)} className={`btn bg-[#FFFFFF] text-[#101218] rounded-full px-2 lg:px-4 ${eachClass?.available_seats === eachClass?.student_enrolled || (userInfo?.role === 'instructor' || userInfo?.role === 'admin') ? 'btn-disabled' : 'hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5]'}`}>
+                  {
+                    joinedClassIds.includes(eachClass?._id) || paidClassIds?.includes(eachClass?._id) ? 'Joined' : <>
+                      Join Now <FontAwesomeIcon icon={faArrowRight} />
+                    </>
+                  }
+                </button>
+              }
+              {
+                isAdmin && <Link to={`/dashboard/managestudents/${eachClass?._id}`}>
+                  <button className="btn">Manage students</button>
+                </Link>
+              }
             </div>
           </div>
         </div>
