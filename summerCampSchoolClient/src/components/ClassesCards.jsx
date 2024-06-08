@@ -149,7 +149,9 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
               }
               {
                 isAdmin && <Link to={`/dashboard/managestudents/${eachClass?._id}`}>
-                  <button className="btn">Manage students</button>
+                  <button className="btn btn-outline btn-accent btn-sm text-white">
+                    Manage students<FontAwesomeIcon icon={faArrowRight} />
+                  </button>
                 </Link>
               }
             </div>

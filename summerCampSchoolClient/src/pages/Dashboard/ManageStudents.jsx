@@ -13,6 +13,7 @@ const ManageStudents = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axiosSecure(`/classes/${id}`);
         const data = await response?.data;

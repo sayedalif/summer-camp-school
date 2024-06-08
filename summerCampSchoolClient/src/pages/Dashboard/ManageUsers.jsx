@@ -50,10 +50,8 @@ const ManageUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {/* rows */}
               {
                 allUsers?.map((user, idx) => {
-                  {/* console.log("🚀 ~ ManageUsers ~ user:", user); */ }
                   const {
                     name,
                     email,
@@ -76,20 +74,6 @@ const ManageUsers = () => {
                             }
                           </ul>
                         </div>
-
-                        {/* 
-                        <div className="dropdown dropdown-end">
-                          <div onClick={() => setIsOpen(!isOpen)} tabIndex={0} role="button" className="btn btn-ghost btn-xs">{role} <span>{isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</span></div>
-                          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                            {
-                              role === 'instructor' && <li><a>{role === 'instructor' && 'admin'}</a></li>
-                            }
-                            {
-                              role === 'student' && <li><a>{role === 'student' && 'instructor'}</a></li>
-                            }
-                          </ul>
-                        </div>
-                         */}
                       </td>
                     </tr>
                   )

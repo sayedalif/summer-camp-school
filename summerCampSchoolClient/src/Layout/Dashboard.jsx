@@ -16,6 +16,7 @@ const Dashboard = () => {
   const { carts, error: cartsError, isLoading: cartsIsLoading, refetch: cartsRefetch, totalPrice } = useCart();
 
   const [isAdmin, isAdminLoading] = useAdmin();
+  console.log("🚀 ~ Dashboard ~ isAdminLoading:", isAdminLoading);
   console.log("🚀 ~ Dashboard ~ isAdmin:", isAdmin);
 
   return (
@@ -36,31 +37,34 @@ const Dashboard = () => {
           <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content rounded-tr-md">
             {/* Sidebar content here */}
             {
-              isAdmin ?
+              isAdmin && !isAdminLoading ?
                 <>
                   {/* if admin is true then this is for the admin */}
-                  <ActiveLink to={`/dashboard/manageclasses`}>
-                    <li className='md:py-4 text-2xl normal-case'>
+
+                  <li className='md:py-4 text-2xl normal-case'>
+                    <ActiveLink to={`/dashboard/manageclasses`}>
                       Manage Classes
-                    </li>
-                  </ActiveLink>
-                  <ActiveLink to={`/dashboard/manageusers`}>
-                    <li className='md:py-4 text-2xl normal-case'>
-                    Manage Users
-                    </li>
-                  </ActiveLink>
+                    </ActiveLink>
+                  </li>
+                  <li className='md:py-4 text-2xl normal-case'>
+                    <ActiveLink to={`/dashboard/manageusers`}>
+                      Manage Users
+                    </ActiveLink>
+                  </li>
                 </>
                 :
                 userInfo?.role === 'instructor' ?
                   <>
-                    <ActiveLink to={`/dashboard/addclass`}>
-                      <li className='md:py-4 text-2xl normal-case'>
+                    <li className='md:py-4 text-2xl normal-case'>
+                      <ActiveLink to={`/dashboard/addclass`}>
                         Add a class
-                      </li>
-                    </ActiveLink>
-                    <ActiveLink to={`/dashboard/myclass`}>
-                      <li className='text-2xl normal-case'>My classes</li>
-                    </ActiveLink>
+                      </ActiveLink>
+                    </li>
+                    <li className='text-2xl normal-case'>
+                      <ActiveLink to={`/dashboard/myclass`}>
+                        My classes
+                      </ActiveLink>
+                    </li>
                   </>
                   :
                   <>
@@ -90,7 +94,6 @@ const Dashboard = () => {
                   </>
             }
           </ul>
-
         </div>
       </div>
     </div>
