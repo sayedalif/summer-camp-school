@@ -123,7 +123,8 @@ async function run() {
       res.send(result);
     });
 
-    // purchased classes for admin to manage the students.
+    // purchased classes of the students
+    //  for admin to manage the students.
     app.get('/classes/:classId', async (req, res) => {
       const { classId } = req.params;
       /* console.log("🚀 ~ app.get ~ classId:", classId);
@@ -253,6 +254,7 @@ async function run() {
 
 
     // * this is for getting all the users
+    // this is for admin only
     app.get('/users', verifyToken, verifyAdmin, async (req, res) => {
       // const userEmail = req?.query?.email;
       // console.log("🚀 ~ app.get ~ userEmail:", userEmail);
@@ -267,16 +269,34 @@ async function run() {
     app.patch('/users', async (req, res) => {
       const email = req?.query?.email;
       console.log("🚀 ~ app.patch ~ email:", email);
-      const { role } = req.body;
-      console.log("🚀 ~ app.patch ~ role:", role);
+      const { role, class_id } = req.body;
+      // console.log("🚀 ~ app.patch ~ role:", role);
+      console.log("🚀 ~ app.patch ~ class_id:", class_id);
       const query = { email: email };
-      const updateDoc = {
-        $set: {
-          role: role
-        },
+      let updateDoc;
+      if (role) {
+        updateDoc = {
+          $set: {
+            role: role
+          }
+        }
+      } else if (class_id) {
+        updateDoc = {
+          $addToSet: {
+            banned_classes: class_id
+          }
+        };
+
+
       }
-      const result = await summerCampSchoolUserCollection.updateOne(query, updateDoc);
-      return res.send(result);
+
+      try {
+        const result = await summerCampSchoolUserCollection.updateOne(query, updateDoc);
+        return res.send(result);
+      } catch (error) {
+        console.error("Error updating user:", error);
+        return res.status(500).send({ error: "An error occurred while updating the user." });
+      }
     });
 
     // saving user info to the database.

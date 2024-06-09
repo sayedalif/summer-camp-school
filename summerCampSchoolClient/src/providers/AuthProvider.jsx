@@ -9,7 +9,7 @@ export const AuthContext = createContext(null);
 
 // auth firebase
 export const auth = getAuth(app);
-console.log("🚀 ~ auth:", auth);
+// console.log("🚀 ~ auth:", auth);
 
 // auth provider
 const AuthProvider = ({ children }) => {
@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
 
   // observer
   const [user, loading, error] = useAuthState(auth);
-  console.log("🚀 ~ AuthProvider ~ user:", user);
+  // console.log("🚀 ~ AuthProvider ~ user:", user);
   if (user) {
     if (user) {
       // get token and store client

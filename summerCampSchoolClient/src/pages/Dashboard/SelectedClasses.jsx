@@ -42,9 +42,9 @@ const SelectedClasses = () => {
         {
           carts && Array.isArray(carts) && carts?.length > 0 && <div className="flex items-center justify-evenly font-bold my-4">
             <h1>Total Items: {carts?.length}</h1>
-            <h1>Total Price: ${totalPrice}</h1>
+            <h1>Total Price: ${totalPrice} USD</h1>
             <Link to={`/dashboard/payment`}>
-              <button className="btn btn-sm btn-primary text-white px-5">pay</button>
+              <button className="btn btn-sm btn-primary text-white px-5 uppercase">pay</button>
             </Link>
           </div>
         }

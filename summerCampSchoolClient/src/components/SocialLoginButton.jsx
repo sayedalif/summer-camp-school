@@ -8,7 +8,7 @@ import useAxiosPublic from '../hooks/useAxiosPublic';
 const SocialLoginButton = ({ authType }) => {
   // hooks
   const [axiosPublic] = useAxiosPublic();
-  
+
   // react router navigate
   // to navigate the user after login
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ const SocialLoginButton = ({ authType }) => {
           const userInfo = {
             email: result?.user?.email,
             name: result?.user?.displayName,
+            role: 'student', // initial role will be student for everyone until admin changed their role.
           };
           console.log("🚀 ~ AuthProvider ~ userInfo:", userInfo);
 

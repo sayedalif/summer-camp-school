@@ -7,7 +7,7 @@ import useAdmin from '../hooks/useAdmin';
 
 const Dashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  // console.log("🚀 ~ Dashboard ~ isDrawerOpen:", isDrawerOpen);
+  // // console.log("🚀 ~ Dashboard ~ isDrawerOpen:", isDrawerOpen);
 
   // user info from hook
   const { data: userInfo, error, isLoading, refetch } = useUserInfo();
@@ -16,8 +16,8 @@ const Dashboard = () => {
   const { carts, error: cartsError, isLoading: cartsIsLoading, refetch: cartsRefetch, totalPrice } = useCart();
 
   const [isAdmin, isAdminLoading] = useAdmin();
-  console.log("🚀 ~ Dashboard ~ isAdminLoading:", isAdminLoading);
-  console.log("🚀 ~ Dashboard ~ isAdmin:", isAdmin);
+  // console.log("🚀 ~ Dashboard ~ isAdminLoading:", isAdminLoading);
+  // console.log("🚀 ~ Dashboard ~ isAdmin:", isAdmin);
 
   return (
     <div>

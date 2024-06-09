@@ -4,6 +4,7 @@ import useAxiosSecure from '../../hooks/UseAxiosSecure';
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import useManageUsers from '../../hooks/useManageUsers';
+import toast from 'react-hot-toast';
 
 const ManageUsers = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -45,12 +46,17 @@ const ManageUsers = () => {
       const response = await axiosSecure.patch(`/users?email=${email}`, { role: 'instructor' });
       const data = await response?.data;
       if (data.acknowledged === true && data.modifiedCount > 0 && data.modifiedCount > 0) {
+        // refetching so that in ui data's will be updated
         refetch();
       }
       console.log(data);
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const handleMakeAdmin = () => {
+    toast.error(`hasn't implemented yet`);
   }
 
   return (
@@ -86,7 +92,7 @@ const ManageUsers = () => {
                           <div tabIndex={0} role="button" className="btn btn-ghost btn-xs">{role}</div>
                           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                             {
-                              role === 'instructor' && <li><a>{role === 'instructor' && 'admin'}</a></li>
+                              role === 'instructor' && <li onClick={handleMakeAdmin}><a>{role === 'instructor' && 'admin'}</a></li>
                             }
                             {
                               role === 'student' && <li onClick={() => handleMakeInstructor(email)}><a>{role === 'student' && 'instructor'}</a></li>
