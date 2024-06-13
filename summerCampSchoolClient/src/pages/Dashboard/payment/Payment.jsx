@@ -1,9 +1,9 @@
 import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import CheckoutForm from './CheckOutForm';
 import useCart from '../../../hooks/useCart';
 import './payment.css';
+import CheckOutForm from './CheckOutForm.jsx';
 
 const Payment = () => {
   const { carts, error, isLoading, refetch, totalPrice } = useCart();
@@ -13,7 +13,7 @@ const Payment = () => {
   return (
     <div>
       <Elements stripe={stripePromise}>
-        <CheckoutForm totalPrice={totalPrice} carts={carts} cartRefetch={refetch} />
+        <CheckOutForm totalPrice={totalPrice} carts={carts} cartRefetch={refetch} />
       </Elements>
     </div>
   );

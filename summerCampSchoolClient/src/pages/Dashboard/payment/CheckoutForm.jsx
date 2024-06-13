@@ -4,7 +4,7 @@ import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import useCart from '../../../hooks/useCart';
 
-const CheckoutForm = ({ totalPrice, carts, cartRefetch }) => {
+const CheckOutForm = ({ totalPrice, carts, cartRefetch }) => {
   // user
   const { user } = useAuth();
 
@@ -151,4 +151,4 @@ const CheckoutForm = ({ totalPrice, carts, cartRefetch }) => {
   );
 };
 
-export default CheckoutForm;
+export default CheckOutForm;
