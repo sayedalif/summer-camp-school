@@ -1,4 +1,4 @@
-const eonlyxpress = require('express')
+const express = require('express')
 const cors = require('cors');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
