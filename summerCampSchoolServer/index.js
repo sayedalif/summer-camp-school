@@ -333,21 +333,46 @@ async function run() {
     });
 
     // save users more info to database
+    // app.post('/users/save-user-data', async (req, res) => {
+    //   const { email, bio, address, phone, gender, photoURL } = req.body;
+    //   const result = await summerCampSchoolUserCollection.updateOne(
+    //     { email },
+    //     {
+    //       $set: {
+    //         bio,
+    //         address,
+    //         phone,
+    //         gender,
+    //         photoURL
+    //       }
+    //     },
+    //     { upsert: false }
+    //   );
+    //   res.send(result);
+    // });
+
     app.post('/users/save-user-data', async (req, res) => {
-      const { email, bio, address, phone, gender } = req.body;
-      const result = await summerCampSchoolUserCollection.updateOne(
-        { email },
-        {
-          $set: {
-            bio,
-            address,
-            phone,
-            gender
-          }
-        },
-        { upsert: false }
-      );
-      res.send(result);
+      const { email, ...updateFields } = req.body;
+
+      // Create an object with only the fields that are present in the request
+      const fieldsToUpdate = Object.keys(updateFields).reduce((acc, key) => {
+        if (updateFields[key] !== undefined) {
+          acc[key] = updateFields[key];
+        }
+        return acc;
+      }, {});
+
+      try {
+        const result = await summerCampSchoolUserCollection.updateOne(
+          { email },
+          { $set: fieldsToUpdate },
+          { upsert: false }
+        );
+        res.send(result);
+      } catch (error) {
+        console.error('Error updating user data:', error);
+        res.status(500).send('Error updating user data');
+      }
     });
 
     // follow a specific instructor
