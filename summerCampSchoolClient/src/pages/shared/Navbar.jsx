@@ -6,6 +6,7 @@ import DarkNLightModeToggle from "../../components/DarknLightModeToggle";
 const Navbar = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
+  console.log("🚀 ~ Navbar ~ user:", user);
 
   const li = [
     'home',
