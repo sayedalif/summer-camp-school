@@ -11,7 +11,8 @@ const useManageUsers = () => {
         const response = await axiosSecure.get("/users");
         const data = await response?.data;
         return data;
-      }
+      },
+      refetchOnWindowFocus:true,
     }
   );
   return { allUsers, isLoading, error, refetch };

@@ -21,7 +21,7 @@ const Login = () => {
 
   // password reset / forget password
   const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
-  console.log("🚀 ~ Login ~ sending:", sending);
+  // console.log("🚀 ~ Login ~ sending:", sending);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -24,7 +24,11 @@ const PopularInstructor = () => {
             return (
               <div key={_id} className="card relative lg:mb-0 md:mb-3 sm:mb-3 mb-3">
                 {/* instructor images */}
-                <img loading="lazy" className='rounded lg:w-[360px] md:w-80' src={image} alt="instructor_image" />
+                {/*
+                lg:w-[360px] 
+                md:w-80
+                */}
+                <img loading="lazy" className='rounded lg:w-[363px] md:w-80' src={image} alt="instructor_image" />
                 <div className='absolute bottom-0 left-4'>
 
                   {/* name */}

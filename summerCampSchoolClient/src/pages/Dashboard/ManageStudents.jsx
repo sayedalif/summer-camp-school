@@ -5,15 +5,18 @@ import useUserInfo from '../../hooks/useUserInfo';
 import useManageUsers from '../../hooks/useManageUsers';
 
 const ManageStudents = () => {
+  const { id } = useParams();
+  console.log("🚀 ~ ManageStudents ~ id:", id);
+  
   const [axiosSecure] = useAxiosSecure();
+
   const { allUsers, isLoading, error: manageUserError, refetch } = useManageUsers();
   console.log("🚀 ~ ManageStudents ~ allUsers:", allUsers);
 
 
-  const bannedClasses = allUsers?.banned_classes?.map(banned_class => banned_class);
+  const bannedClasses = allUsers?.banned_classes?.map(banned_class => console.log(banned_class));
   console.log("🚀 ~ PaymentHistory ~ bannedClasses:", bannedClasses);
-  const { id } = useParams();
-  // console.log("🚀 ~ ManageStudents ~ id:", id);
+
 
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -23,8 +26,10 @@ const ManageStudents = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axiosSecure(`/classes/${id}`);
+        const response = await axiosSecure(`/studentsinfo/${id}`);
         const data = await response?.data;
+        console.log("🚀 ~ fetchData ~ data:", data);
+        
         setData(data);
       } catch (error) {
         setError(error);

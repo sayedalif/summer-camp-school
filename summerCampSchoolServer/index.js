@@ -106,7 +106,7 @@ async function run() {
     // using it in the classes route
     app.get('/classes', verifyToken, async (req, res) => {
       const result = await summerCampSchoolClassesCollection.find().toArray();
-      // console.log("🚀 ~ app.get ~ result:", result);
+      // // console.log("🚀 ~ app.get ~ result:", result);
       res.send(result);
     });
 
@@ -125,7 +125,29 @@ async function run() {
 
     // purchased classes of the students
     //  for admin to manage the students.
-    app.get('/classes/:classId', async (req, res) => {
+    // temp_file.js
+
+    // for updating the student enrolled seats on specific classes
+    app.patch('/classes/:id', async (req, res) => {
+      const { id } = req.params;
+      const filter = { _id: new ObjectId(id) };
+      const updateStudentEnrolledSeats = req.body;
+      // // console.log("🚀 ~ app.patch ~ updateStudentEnrolledSeats:", updateStudentEnrolledSeats);
+      const updateDoc = {
+        $set: {
+          students_enrolled: updateStudentEnrolledSeats.students_enrolled,
+        },
+      }
+      // // console.log("🚀 ~ app.patch ~ updateDoc:", updateDoc);
+      const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
+      // // console.log("🚀 ~ app.patch ~ result:", result);
+
+      return res.send(result);
+    });
+
+
+    // for getting manage students info for admin only
+    app.get('/studentsinfo/:classId', verifyToken, verifyAdmin, async (req, res) => {
       const { classId } = req.params;
       /* console.log("🚀 ~ app.get ~ classId:", classId);
       const classObjectIdString = classId;
@@ -158,15 +180,16 @@ async function run() {
           }
         }
       ];
-
+    
       const result = await summerCampSchoolClassesCollection.aggregate(pipeline).toArray();
-
+    
       return res.send(result); */
 
       // Find payments with the class ID
       const payments = await summerCampSchoolPaymentCollection.find({
         classes_id: { $in: [classId] } // Use $in operator to search for classId in the array
       }).toArray();
+      console.log("🚀 ~ app.get ~ payments:", payments);
 
       // Collect unique user emails from payments
       // const userEmails = new Set();
@@ -190,31 +213,15 @@ async function run() {
       res.send(userInfo);
     });
 
-    // for updating the student enrolled seats on specific classes
-    app.patch('/classes/:id', async (req, res) => {
-      const { id } = req.params;
-      const filter = { _id: new ObjectId(id) };
-      const updateStudentEnrolledSeats = req.body;
-      // console.log("🚀 ~ app.patch ~ updateStudentEnrolledSeats:", updateStudentEnrolledSeats);
-      const updateDoc = {
-        $set: {
-          students_enrolled: updateStudentEnrolledSeats.students_enrolled,
-        },
-      }
-      // console.log("🚀 ~ app.patch ~ updateDoc:", updateDoc);
-      const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
-      // console.log("🚀 ~ app.patch ~ result:", result);
-
-      return res.send(result);
-    });
-
     // for specific instructor classes
     app.get('/classes/:instructorId', verifyToken, async (req, res) => {
       const { instructorId } = req.params;
-      // // // console.log("🚀 ~ app.get ~ instructorId:", instructorId);
+      // console.log("🚀 ~ app.get ~ instructorId:", instructorId);
       const result = await summerCampSchoolClassesCollection.find({ instructor_id: instructorId }).toArray();
       res.send(result);
     });
+
+    // 
 
     // * here is the api for popular classes
     // * i'm deciding popular classes based on their available seats and students enrolled in that class if the students enrolled are 70% of the available seats then that class is popular
@@ -257,7 +264,7 @@ async function run() {
     // this is for admin only
     app.get('/users', verifyToken, verifyAdmin, async (req, res) => {
       // const userEmail = req?.query?.email;
-      // console.log("🚀 ~ app.get ~ userEmail:", userEmail);
+      // // console.log("🚀 ~ app.get ~ userEmail:", userEmail);
 
       // const query = { email: userEmail }
       const result = await summerCampSchoolUserCollection.find().toArray();
@@ -270,7 +277,7 @@ async function run() {
       const email = req.query.email;
       console.log("🚀 ~ app.patch ~ email:", email);
       const { role, class_id } = req.body;
-      // console.log("🚀 ~ app.patch ~ role:", role);
+      console.log("🚀 ~ app.patch ~ role:", role);
       console.log("🚀 ~ app.patch ~ class_id:", class_id);
       const query = { email: email };
       let updateDoc;
@@ -465,7 +472,7 @@ async function run() {
     // get all the payment of a specific user
     app.get('/payments', verifyToken, async (req, res) => {
       const user = req.query.email;
-      // console.log("🚀 ~ app.get ~ user:", user);
+      // // console.log("🚀 ~ app.get ~ user:", user);
 
       // const result = await summerCampSchoolPaymentCollection.find({ email: user }).toArray();
 
@@ -512,7 +519,7 @@ async function run() {
       ];
 
       const results = await summerCampSchoolPaymentCollection.aggregate(pipeline).toArray();
-      // console.log("🚀 ~ app.get ~ results:", results);
+      // // console.log("🚀 ~ app.get ~ results:", results);
 
       return res.send(results);
     });
@@ -520,13 +527,13 @@ async function run() {
     // paid user classes
     app.get('/payments/classes', verifyToken, async (req, res) => {
       const email = req.query.email;
-      // console.log("🚀 ~ app.get ~ email:", email);
+      // // console.log("🚀 ~ app.get ~ email:", email);
       // const db = await connectToDatabase();
 
       try {
         // Find all payments for the user
         const payments = await summerCampSchoolPaymentCollection.find({ email: email }).toArray();
-        // console.log("🚀 ~ app.get ~ payments:", payments);
+        // // console.log("🚀 ~ app.get ~ payments:", payments);
 
         if (payments.length === 0) {
           return res.status(404).send('No successful payments found for this user.');
@@ -541,7 +548,7 @@ async function run() {
 
         /* // Extract the classes_ids from the payments
         const classesIds = payments.map(payment => payment.classes_id).filter(Boolean);
-        // console.log("🚀 ~ app.get ~ classesIds:", classesIds);
+        // // console.log("🚀 ~ app.get ~ classesIds:", classesIds);
 
         if (classesIds.length === 0) {
           return res.status(404).send('No classes found for the successful payments.');
@@ -557,14 +564,14 @@ async function run() {
 
         // Extract class IDs from successful payments
         const classIds = payments.map(payment => payment.classes_id);
-        // console.log("🚀 ~ app.get ~ classIds:", classIds);
+        // // console.log("🚀 ~ app.get ~ classIds:", classIds);
 
         const flattenedClassIds = [].concat(...classIds);
-        // console.log("🚀 ~ app.get ~ flattenedClassIds:", flattenedClassIds);
+        // // console.log("🚀 ~ app.get ~ flattenedClassIds:", flattenedClassIds);
 
         // Find classes corresponding to the class IDs
         const userClasses = await summerCampSchoolClassesCollection.find({ _id: { $in: flattenedClassIds.map(id => new ObjectId(id)) } }).toArray();
-        // console.log("🚀 ~ app.get ~ userClasses:", userClasses);
+        // // console.log("🚀 ~ app.get ~ userClasses:", userClasses);
 
         res.send(userClasses);
         // res.send('fixing');
@@ -628,8 +635,8 @@ async function run() {
     // payment-intent
     app.post("/create-payment-intent", async (req, res) => {
       const { price } = req.body;
-      // // console.log("🚀 ~ app.post ~ price:", typeof (price));
-      // // console.log("🚀 ~ app.post ~ price:", price);
+      // // // console.log("🚀 ~ app.post ~ price:", typeof (price));
+      // // // console.log("🚀 ~ app.post ~ price:", price);
 
       const amount = price * 100;
       // Create a PaymentIntent with the order amount and currency

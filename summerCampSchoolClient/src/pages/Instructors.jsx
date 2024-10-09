@@ -115,6 +115,9 @@ const Instructors = () => {
         data?.map((instructor) => {
           const {
             _id, email, classes_names, image, name, total_classes } = instructor;
+
+            console.log("🚀 ~ data?.map ~ _id:", _id);
+
           return (
             <div key={_id} className='group cursor-pointer'>
               <div className="card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] bg-base-100 shadow-xl mb-4 rounded-xl">

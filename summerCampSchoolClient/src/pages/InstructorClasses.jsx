@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 
 const InstructorClasses = () => {
   const param = useParams();
+  console.log("🚀 ~ InstructorClasses ~ param:", param);
 
   // const { data: classes = [], error, loading } = useFetch(`/classes/${param?.id}`);
 
@@ -23,6 +24,9 @@ const InstructorClasses = () => {
         try {
           setLoading(true);
           const response = await axiosSecure.get(`/classes/${param?.id}`);
+
+          console.log("🚀 ~ response:", response);
+          
           const data = await response?.data;
           setData(data);
         } catch (err) {

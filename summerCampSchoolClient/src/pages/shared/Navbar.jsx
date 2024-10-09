@@ -3,6 +3,15 @@ import useAuth from "../../hooks/useAuth";
 import Logo from "../../components/Logo";
 import DarkNLightModeToggle from "../../components/DarknLightModeToggle";
 
+
+const DefaultAvatar = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+    <circle cx="64" cy="64" r="64" fill="#e0e0e0" />
+    <circle cx="62" cy="40" r="24" fill="#bdbdbd" />
+    <path d="M64 69c-24 0-40 16-40 36h80c0-20-16-36-40-36z" fill="#bdbdbd" />
+  </svg>
+);
+
 const Navbar = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
@@ -58,7 +67,11 @@ const Navbar = () => {
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                {
+                  user?.photoURL ? <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                    :
+                    <DefaultAvatar />
+                }
               </div>
             </div>
             <ul tabIndex={0} className="mt-3 z-50 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">

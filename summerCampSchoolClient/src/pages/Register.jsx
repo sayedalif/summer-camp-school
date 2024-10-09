@@ -39,13 +39,8 @@ const Register = () => {
 
   // from submit
   const onSubmit = async (data) => {
-    // console.log("🚀 ~ onSubmit ~ data:", data);
 
-    const { name, email, password, confirmPassword, address, number } = data;
-    console.log("🚀 ~ onSubmit ~ name:", name);
-
-    console.log("🚀 ~ onSubmit ~ number:", number);
-
+    const { email, password, confirmPassword, address } = data;
     console.log("🚀 ~ onSubmit ~ password:", password);
     console.log("🚀 ~ onSubmit ~ confirmPassword:", confirmPassword);
 
@@ -56,39 +51,36 @@ const Register = () => {
 
     try {
       const success = await createUserWithEmailAndPassword(email, password);
+      console.log("🚀 ~ onSubmit ~ success:", success);
+
       if (success) {
         navigate('/');
 
-        updateProfile({ displayName: name, photoURL: '' }).then(response => {
-          toast.success('Successfully updated profile');
+        // saving the user info to database
+        const userInfo = {
+          email: email,
+          name: success?.user?.displayName,
+          photoURL: success?.user?.photoURL,
+          phone: success?.user?.phoneNumber,
+          address: address,
+          role: 'student'
+        };
+        console.log("🚀 ~ AuthProvider ~ userInfo:", userInfo);
 
-          // saving the user info to database
-          const userInfo = {
-            email: email,
-            name: name,
-          };
-          console.log("🚀 ~ AuthProvider ~ userInfo:", userInfo);
-
-          axiosPublic.post(`/users`, { userInfo }).then(response => {
-            console.log(response);
-          }).catch(err => {
-            console.log(err);
-          })
-          console.log("🚀 ~ onSubmit ~ response:", response);
-        }).catch(error => {
-          console.log("🚀 ~ onSubmit ~ error:", error);
+        axiosPublic.post(`/users`, { userInfo }).then(response => {
+          console.log(response);
+          return toast.success('Successfully created account');
+        }).catch(err => {
+          console.log(err);
         })
-        return toast.success('Successfully created account');
       }
-      console.log('create user with email and password is offline now');
-
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   // console.log(errors);
-  console.log('create user with email and password error', error);
+  console.error('create user with email and password error', error);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -96,21 +88,25 @@ const Register = () => {
         <div className="hero-content flex-col lg:flex-row-reverse md:w-1/2 lg:w-1/2 xl:w-3/5 2xl:w-3/5">
           <div className="card shrink-0 w-full shadow-2xl">
             <div className="card-body">
+              {
+                /* 
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text text-base">Name*</span>
+                  </label>
+                  <input type="name" placeholder="name" className="input input-bordered"
+  
+                    {
+                    ...register("name", { required: true, maxLength: 80 })
+                    }
+  
+                  />
+                </div>
+                */
+              }
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text text-base">name</span>
-                </label>
-                <input type="name" placeholder="name" className="input input-bordered"
-
-                  {
-                  ...register("name", { required: true, maxLength: 80 })
-                  }
-
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-base">Email</span>
+                  <span className="label-text text-base">Email*</span>
                 </label>
                 <input type="email" placeholder="email" className="input input-bordered"
 
@@ -122,7 +118,7 @@ const Register = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text text-base">Password</span>
+                  <span className="label-text text-base">Password*</span>
                 </label>
                 <input type="password" placeholder="password" className="input input-bordered"
 
@@ -137,7 +133,7 @@ const Register = () => {
               {/* confirm password */}
               <div className="form-control relative">
                 <label className="label">
-                  <span className="label-text text-base">Confirm Password</span>
+                  <span className="label-text text-base">Confirm Password*</span>
                 </label>
                 <input type="password" placeholder="confirm password" className="input input-bordered"
 
@@ -151,8 +147,8 @@ const Register = () => {
               </div>
 
               {/* image drag and drop */}
-              <span>Profile photo</span>
-              <DragAndDrop></DragAndDrop>
+              {/* <span>Profile Photo</span>
+              <DragAndDrop></DragAndDrop> */}
 
               {/* Display dropped images */}
               {/* {droppedImages.length > 0 && (
@@ -171,7 +167,7 @@ const Register = () => {
               )} */}
 
               {/* phone number */}
-              <div className="form-control">
+              {/* <div className="form-control">
                 <label className="label">
                   <span className="label-text text-base">Phone Number <i className='text-gray-500'> - optional</i></span>
                 </label>
@@ -180,7 +176,7 @@ const Register = () => {
                   ...register("number", { required: false, })
                   }
                 />
-              </div>
+              </div> */}
 
 
               {/* address */}

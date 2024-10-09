@@ -85,7 +85,7 @@ const ManageUsers = () => {
                   return (
                     <tr key={user?._id}>
                       <th>{idx + 1}</th>
-                      <td>{name}</td>
+                      <td>{name ? name : <span className='text-amber-300'>Anonymous⚠️</span>}</td>
                       <td>{email}</td>
                       <td>
                         <div className="dropdown dropdown-end">
@@ -95,7 +95,12 @@ const ManageUsers = () => {
                               role === 'instructor' && <li onClick={handleMakeAdmin}><a>{role === 'instructor' && 'admin'}</a></li>
                             }
                             {
-                              role === 'student' && <li onClick={() => handleMakeInstructor(email)}><a>{role === 'student' && 'instructor'}</a></li>
+                              role === 'student' &&
+                              <li onClick={() => handleMakeInstructor(email)}>
+                                <a>
+                                  {role === 'student' && 'instructor'}
+                                </a>
+                              </li>
                             }
                           </ul>
                         </div>

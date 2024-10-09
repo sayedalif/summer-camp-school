@@ -9,14 +9,14 @@ const DragAndDrop = () => {
   todo:
   amake make sure korte hobe je ami jodi register er moddhe image upload dae tahole jeno register er moddhe image ta jae, jodi ami add class er moddhe class_thubnail or video upload dae tahole jeno video ta pae.
 
-  2. secondly amake make sure korte hobe jeno ami submit button a click korle amer file ta upload hoie then ami jeno baki user er data gula ke submit kori.
+  2. secondly amake make sure korte hobe jeno ami submit button a click korle amer file ta upload hoie cloudinary er moddhe then ami jeno baki user er data gula ke submit kori.
 
   3. data gula ke jeno ami sob file er moddhe access korte per e. tae amake data ta ke context api er moddhe nite hobe.
 
   4. then amamke make sure korte hobe jeno ami je type er data send kortaci oi data ta ke pae.
   */
   const [file, setFile] = useState(null);
-  console.log("🚀 ~ App ~ file:", file);
+  // console.log("🚀 ~ App ~ file:", file);
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState('idle');
   const [res, setRes] = useState(null);
@@ -56,7 +56,7 @@ const DragAndDrop = () => {
           'Content-Type': 'multipart/form-data'
         },
         onUploadProgress: (progressEvent) => {
-          // console.log("🚀 ~ handleFileChange ~ progressEvent:", progressEvent);
+          // // console.log("🚀 ~ handleFileChange ~ progressEvent:", progressEvent);
 
           // ! how does this works i have to learn it.
           const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);

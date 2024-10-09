@@ -111,7 +111,12 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
             </figure>
             <div className='text-right'>
 
-              <span style={{ backgroundColor: randomBadgeColors }} className={`badge text-end outline-none border-0`}>
+              <span style=
+                {
+                  {
+                    backgroundColor: randomBadgeColors
+                  }
+                } className={`badge text-end outline-none border-0`}>
                 {eachClass?.category}
               </span>
 
@@ -149,7 +154,7 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
               }
               {
                 isAdmin && <Link to={`/dashboard/managestudents/${eachClass?._id}`}>
-                  <button className="btn btn-outline btn-accent btn-sm text-white">
+                  <button className="btn btn-outline btn-accent btn-sm">
                     Manage students<FontAwesomeIcon icon={faArrowRight} />
                   </button>
                 </Link>

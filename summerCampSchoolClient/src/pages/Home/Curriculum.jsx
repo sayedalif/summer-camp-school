@@ -28,7 +28,7 @@ const Curriculum = () => {
             return (
               <div
                 key={eachCurriculum._id}
-                className={`card lg:w-[32rem] lg:h-[32rem] md:h-[40rem] ${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : ''} md:w-full sm:w-full w-full bg-[#AEE5FF] text-black`}>
+                className={`${index === 1 ? 'lg:w-[42rem] bg-[#C3FFD2]' : 'bg-[#AEE5FF]'} card lg:w-[32rem] lg:h-[32rem] md:h-[40rem] md:w-full sm:w-full w-full text-black flex flex-col justify-between items-stretch`}>
                 <div className="card-body">
                   {/* cards images */}
                   <img loading="lazy" className='lg:w-40 md:w-36 sm:w-[13rem] w-[10rem] mx-auto' src={eachCurriculum.img} alt="own pace png" />

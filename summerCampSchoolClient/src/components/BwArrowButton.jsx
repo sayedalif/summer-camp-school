@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 // black and white with arrow buttons
 const BwArrowButton = ({ text, to }) => {
   return (
-    <Link to={to}>
+    // to={to}
+    <Link>
       <button className="btn bg-[#000] hover:bg-[#000] text-[#FFFF] rounded-full capitalize">{text}
         <FontAwesomeIcon className='bg-[#fff] text-[#000] p-2 rounded-full' icon={faArrowRight} />
       </button>

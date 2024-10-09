@@ -18,7 +18,7 @@ const useAxiosSecure = () => {
       // trying to access the jwt token here by using localStorage.getItem('access-token')
       const token = localStorage.getItem('access-token');
 
-      // console.log("🚀 ~ file: useAxiosSecure.jsx:19 ~ useEffect ~ token:", token); // returned undefined
+      console.log("🚀 ~ file: useAxiosSecure.jsx:19 ~ useEffect ~ token:", token); // returned undefined
 
       if (token) {
         config.headers.Authorization = `Bearer ${token}`

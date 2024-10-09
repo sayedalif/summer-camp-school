@@ -5,6 +5,7 @@ import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 
+// checking usign the authType props to see what login media is user using.
 const SocialLoginButton = ({ authType }) => {
   // hooks
   const [axiosPublic] = useAxiosPublic();
@@ -31,10 +32,16 @@ const SocialLoginButton = ({ authType }) => {
         signInWithGoogle().then(result => {
           console.log(result);
           toast.success('Successfully logged in with Google');
+          // ! phone number and photoURL send kora e hocche nah. google sign in somoy.
           const userInfo = {
             email: result?.user?.email,
             name: result?.user?.displayName,
             role: 'student', // initial role will be student for everyone until admin changed their role.
+
+            // sending phone number and photo url if they exist
+            
+            phoneNumber: result?.user?.phoneNumber,
+            photoURL: result?.user?.photoURL
           };
           console.log("🚀 ~ AuthProvider ~ userInfo:", userInfo);
 
