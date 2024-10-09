@@ -1,34 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import useUserInfo from '../../hooks/useUserInfo';
 import useAxiosSecure from '../../hooks/UseAxiosSecure';
-import { IoIosArrowUp } from "react-icons/io";
-import { IoIosArrowDown } from "react-icons/io";
 import useManageUsers from '../../hooks/useManageUsers';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2'
+
 
 const ManageUsers = () => {
   const [axiosSecure] = useAxiosSecure();
-  // const [allUsers, setAllUsers] = useState([]);
-  // const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const { allUsers, isLoading, error, refetch } = useManageUsers();
-
-  /* useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await axiosSecure('/users');
-        const data = await res?.data;
-        setAllUsers(data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData()
-  }, [axiosSecure]); */
 
   if (isLoading) {
     return <h1>Loading...</h1>
@@ -37,27 +16,83 @@ const ManageUsers = () => {
     return <h1>{error.message}</h1>
   }
 
-  // make instructor
+  // this function makes an student to instructor.
+  // patch is protected by JWT token and also in backend making sure the user is admin.
 
   const handleMakeInstructor = async (email) => {
-    console.log("🚀 ~ email:", email);
-
-    try {
-      const response = await axiosSecure.patch(`/users?email=${email}`, { role: 'instructor' });
-      const data = await response?.data;
-      if (data.acknowledged === true && data.modifiedCount > 0 && data.modifiedCount > 0) {
-        // refetching so that in ui data's will be updated
-        refetch();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to change this user's role from student to instructor?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, make instructor!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Perform the role change
+        axiosSecure.patch(`/users?email=${email}`, { role: 'instructor' })
+          .then(response => {
+            const data = response.data;
+            if (data.acknowledged === true && data.modifiedCount > 0) {
+              Swal.fire({
+                title: "Role Updated!",
+                text: `${email} is now an instructor.`,
+                icon: "success"
+              });
+              toast.success(`${email} role updated to instructor`);
+              refetch();
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to update user role.",
+              icon: "error"
+            });
+          });
       }
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    });
   }
-
-  const handleMakeAdmin = () => {
-    toast.error(`hasn't implemented yet`);
-  }
+  // this function makes an instructor to admin.
+  // patch is protected by JWT token and aslo in backend making sure the user is admin.
+  const handleMakeAdmin = (email) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to change this user's role from instructor to admin?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, make admin!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Perform the role change
+        axiosSecure.patch(`/users?email=${email}`, { role: 'admin' })
+          .then(response => {
+            const data = response.data;
+            if (data.acknowledged === true && data.modifiedCount > 0) {
+              Swal.fire({
+                title: "Role Updated!",
+                text: `${email} is now an admin.`,
+                icon: "success"
+              });
+              toast.success(`${email} role updated to admin`);
+              refetch();
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to update user role.",
+              icon: "error"
+            });
+          });
+      }
+    });
+  };
 
   return (
     <div>
@@ -92,7 +127,7 @@ const ManageUsers = () => {
                           <div tabIndex={0} role="button" className="btn btn-ghost btn-xs">{role}</div>
                           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                             {
-                              role === 'instructor' && <li onClick={handleMakeAdmin}><a>{role === 'instructor' && 'admin'}</a></li>
+                              role === 'instructor' && <li onClick={() => handleMakeAdmin(email)}><a>{role === 'instructor' && 'admin'}</a></li>
                             }
                             {
                               role === 'student' &&
