@@ -200,7 +200,7 @@ async function run() {
         // Assuming "user_email" field stores user email in payments collection
         userInfo = [
           {
-            email: payment.email, purchaseDate: payment.purchaseDate, transactionId: payment.transactionId
+            email: payment.email, classes_id: payment.classes_id, purchaseDate: payment.purchaseDate, transactionId: payment.transactionId
           }
         ];
         /* if (userEmail) {
@@ -220,8 +220,6 @@ async function run() {
       const result = await summerCampSchoolClassesCollection.find({ instructor_id: instructorId }).toArray();
       res.send(result);
     });
-
-    // 
 
     // * here is the api for popular classes
     // * i'm deciding popular classes based on their available seats and students enrolled in that class if the students enrolled are 70% of the available seats then that class is popular
@@ -274,9 +272,9 @@ async function run() {
 
     // updates user role, this is for admin only
     app.patch('/users', async (req, res) => {
-      const email = req.query.email;
+      const email = req?.query?.email;
       console.log("🚀 ~ app.patch ~ email:", email);
-      const { role, class_id } = req.body;
+      const { role, class_id } = req?.body;
       console.log("🚀 ~ app.patch ~ role:", role);
       console.log("🚀 ~ app.patch ~ class_id:", class_id);
       const query = { email: email };
@@ -442,7 +440,10 @@ async function run() {
       const result = await summerCampSchoolCartsCollection.find({ email: email }).toArray();
       return res.send(result);
     });
-
+    /* ---------------------------------------------------------------
+        PAYMENT
+    --------------------------------------------------------------- 
+    */
     // store all payment information to database.
     app.post('/payment', async (req, res) => {
       const { email,
@@ -571,7 +572,7 @@ async function run() {
 
         // Find classes corresponding to the class IDs
         const userClasses = await summerCampSchoolClassesCollection.find({ _id: { $in: flattenedClassIds.map(id => new ObjectId(id)) } }).toArray();
-        // // console.log("🚀 ~ app.get ~ userClasses:", userClasses);
+        console.log("🚀 ~ app.get ~ userClasses:", userClasses);
 
         res.send(userClasses);
         // res.send('fixing');
@@ -580,6 +581,10 @@ async function run() {
         res.status(500).send('Internal Server Error');
       }
     });
+
+    /*
+    ------------------------------------------------------------------------------------------------------------------------------
+    */
 
     // * for getting all instructors
     app.get('/instructors', verifyToken, async (req, res) => {

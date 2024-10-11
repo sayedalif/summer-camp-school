@@ -6,12 +6,14 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const SelectedClasses = () => {
   // custom hooks
+
   // axios public is the less secure version, which has base url.
   const [axiosPublic] = useAxiosPublic();
+
   // for getting cart data
   const { carts, error, isLoading, refetch, totalPrice } = useCart();
 
-  // this is for disabling the delete button when the delete api call is processing...
+  // this is for disabling the delete button when the delete api call is processing..
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const handleDeleteFromCart = async (id) => {
@@ -28,7 +30,7 @@ const SelectedClasses = () => {
         refetch();
       }
     } catch (error) {
-      console.log("🚀 ~ handleDeleteFromCart ~ error:", error);
+      console.error("🚀 ~ handleDeleteFromCart ~ error:", error);
     } finally {
       setDeleteLoading(false);
     }
@@ -100,7 +102,9 @@ const SelectedClasses = () => {
                       </td>
                       <td>$ {price}</td>
                       <th>
-                        <button onClick={() => handleDeleteFromCart(_id)} className="btn btn-ghost btn-xs"
+                        <button onClick={
+                          () => handleDeleteFromCart(_id)
+                        } className="btn btn-ghost btn-xs"
                           disabled={deleteLoading}
                         >delete</button>
                       </th>
@@ -112,12 +116,12 @@ const SelectedClasses = () => {
 
           </table>
             :
-            <p className='flex justify-center items-center h-screen text-xl'>
+            <div className='flex justify-center items-center h-screen text-xl'>
               <p className='mr-1'>No selected classes found!!!</p>
               <Link to={`/classes`}>
                 <button className='btn btn-primary btn-sm'>  Join now</button>
               </Link>
-            </p>
+            </div>
         }
       </div>
     </div>

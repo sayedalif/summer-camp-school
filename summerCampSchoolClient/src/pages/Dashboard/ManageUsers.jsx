@@ -3,7 +3,6 @@ import useManageUsers from '../../hooks/useManageUsers';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2'
 
-
 const ManageUsers = () => {
   const [axiosSecure] = useAxiosSecure();
 

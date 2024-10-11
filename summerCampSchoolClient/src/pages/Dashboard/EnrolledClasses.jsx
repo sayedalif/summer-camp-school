@@ -1,6 +1,7 @@
 import usePaymentClasses from '../../hooks/usePaymentClasses';
-import { FaPlay } from "react-icons/fa";
 import useUserInfo from '../../hooks/useUserInfo';
+import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const EnrolledClasses = () => {
 
@@ -10,6 +11,7 @@ const EnrolledClasses = () => {
   console.log("🚀 ~ EnrolledClasses ~ paymentClass:", paymentClass);
 
   const bannedClasses = userInfoData?.banned_classes?.map(banned_class => banned_class);
+  console.log("🚀 ~ EnrolledClasses ~ bannedClasses:", bannedClasses);
 
   return (
     <div className='lg:flex lg:flex-row lg:flex-wrap lg:justify-center'>
@@ -31,7 +33,10 @@ const EnrolledClasses = () => {
                 <h2>{className}</h2>
                 <div className="card-actions justify-end">
                   {
-                    bannedFromClass ? <button className='text-white btn btn-md btn-error'>Banned</button> :
+                    bannedFromClass
+                      ?
+                      <button onClick={() => toast.error('you are banned form this class')} className='text-white btn btn-md btn-error'>Banned</button>
+                      :
                       <button className='text-white btn btn-md btn-primary'>Play</button>
                   }
                 </div>
@@ -40,7 +45,12 @@ const EnrolledClasses = () => {
           )
         })
           :
-          <p className='flex justify-center items-center h-screen text-2xl'>No classes are found</p>
+          <div className='flex justify-center items-center h-screen text-2xl'>
+            <p className='mr-1'>No classes are found</p>
+            <Link to={`/classes`}>
+              <button className='btn btn-primary btn-sm'>  Join now</button>
+            </Link>
+          </div>
       }
     </div>
   );

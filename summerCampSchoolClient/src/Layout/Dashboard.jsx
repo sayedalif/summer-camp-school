@@ -53,8 +53,10 @@ const Dashboard = () => {
                   </li>
                 </>
                 :
-                userInfo?.role === 'instructor' ?
+                userInfo?.role === 'instructor'
+                  ?
                   <>
+                    {/* this is for the instructors */}
                     <li className='md:py-4 text-2xl normal-case'>
                       <ActiveLink to={`/dashboard/addclass`}>
                         Add a class

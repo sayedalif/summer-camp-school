@@ -12,7 +12,9 @@ const PrivateRoute = ({ children }) => {
 
   // in loading state this will show a progress bar.
   if (loading) {
-    return <progress className="progress w-56 mx-auto"></progress>
+    return <div className="text-center">
+      <progress className="progress w-56 mx-auto"></progress>
+    </div>
   }
 
   if (user) {
