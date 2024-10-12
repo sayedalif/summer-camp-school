@@ -26,7 +26,7 @@ const InstructorClasses = () => {
           const response = await axiosSecure.get(`/classes/${param?.id}`);
 
           console.log("🚀 ~ response:", response);
-          
+
           const data = await response?.data;
           setData(data);
         } catch (err) {
@@ -36,11 +36,11 @@ const InstructorClasses = () => {
         }
       }
     )()
-  }, [axiosSecure]);
+  }, [axiosSecure, param]);
 
 
   if (data?.length === 0) {
-    toast.error('Invalid parameter returning you to instructor page');
+    toast.error('No classes found or Invalid parameter. Returning you to instructor page');
 
     return <Navigate to={`/instructors`}></Navigate>
   }

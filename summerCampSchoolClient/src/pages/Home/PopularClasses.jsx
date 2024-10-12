@@ -5,6 +5,7 @@ import ClassesCards from '../../components/ClassesCards';
 
 const PopularClasses = () => {
   const { data: classes = [], loading, error } = useFetch('/popularclasses');
+  console.log("🚀 ~ PopularClasses ~ classes:", classes);
 
   if (loading) {
     return <h1>Loading...</h1>

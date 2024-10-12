@@ -116,7 +116,7 @@ const Instructors = () => {
           const {
             _id, email, classes_names, image, name, total_classes } = instructor;
 
-            console.log("🚀 ~ data?.map ~ _id:", _id);
+          console.log("🚀 ~ data?.map ~ _id:", _id);
 
           return (
             <div key={_id} className='group cursor-pointer'>
@@ -130,7 +130,13 @@ const Instructors = () => {
                     </figure>
                     {/* follow and unfollow button */}
                     <div className='text-right'>
-                      <button onClick={userFollowing?.includes(_id) ? () => handleUnFollow(_id) : () => handleFollow(_id)} className={`badge ${isFollowingLoading || userFollowing?.includes(_id) ? 'badge-ghost' : 'badge-info'} `}>{userFollowing?.includes(_id) ? 'following' : 'Follow'}</button>
+                      {
+                        email === userEmail ?
+                          <></>
+                          :
+                          <button onClick={userFollowing?.includes(_id) ? () => handleUnFollow(_id) : () => handleFollow(_id)} className={`badge ${isFollowingLoading || userFollowing?.includes(_id) ? 'badge-ghost' : 'badge-info'} `}>{userFollowing?.includes(_id) ? 'following' : 'Follow'}
+                          </button>
+                      }
 
                     </div>
                   </div>
