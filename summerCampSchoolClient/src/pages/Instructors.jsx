@@ -30,7 +30,7 @@ const Instructors = () => {
   const [axiosSecure] = useAxiosSecure();
 
   const [data, setData] = useState(null);
-  console.log("🚀 ~ Classes ~ data:", data);
+  // // console.log("🚀 ~ Classes ~ data:", data);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -114,9 +114,11 @@ const Instructors = () => {
         data?.length > 0 && Array?.isArray(data) &&
         data?.map((instructor) => {
           const {
-            _id, email, classes_names, image, name, total_classes } = instructor;
+            _id, email, classes_names, photoURL, name, total_classes } = instructor;
+          // console.log("🚀 ~ data?.map ~ classes_names:", classes_names);
+          // console.log("🚀 ~ data?.map ~ total_classes:", total_classes);
 
-          console.log("🚀 ~ data?.map ~ _id:", _id);
+          // // console.log("🚀 ~ data?.map ~ _id:", _id);
 
           return (
             <div key={_id} className='group cursor-pointer'>
@@ -126,7 +128,7 @@ const Instructors = () => {
                   <div className='flex justify-between items-start px-4 py-4'>
                     {/* instructor image */}
                     <figure>
-                      <img loading="lazy" className='md:w-[200px] w-48 md:rounded-md sm:rounded-sm rounded' src={image} alt='instructor image' />
+                      <img loading="lazy" className='md:w-[200px] w-48 max-h-40 md:rounded-md sm:rounded-sm rounded' src={photoURL} alt='instructor image' />
                     </figure>
                     {/* follow and unfollow button */}
                     <div className='text-right'>
@@ -145,22 +147,29 @@ const Instructors = () => {
                     {/* name */}
                     <p>{name}</p>
                     {/* instructor taken classes */}
-                    <p>Classes names: {classes_names?.map((course, idx) => <span key={idx}>{course}</span>)}</p>
+                    <p>Classes names: {
+                      classes_names ?
+                        classes_names?.map((course, idx) => <span key={idx}>{course}</span>)
+                        :
+                        'N/A'
+                    }</p>
                     {/* instructor email */}
                     <p className='font-medium text-base'>
                       {email}
                     </p>
                     {/* instructor total classes */}
                     <div className='flex justify-between items-center'>
-                      <span>total classes: {total_classes}</span>
+                      <span>total classes: {total_classes ? total_classes : '0'}</span>
                     </div>
                     {/* see all classes by specific instructor */}
                     <div className="card-actions flex justify-end">
-                      <Link to={`/instructors/${_id}`}>
-                        <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2 lg:px-4">See classes
-                          <FontAwesomeIcon icon={faArrowRight} />
-                        </button>
-                      </Link>
+                      {
+                        classes_names && total_classes && <Link to={`/instructors/${_id}`}>
+                          <button className="btn bg-[#FFFFFF] hover:bg-[#A3A3F5] group-hover:bg-[#A3A3F5] text-[#101218] rounded-full px-2 lg:px-4">See classes
+                            <FontAwesomeIcon icon={faArrowRight} />
+                          </button>
+                        </Link>
+                      }
                     </div>
                   </div>
                 </div>

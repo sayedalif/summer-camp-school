@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Logo from "../../components/Logo";
 import DarkNLightModeToggle from "../../components/DarknLightModeToggle";
+import useUserInfo from "../../hooks/useUserInfo";
 
 
 const DefaultAvatar = () => (
@@ -15,7 +16,11 @@ const DefaultAvatar = () => (
 const Navbar = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
-  console.log("🚀 ~ Navbar ~ user:", user);
+  // console.log("🚀 ~ Navbar ~ user:", user);
+
+  const { data: userInfo = [], error, isLoading, refetch } = useUserInfo();
+  const { _id, email, following, name, photoURL } = userInfo;
+  // console.log("🚀 ~ Profile ~ name:", name);
 
   const li = [
     'home',
@@ -68,7 +73,7 @@ const Navbar = () => {
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 {
-                  user?.photoURL ? <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                  user && userInfo && userInfo?.photoURL ? <img alt="user photo" src={photoURL} />
                     :
                     <DefaultAvatar />
                 }

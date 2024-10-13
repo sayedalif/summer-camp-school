@@ -128,10 +128,12 @@ const DragAndDrop = () => {
           toast.success('Please select a file to upload again');
         }}>🔄️ upload again</button>
       }
-      {status === 'done' && <div>
-        <p className="text-gray-400 text-xl">you can access the file from here ⤵️</p>
-        <a href={`${res?.secure_url}`} target="_blank" className="text-blue-400 visited:text-purple-600 text-lg">{res?.secure_url}</a>
-      </div>}
+      {
+        status === 'done' && <div>
+          <p className="text-gray-400 text-xl">you can access the file from here ⤵️</p>
+          <a href={`${res?.secure_url}`} target="_blank" className="text-blue-400 visited:text-purple-600 text-lg">{res?.secure_url}</a>
+        </div>
+      }
     </div>
   )
 };

@@ -110,6 +110,16 @@ async function run() {
       res.send(result);
     });
 
+    app.post('/classes', verifyToken, async (req, res) => {
+      const classData = req.body;
+      console.log(req.body);
+      console.log("🚀 ~ app.post ~ classData:", classData);
+      if (classData) {
+        const result = await summerCampSchoolClassesCollection.insertOne(classData);
+        return res.send(result);
+      }
+    });
+
     // for admin to update class status.
     app.patch('/classes', verifyToken, verifyAdmin, async (req, res) => {
       const { id, status } = req.body;

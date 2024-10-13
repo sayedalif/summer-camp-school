@@ -40,7 +40,7 @@ const InstructorClasses = () => {
 
 
   if (data?.length === 0) {
-    toast.error('No classes found or Invalid parameter. Returning you to instructor page');
+    toast.error('No classes found or Invalid parameter, Returning you to instructor page.');
 
     return <Navigate to={`/instructors`}></Navigate>
   }

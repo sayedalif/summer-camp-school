@@ -23,7 +23,7 @@ const Profile = () => {
 
   const { data: user = [], error, isLoading, refetch } = useUserInfo();
   const { _id, email, following, name, photoURL } = user;
-  console.log("🚀 ~ Profile ~ name:", name);
+  // console.log("🚀 ~ Profile ~ name:", name);
 
   if (isLoading) {
     return <h1>Loading...</h1>
@@ -59,17 +59,22 @@ const Profile = () => {
 
   const handleUserInfoUpdate = async () => {
     const bio = bioRef?.current?.value;
+    // console.log("🚀 ~ handleUserInfoUpdate ~ bio:", bio)
     const name = nameRef?.current?.value;
+    // console.log("🚀 ~ handleUserInfoUpdate ~ name:", name)
     const phone = phoneRef?.current?.value;
+    // console.log("🚀 ~ handleUserInfoUpdate ~ phone:", phone)
     const address = addressRef?.current?.value;
+    // console.log("🚀 ~ handleUserInfoUpdate ~ address:", address)
     const gender = genderRef?.current?.value;
+    // console.log("🚀 ~ handleUserInfoUpdate ~ gender:", gender)
 
     // Check if we're only updating the image
-    const isOnlyImageUpdate = selectedFile && !bio && !phone && !address && !gender;
-    console.log("🚀 ~ handleUserInfoUpdate ~ isOnlyImageUpdate:", isOnlyImageUpdate);
+    const isOnlyImageUpdate = selectedFile && !bio && !phone && (!address || user?.address) && !gender;
+    // console.log("🚀 ~ handleUserInfoUpdate ~ isOnlyImageUpdate:", isOnlyImageUpdate);
 
     // Validate fields only if we're updating more than just the image
-    if (!isOnlyImageUpdate && (!bio || !phone || !address || !gender)) {
+    if (!isOnlyImageUpdate && (bio && phone && address && gender)) {
       return toast.error('Please fill all the fields');
     }
 
@@ -78,7 +83,7 @@ const Profile = () => {
 
     try {
       let imageUrl = photoURL; // Use existing photoURL by default
-      console.log("🚀 ~ handleUserInfoUpdate ~ imageUrl:", imageUrl);
+      // console.log("🚀 ~ handleUserInfoUpdate ~ imageUrl:", imageUrl);
 
       if (selectedFile) {
         // Upload image to Cloudinary if a new file was selected
@@ -91,12 +96,13 @@ const Profile = () => {
       const updatedUserData = {
         email,
         photoURL: imageUrl,
+        ...(name && { name }),
         ...(bio && { bio }),
         ...(phone && { phone }),
         ...(address && { address }),
         ...(gender && { gender }),
       };
-      console.log("🚀 ~ handleUserInfoUpdate ~ updatedUserData:", updatedUserData);
+      // console.log("🚀 ~ handleUserInfoUpdate ~ updatedUserData:", updatedUserData);
 
       const response = await axiosPublic.post('/users/save-user-data',
         updatedUserData,
@@ -109,7 +115,7 @@ const Profile = () => {
       );
 
       const data = await response.data;
-      console.log("🚀 ~ handleUserInfoUpdate ~ data:", data);
+      // console.log("🚀 ~ handleUserInfoUpdate ~ data:", data);
       toast.success('Profile updated successfully');
       setIsProfileUpdated(true); // Set this to true after successful update
     } catch (error) {
@@ -180,7 +186,7 @@ const Profile = () => {
               !user?.name &&
               <p className='xl:flex xl:justify-between xl:flex-row lg:flex lg:justify-between lg:flex-row md:flex md:flex-row md:justify-between sm:flex sm:flex-col flex flex-col xl:mb-2 lg:mb-2 md:mb-2 sm:mb-2 mb-2'>
                 <span>Name:</span>
-                <span>{user?.name}</span>
+                {/* <span>{user?.name}</span> */}
                 {
                   user && !user?.name && <input ref={nameRef} type="text" placeholder="Type here" className="input-xs input-bordered rounded w-full max-w-xs" />
                 }

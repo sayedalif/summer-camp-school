@@ -36,12 +36,14 @@ const SocialLoginButton = ({ authType }) => {
           const userInfo = {
             email: result?.user?.email,
             name: result?.user?.displayName,
-            role: 'student', // initial role will be student for everyone until admin changed their role.
 
             // sending phone number and photo url if they exist
-            
             phoneNumber: result?.user?.phoneNumber,
-            photoURL: result?.user?.photoURL
+            photoURL: result?.user?.photoURL,
+
+            // sending null address
+            address: null,
+            role: 'student', // initial role will be student for everyone until admin changed their role.
           };
           console.log("🚀 ~ AuthProvider ~ userInfo:", userInfo);
 
