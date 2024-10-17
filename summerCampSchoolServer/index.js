@@ -5,6 +5,15 @@ const jwt = require('jsonwebtoken');
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+const cloudinary = require('cloudinary').v2;
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 // safe to use Axios secure
 // classes route, where i'm showing all the classes
 // instructor route where im showing all the instructors.
@@ -133,26 +142,94 @@ async function run() {
       res.send(result);
     });
 
-    // purchased classes of the students
-    //  for admin to manage the students.
-    // temp_file.js
 
-    // for updating the student enrolled seats on specific classes
-    app.patch('/classes/:id', async (req, res) => {
-      const { id } = req.params;
-      const filter = { _id: new ObjectId(id) };
-      const updateStudentEnrolledSeats = req.body;
-      // // console.log("🚀 ~ app.patch ~ updateStudentEnrolledSeats:", updateStudentEnrolledSeats);
-      const updateDoc = {
-        $set: {
-          students_enrolled: updateStudentEnrolledSeats.students_enrolled,
-        },
+    // to delete uploaded classes image form cloudinary when instructor updates their class.
+
+    app.post('/delete-cloudinary-asset', async (req, res) => {
+      const { publicId, resourceType } = req.body;
+      console.log("🚀 ~ app.post ~ resourceType:", resourceType);
+      console.log("🚀 ~ app.post ~ publicId:", publicId);
+
+      try {
+        const result = await cloudinary.uploader.destroy(publicId, {
+          resource_type: resourceType,
+        });
+        console.log(result);
+        return res.status(200).send({ result });
+      } catch (error) {
+        res.status(500).send({ error: 'Failed to delete the asset from Cloudinary' });
       }
-      // // console.log("🚀 ~ app.patch ~ updateDoc:", updateDoc);
-      const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
-      // // console.log("🚀 ~ app.patch ~ result:", result);
+    });
 
-      return res.send(result);
+    //  for admin to manage the students.
+    // for updating the student enrolled seats on specific classes
+    // app.patch('/classes/:id', async (req, res) => {
+    //   const { id } = req.params;
+    //   const filter = { _id: new ObjectId(id) };
+    //   const updateStudentEnrolledSeats = req.body;
+    //   // // console.log("🚀 ~ app.patch ~ updateStudentEnrolledSeats:", updateStudentEnrolledSeats);
+
+    //   if (updateStudentEnrolledSeats.students_enrolled) {
+    //     const updateDoc = {
+    //       $set: {
+    //         students_enrolled: updateStudentEnrolledSeats.students_enrolled,
+    //       },
+    //     }
+    //     // // console.log("🚀 ~ app.patch ~ updateDoc:", updateDoc);
+    //     const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
+    //     // // console.log("🚀 ~ app.patch ~ result:", result);
+    //   }
+
+
+    //   return res.send(result);
+    // });
+
+    app.patch('/classes/:id', async (req, res) => {
+      try {
+        const { id } = req.params;
+        const filter = { _id: new ObjectId(id) };
+        const updates = req.body;
+        console.log("🚀 ~ app.patch ~ updates:", updates);
+
+        let updateDoc = { $set: {} };
+
+        // Handle updating enrolled students
+        if (updates.students_enrolled !== undefined) {
+          updateDoc.$set.students_enrolled = updates.students_enrolled;
+        }
+
+        // Handle updating class information
+        const allowedUpdates = [
+          'className', 'category', 'price', 'available_seats',
+          'video_length', 'description', 'class_thumbnail', 'videoUrl'
+        ];
+
+        allowedUpdates.forEach(field => {
+          if (updates[field] !== undefined) {
+            updateDoc.$set[field] = updates[field];
+          }
+        });
+
+        // If there's nothing to update, send an error
+        if (Object.keys(updateDoc.$set).length === 0) {
+          return res.status(400).send({ error: 'No valid updates provided' });
+        }
+
+        const result = await summerCampSchoolClassesCollection.updateOne(filter, updateDoc);
+
+        if (result.matchedCount === 0) {
+          return res.status(404).send({ error: 'Class not found' });
+        }
+
+        return res.send({
+          message: 'Class updated successfully',
+          modifiedCount: result.modifiedCount
+        });
+
+      } catch (error) {
+        console.error('Error updating class:', error);
+        res.status(500).send({ error: 'Internal server error' });
+      }
     });
 
 
@@ -553,21 +630,21 @@ async function run() {
         /* // Extract the classes_ids from the payments
         // const query = payments?.classes_id?.map(id => new ObjectId(id));
         const query = { _id: { $in: payments?.classes_id?.map(id => new ObjectId(id)) } };
-
+ 
         // Fetch the class details
         const classes = await summerCampSchoolClassesCollection.find(query).toArray(); */
 
         /* // Extract the classes_ids from the payments
         const classesIds = payments.map(payment => payment.classes_id).filter(Boolean);
         // // console.log("🚀 ~ app.get ~ classesIds:", classesIds);
-
+ 
         if (classesIds.length === 0) {
           return res.status(404).send('No classes found for the successful payments.');
         }
-
+ 
         // Form the query
         const query = { _id: { $in: classesIds.map(id => new ObjectId(id)) } };
-
+ 
         // Fetch the class details
         const classes = await summerCampSchoolClassesCollection.find(query).toArray(); */
         // ! $in aie method gula sikha.

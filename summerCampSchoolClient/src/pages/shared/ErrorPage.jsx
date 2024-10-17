@@ -1,6 +1,8 @@
-import Lottie from "lottie-react";
-import errorAnimation from '../../assets/animation/robotError404.json';
+// import Lottie from "lottie-react";
+// import errorAnimation from '../../assets/animation/robotError404.json';
 import { Link, useRouteError } from 'react-router-dom';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import errorAnimation from '../../assets/animation/Animation - 1729008367365.lottie';
 
 const ErrorPage = () => {
   const error = useRouteError();
@@ -8,9 +10,14 @@ const ErrorPage = () => {
 
   return (
     <>
-      <div className='flex flex-col items-center w-full h-full space-y-5'>
-        <div>
-          <Lottie animationData={errorAnimation} loop={true} />
+      <div className='flex flex-col items-center justify-center w-screen h-screen space-y-5'>
+        <div className='max-w-[50%] max-h-[50%]'>
+          {/* <Lottie animationData={errorAnimation} loop={true} /> */}
+          <DotLottieReact
+            src={errorAnimation}
+            loop
+            autoplay
+          />
         </div>
 
         <div>

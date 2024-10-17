@@ -16,7 +16,7 @@ const DefaultAvatar = () => (
 const Navbar = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
-  // console.log("🚀 ~ Navbar ~ user:", user);
+  console.log("🚀 ~ Navbar ~ user:", user);
 
   const { data: userInfo = [], error, isLoading, refetch } = useUserInfo();
   const { _id, email, following, name, photoURL } = userInfo;

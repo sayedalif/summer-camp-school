@@ -11,9 +11,13 @@ import useCart from "../hooks/useCart";
 import usePaymentClasses from "../hooks/usePaymentClasses";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAdmin from "../hooks/useAdmin";
+import AddClass from "../pages/Dashboard/AddClass";
+import AddAndUpdateClass from "./AddAndUpdateClass.jsx";
 
 
-const ClassesCards = ({ key, eachClass, status, feedback }) => {
+const ClassesCards = ({ eachClass, status, feedback }) => {
+  console.log("🚀 ~ ClassesCards ~ eachClass:", eachClass);
+
   // these are for dropping of the user in same page after login
   const location = useLocation();
   // console.log("🚀 ~ ClassesCards ~ location:", location);
@@ -89,16 +93,41 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
       // console.log("🚀 ~ handleAddToCart ~ error:", error);
     }
   }
+  const modalId = `edit_modal_${eachClass._id}`;
 
   return (
-    <div key={key} className='group cursor-pointer'>
+    <div key={eachClass._id} className='group cursor-pointer'>
 
       {
         location?.pathname === '/dashboard/myclass' && userInfo?.role === 'instructor' && <div className="flex justify-between px-4 py-3">
           {
             eachClass?.status === 'denied' && <button className="btn btn-sm">Feedback</button>
           }
-          <button className="btn btn-sm">edit<BiSolidEdit /></button>
+          {/* <button className="btn btn-sm">edit<BiSolidEdit /></button> */}
+          {/* You can open the modal using document.getElementById('ID').showModal() method */}
+          {/* <button className="btn btn-sm" onClick={() => document.getElementById('my_modal_4').showModal()}>
+            edit<BiSolidEdit />
+          </button> */}
+          <button className="btn btn-sm" onClick={() => document.getElementById(modalId).showModal()}>
+            edit<BiSolidEdit />
+          </button>
+          {/* <dialog id="my_modal_4" className="modal"> */}
+          <dialog id={modalId} className="modal">
+            <div className="modal-box w-11/12 max-w-5xl">
+              <h3 className="font-bold text-lg">Hello!</h3>
+              <p className="py-4">Click the button below to close</p>
+              <>
+                {/* <AddAndUpdateClass eachClass={eachClass}></AddAndUpdateClass> */}
+                <AddClass eachClass={eachClass}></AddClass>
+              </>
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button, it will close the modal */}
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
         </div>
       }
       <div className={`card-container lg:w-[22rem] md:w-[20rem] sm:w-[20rem] w-[18rem] lg:h-[28rem] ${parseInt(eachClass?.available_seats) === parseInt(eachClass?.students_enrolled) ? 'bg-red-500' : 'bg-base-100'} shadow-xl group-hover:bg-[#C3FFD2] hover:scale-[1.03] transition duration-300 delay-150 hover:delay-300 mb-4 rounded-xl backface-hidden`}>
@@ -130,9 +159,22 @@ const ClassesCards = ({ key, eachClass, status, feedback }) => {
             {
               location?.pathname === '/dashboard/myclass' && userInfo?.role === 'instructor' && eachClass?.status && <p>Status: <span className={`${eachClass?.status === 'denied' ? 'text-red-500' : eachClass?.status === 'approved' ? 'text-green-500' : 'text-yellow-500'} capitalize font-bold`}>{eachClass?.status}</span></p>
             }
-            {
+            {/* {
               location?.pathname === '/dashboard/manageclasses' && userInfo?.role === 'admin' && eachClass?.status && <p>Status: <button className={`${eachClass?.status === 'denied' ? 'text-red-500' : eachClass?.status === 'approved' ? 'text-green-500' : 'text-yellow-500'} capitalize font-bold btn btn-xs`} disabled={eachClass?.status !== 'approved'}>{eachClass?.status}</button></p>
+            } */}
+
+            {
+              location?.pathname === '/dashboard/manageclasses' && userInfo?.role === 'admin' && eachClass?.status && <p>Status:
+                <div className="dropdown dropdown-right">
+                  <div tabIndex={0} role="button" className="btn btn-sm ml-1">{eachClass?.status}</div>
+                  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                    <li><a>approved</a></li>
+                    <li><a>denied</a></li>
+                  </ul>
+                </div>
+              </p>
             }
+
             <div className='flex justify-between items-center'>
               <span className='badge bg-[#E2F6FF] my-[16px]'>
                 <FontAwesomeIcon className='text-[#6FD1FF] pr-1' icon={faIdBadge} />

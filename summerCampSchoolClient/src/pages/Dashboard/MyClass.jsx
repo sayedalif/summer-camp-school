@@ -6,7 +6,7 @@ import useAxiosSecure from "../../hooks/UseAxiosSecure";
 
 const MyClass = () => {
   const { data: userInfoData, error: userInfoError, isLoading, refetch } = useUserInfo();
-  // console.log("🚀 ~ MyClass ~ userInfoData:", userInfoData);
+  console.log("🚀 ~ MyClass ~ userInfoData:", userInfoData);
 
   /* const { data: classes = [], error, loading } = useFetch(`/classes/${userInfoData?._id}`);
   console.log("🚀 ~ MyClass ~ classes:", classes); */

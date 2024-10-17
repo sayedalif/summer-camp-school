@@ -432,16 +432,18 @@
 
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import EditableAvatar from "../../components/EditableAvatar";
-import uploadImagePlaceholder from '../../assets/images/png/picture.png';
-import uploadVideoPlaceholder from '../../assets/images/png/video-chat.png';
+// import EditableAvatar from "../../components/EditableAvatar";
+import EditableAvatar from "./EditableAvatar";
+// import uploadImagePlaceholder from '../../assets/images/png/picture.png';
+import uploadImagePlaceholder from '../assets/images/png/picture.png';
+import uploadVideoPlaceholder from '../assets/images/png/video-chat.png';
 import axios from 'axios';
-import useAxiosSecure from "../../hooks/UseAxiosSecure";
-import useUserInfo from "../../hooks/useUserInfo";
+import useAxiosSecure from "../hooks/UseAxiosSecure";
+import useUserInfo from "../hooks/useUserInfo";
 
-const AddClass = ({ eachClass }) => {
-  console.log("🚀 ~ AddClass ~ eachClass:", eachClass);
-  
+const AddAndUpdateClass = ({ eachClass }) => {
+console.log("🚀 ~ AddAndUpdateClass ~ eachClass:", eachClass);
+
   const [axiosSecure] = useAxiosSecure();
   const { data: userInfo } = useUserInfo();
 
@@ -668,4 +670,4 @@ const AddClass = ({ eachClass }) => {
   );
 };
 
-export default AddClass;
+export default AddAndUpdateClass;
